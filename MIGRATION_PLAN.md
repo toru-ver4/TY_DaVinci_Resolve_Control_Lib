@@ -1,0 +1,300 @@
+# TY_DaVinci_Resolve_Control_Lib 移行・再設計計画
+
+## 1. 目的
+
+`sample_code/ty_lib` にある次の実装を出発点として、DaVinci Resolve 21.0.4 を Windows から制御する独立した Python パッケージを作る。
+
+- `ty_davinci_control_lib_2.py`
+- `ty_davinci_constants.py`
+
+新パッケージは旧実装との後方互換性を持たせない。旧ファイルは `sample_code` 側に残し、新パッケージでは関数名、引数、戻り値、例外、モジュール分割を必要に応じて変更する。
+
+公式 API の基準資料は `official_documents/21.0.4_Scripting/README.txt` とする。同文書が要求する Python は 3.6 以上の 64-bit 版であるため、初期保証環境には Python 3.12 64-bit を採用する（README.txt 16–20行）。
+
+## 2. 対象範囲と保証環境
+
+| 項目 | 方針 |
+|---|---|
+| OS | Windows のみ保証。macOS は可能な範囲で単体テスト可能な設計にするが、実機保証しない |
+| DaVinci Resolve | 21.0.4 |
+| Python | 3.12 64-bit |
+| パッケージ形式 | `pyproject.toml` と `src` layout を使用 |
+| 開発用インストール | `python -m pip install -e .` |
+| 配布 | PyPI 公開は前提にせず、ローカルまたは Git URL から `pip install` |
+| Git連携 | Git submodule は使用しない |
+| 実機テスト | 専用プロジェクトの作成・削除、Resolve の終了・再起動を許可 |
+
+初期の `requires-python` は `>=3.12,<3.13` とする。Python 3.13 は単体テストと Resolve 接続を実機確認した後、別の対応作業として追加する。
+
+## 3. 設計原則
+
+1. パッケージの import だけでは Resolve に接続しない。
+2. `resolve` と `fusion` のモジュールグローバルを廃止し、接続状態を `ResolveSession` に保持する。
+3. 公式 API の `False`、`None`、空リストなど、操作失敗を示す戻り値を検出したら独自例外を送出する。ライブラリ内で `sys.exit()` は呼ばない。
+4. 公開関数の引数は呼び出し前に検証し、不正値なら Resolve を操作しない。
+5. Resolve のリモートオブジェクトを過度に包み直さない。複数の公式 API 呼び出しを安全にまとめる処理、入力検証、エラー変換に価値がある箇所を公開 API にする。
+6. 未ラップの公式 API を利用できるよう、`ResolveSession.resolve` と `ResolveSession.fusion` にはアクセス可能とする。
+7. Python の公開関数には、プロジェクトの `AGENTS.md` に従った英語の NumPy style docstring を付ける。
+
+## 4. パッケージ構成案
+
+配布名を `ty-davinci-resolve-control`、import 名を `ty_davinci_resolve` とする。
+
+```text
+TY_DaVinci_Resolve_Control_Lib/
+├── pyproject.toml
+├── README.md
+├── src/
+│   └── ty_davinci_resolve/
+│       ├── __init__.py
+│       ├── connection.py
+│       ├── errors.py
+│       ├── constants.py
+│       ├── project.py
+│       ├── media.py
+│       ├── timeline.py
+│       ├── render.py
+│       ├── fusion.py
+│       └── timecode.py
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   │   └── test_countdown_regression.py
+│   ├── countdown_regression/
+│   │   └── create_countdown_v2.py
+│   └── countdown_reference_data/
+│       └── ref_data_1280x720.zip
+├── examples/
+└── official_documents/
+```
+
+- `connection.py`: API モジュール探索、接続、バージョン検査、終了、再起動
+- `errors.py`: 接続・入力値・API操作失敗を区別する例外
+- `constants.py`: ページ名、トラック種別など安定した値。環境依存のコーデック一覧は固定定数にせず公式 API から取得する
+- `project.py`: プロジェクトのライフサイクルと設定
+- `media.py`: Media Storage、Media Pool、Folder、MediaPoolItem 操作
+- `timeline.py`: タイムライン、トラック、TimelineItem 操作
+- `render.py`: レンダー能力照会、設定、ジョブ作成、待機、停止
+- `fusion.py`: Composition と Tool の生成、接続、入力値設定
+- `timecode.py`: Resolve に依存しないフレーム・タイムコード計算
+
+大規模なクラス階層は作らず、`ResolveSession` と小さな関数群を基本とする。
+
+## 5. 現行 API の移行方針
+
+### 5.1 初期移植する機能
+
+| 現行機能 | 新しい配置・方向性 |
+|---|---|
+| import時の接続、`get_project_manager()` | `ResolveSession.connect()` と `session.project_manager` に統合 |
+| `reboot_resolve()` | `ResolveSession.restart()`。固定sleepではなく期限付き再接続を行う |
+| project の作成・読込・保存・終了・削除 | `project.py` に整理し、名前と戻り値を統一 |
+| project/timeline の設定、解像度取得 | 単項目操作と一括操作を分離。一括操作は最初の失敗で停止 |
+| media の追加、連番読込 | `media.py` の単一インターフェースに整理し、パスとフレーム範囲を検証 |
+| timeline の作成、clip追加、track item取得 | `timeline.py` に移動し、空の公式戻り値を安全に扱う |
+| render format/codec/settings、実行待機 | `render.py` でジョブIDを追跡する方式に置換 |
+| Fusion comp/tool の生成・接続・入力設定 | `fusion.py` に移動し、ミュータブルなデフォルト引数を廃止 |
+| 秒・フレーム・タイムコード変換 | `timecode.py` の純粋関数にする。fpsを暗黙取得しない |
+| RCM更新のページ切替 | Resolve 21.0.4 で再現確認できた場合のみ、明示的な workaround として残す |
+
+現行 `_2` 利用箇所で実際に参照されている機能は、上表のプロジェクト設定、メディア追加、タイムライン追加、レンダー、Fusionノード操作にほぼ収まる。この利用実績を初期実装の優先順位に使うが、新パッケージの名前やシグネチャは旧 API に合わせない。
+
+### 5.2 削除または再検討する機能
+
+- `log_return_value`: `print` ベースのデバッグ機能は削除する。必要なら標準 `logging` を利用者側で設定できるようにする。
+- `_create_dummy_video_relative_path()` とダミー動画依存: 公式の `Timeline.InsertFusionCompositionIntoTimeline()` をまず使用する。長さ指定が必要なユースケースだけ、独立した補助機能として実機検証する。
+- 大量の固定 render codec 定数: `Project.GetRenderFormats()` と `Project.GetRenderCodecs()` の実行結果を優先する。Resolve の版、OS、エディション、ハードウェアで変わり得る値を固定しない。
+- `run_rendering_and_wait_until_finish()`: 現行実装は全ジョブ削除と完了待機の順序を再設計する。新実装では `AddRenderJob()` が返すジョブIDを保持し、`GetRenderJobStatus(jobId)` を監視して、そのジョブだけを扱う。
+- `sec_to_frame_idx()`: プロジェクト状態を暗黙参照せず、fpsを明示引数にする。
+- `make_videoMonitorFormat_str()`: 対応する解像度とfpsを明示的に検証し、命名を snake_case に直す。
+- `add_line_comp()`、`add_rectangle_comp()` など用途特化ビルダー: 基本的なTool操作を先に実装した後、実利用を確認して第2段階で追加する。
+
+## 6. 公式文書からの新規 API 候補
+
+候補は `official_documents/21.0.4_Scripting/README.txt` の非deprecated APIを基準とする。すべてを薄くラップするのではなく、失敗検出、入力検証、複数操作の一貫性を提供できるものを採用する。
+
+### 優先度 P0：初期リリースに含める
+
+| 候補 | 公式API・根拠 | 用途 |
+|---|---|---|
+| 接続時の製品・版確認 | `Resolve.GetProductName()`, `GetVersion()`, `GetVersionString()`（91–93行） | 接続先が Resolve 21.0.4 かをfail-fastで確認 |
+| 安全なアプリ終了 | `Resolve.Quit()`（101行） | OSの強制終了より先に公式終了APIを使用 |
+| プロジェクト存在確認 | `ProjectManager.GetProjectListInCurrentFolder()`（133行） | create/load/delete前の検証と明確なエラー |
+| プロジェクトの一覧・選択 | `Project.GetTimelineCount()`, `GetTimelineByIndex()`, `SetCurrentTimeline()`（163–166行） | タイムラインを名前またはindexで安全に取得 |
+| レンダー能力照会 | `GetRenderFormats()`, `GetRenderCodecs()`, `GetCurrentRenderFormatAndCodec()`, `GetRenderResolutions()`（197–203行） | 環境依存のformat/codecを事前検証 |
+| ジョブ単位のレンダー管理 | `AddRenderJob()`, `GetRenderJobList()`, `StartRendering(jobId)`, `StopRendering()`, `GetRenderJobStatus(jobId)`（172–189行） | 対象ジョブだけを開始・監視・停止し、他ジョブを消さない |
+| Media Pool フォルダー取得 | `GetRootFolder()`, `GetCurrentFolder()`, `SetCurrentFolder()`（232、249–250行） | import先を暗黙のGUI選択状態に依存させない |
+| trackの検証と操作 | `GetTrackCount()`, `GetTrackName()`, `SetTrackName()`, `GetItemListInTrack()`（372、399、416–417行） | track indexを操作前に検証し、テスト後の確認にも使う |
+| playheadの取得 | `Timeline.GetCurrentTimecode()`（411行） | `SetCurrentTimecode()` の結果確認 |
+| ネイティブFusion Composition挿入 | `Timeline.InsertFusionCompositionIntoTimeline()`（438行） | ダミー動画方式を使わない基本経路 |
+
+### 優先度 P1：初期安定後に追加
+
+| 候補 | 公式API・根拠 | 用途 |
+|---|---|---|
+| プロジェクトのバックアップ | `ImportProject()`, `ExportProject()`, `RestoreProject()`（141–143行） | 実機テスト前後の退避と復元にも利用可能 |
+| Media Poolの整理 | `AddSubFolder()`, `DeleteFolders()`, `MoveClips()`, `MoveFolders()`（233、254–256行） | importワークフローをGUI状態から分離 |
+| メディア再リンク | `RelinkClips()`, `UnlinkClips()`（260–261行） | ファイル移動後の復旧 |
+| clip情報・設定 | `GetClipProperty()`, `SetClipProperty()`, `GetMetadata()`, `SetMetadata()`（305–308、332–334行） | color space等のset/get確認を共通化 |
+| marker操作 | MediaPoolItem、Timeline、TimelineItem のmarker API（317–325、403–410、488–495行） | 同種APIの検証・エラー処理を共通化 |
+| timeline複製・export | `DuplicateTimeline()`, `Timeline.Export()`（418、432行） | 破壊的変更前の複製、AAF/XML/OTIO等の出力 |
+| timeline track管理 | `AddTrack()`, `DeleteTrack()`, enable/lock操作（372–397行） | テスト用timeline構築と通常の編集自動化 |
+| thumbnail取得 | `GetCurrentClipThumbnailImage()`（414–415行） | 公式Example 6を基にbase64データを検証して返す |
+| Fusion comp管理 | `GetFusionCompCount()`, `GetFusionCompByIndex/Name()`, import/export/rename/delete（473–476、502–507行） | compの生成確認と再利用 |
+| LUT操作 | `Graph.SetLUT()`, `GetLUT()`（584–589行） | 現行DCTL/LUT用途を公式Color Graph側にも拡張 |
+| テスト時の背景処理抑制 | `DisableBackgroundTasksForCurrentResolveSession()`（117行） | 実機テストの揺らぎを減らせるか検証 |
+
+### 優先度 P2：要求が出たときに追加
+
+- Gallery、ColorGroup、take、stereo、Fairlight、burn-in/layout/user-preference preset、database切替、cloud project関連。
+- `CreateSubtitlesFromAudio()`、`GenerateSpeech()`、IntelliSearch、Slate解析、Motion Deblur等のStudio/AI機能。公式文書ではFree版、最小システム要件、追加パッケージの有無により `False` などを返すとされている（1021–1035行）ため、通常機能とテスト条件を分離する。
+- Resolve 21で追加された `PerformAudioClassification()`、`RemoveMotionBlur()`、`AnalyzeForIntellisearch()`、`AnalyzeForSlate()`、`GenerateSpeech()` は新規API候補台帳には残すが、現行ライブラリの主用途から外れるため初期実装しない（CHANGELOG.txt「21.0 Beta」）。
+
+deprecated欄（README.txt 1099行以降）およびunsupported欄（1140行以降）のAPIは新規ラッパーを作らない。
+
+## 7. 公式文書を更新したときの API 棚卸し手順
+
+Resolve の対応版を上げるたびに、次を実施する。
+
+1. `official_documents/<version>_Scripting/` を追加し、旧版を削除しない。
+2. 新旧 `CHANGELOG.txt` と `README.txt` のオブジェクト別メソッド一覧を比較する。
+3. 追加・変更・deprecated・unsupported APIを一覧化する。
+4. 既存ラッパーへの影響、利用価値、Free/Studio差、破壊性、実機テスト可否を評価する。
+5. P0/P1/P2候補表を更新し、採用するAPIには公式文書の行または節を記録する。
+6. 対応対象のResolveバージョンを接続時検査とパッケージ文書へ反映する。
+
+## 8. テスト計画
+
+### 8.1 単体テスト
+
+Resolveを起動せず、Python 3.12で毎回実行できるようにする。
+
+- timecode/frame変換の境界値と不正形式
+- 解像度・fps・page・track type・index・パスの入力検証
+- Fakeオブジェクトに正しい公式API名と引数を渡すこと
+- 公式APIが `False`、`None`、空リストを返した場合の例外
+- importしても `DaVinciResolveScript` のロードや接続を実行しないこと
+- render job IDを保持し、他のジョブを削除しないこと
+- float、dict、remote objectを含むFusion Tool入力値の照合
+
+### 8.2 Windows実機テスト
+
+`pytest` markerで通常テストから分離する。
+
+- Resolve 21.0.4への接続とバージョン確認
+- 専用プロジェクトのcreate/get/save/close/load/delete
+- project/timeline設定のset/get。ただしResolve側で正規化される値は許容値を個別定義
+- MediaPoolへの静止画・動画・連番追加と、返されたオブジェクトへのアクセス
+- timeline作成、track作成、clip追加、取得、削除
+- Fusion CompositionとToolの作成、接続、入力値、位置の確認
+- 小さな素材を使ったrender job作成、状態監視、成果物確認、対象job削除
+- `Quit()`、起動、期限付き再接続。再起動テストは最後に単独実行
+
+テスト用プロジェクト名には専用prefixと実行IDを使い、その実行で作成した対象だけを削除する。既存プロジェクトや既存render jobを一括削除しない。
+
+各テストファイルの冒頭には、`sample_code/ty_lib/TY_DaVinci_Resolve_Control_Lib` で実行することと、対応するコマンドをコメントで明記する。
+
+```powershell
+python -m pytest tests/unit
+python -m pytest -m resolve_integration tests/integration
+```
+
+### 8.3 Countdown V2 画像回帰テスト
+
+現行実装で最も複雑な利用例である `sample_code/2025/02_Countdown_V2/create_countdown_v2.py` を原本として、新パッケージの総合回帰テストを作る。原本は読み取り参照だけとし、一切変更しない。
+
+新パッケージ対応版は、移行先リポジトリの `tests/countdown_regression/create_countdown_v2.py` にテスト専用の派生スクリプトとして作成する。原本との差分は、新パッケージへの移行、テスト可能化、`transfer_functions.py` 依存の除去に必要な範囲に限定する。
+
+参照データは `tests/countdown_reference_data/ref_data_1280x720.zip` とする。事前確認時点の参照データは次の内容である。
+
+- ZIP SHA-256: `490A48B91FE8ACD693C31253DAF263000D9F1AEB76DC6216F60049590296773D`
+- 画像数: 384枚
+- 画像仕様: 1280×720、RGB、各channel 16-bit、non-interlaced PNG
+- 4条件: Gamma 2.4 / ST2084 と P3-D65 / Rec.2020 の組み合わせ
+- 各条件: 96 frames
+
+#### Countdownテスト用派生スクリプトの作成
+
+`tests/countdown_regression/create_countdown_v2.py` には次の変更を反映する。
+
+1. `ty_davinci_control_lib_2` と `ty_davinci_constants` を、新しい `ty_davinci_resolve` パッケージへ置換する。
+2. 出力先を `F:\abuse\Countdown\temp_seq` に固定せず、関数引数またはCLI引数 `--output-dir` で指定可能にする。通常実行時のdefaultは既存値を維持してよいが、テストではpytestの一時directoryを渡す。
+3. テスト対象の解像度、fps、gamut、gammaを引数で指定可能にし、モジュールをimportしただけでは処理を開始しない。
+4. `ty_lib/transfer_functions.py` をimportしない。原本で使用しているのは `oetf_from_luminance(..., ST2084)` のみなので、派生スクリプト側にNumPyだけで動作する小さな `st2084_oetf_from_luminance()` を実装する。
+5. ST 2084関数は、既存処理と同じく入力をcd/m²、出力を正規化code valueとし、0–10000 cd/m²の範囲を検証する。SMPTE ST 2084の定数を明記し、代表値の単体テストを追加する。
+6. render完了前のjob削除を行わず、新ライブラリのjob ID単位の待機処理を使用する。
+7. 使用する動画、音声、DCTL、font等のassetを開始前に検証し、不足があればレンダーを開始せずに失敗させる。
+
+原本および `transfer_functions.py` のコードを無条件に同期させる構成にはしない。Countdownで必要なST 2084変換だけを派生スクリプトへ独立実装し、同モジュールと、その依存先である `colour` をCountdown回帰テストから除外する。
+
+#### 比較方法
+
+`tests/integration/test_countdown_regression.py` を追加し、次の順序で検査する。
+
+1. 参照ZIPのSHA-256、entry数、重複entry、path traversalを検査する。
+2. 空の一時directoryへCountdownの4条件をレンダーする。
+3. 出力ファイル名の集合が参照ZIPと完全一致することを確認する。余分なPNGや欠落も失敗とする。
+4. 参照・出力双方のPNGが1280×720、RGB、16-bitであることを確認する。
+5. PNGを16-bit整数のRGB配列としてdecodeし、384枚すべてを同名ファイル同士で比較する。
+6. shape、dtype、全channelの全画素値が完全一致することを確認する。許容差は設けず、1 code valueの差でも失敗とする。
+7. 不一致時は最初のファイル名、座標、channel、期待値、実値、相違画素数を表示する。
+
+PNGの圧縮方法、chunk順序、timestamp等は画としての出力に影響しないため、PNGファイル全体のbyte一致は要求しない。比較対象はdecode後の16-bit RGB sampleである。16-bit RGBを8-bitへ縮退させないdecoderをテスト用依存関係として選び、decoder自体のbit depth保持を小さな単体テストで確認する。
+
+本テストには `resolve_integration` に加えて `countdown_regression` markerを付け、通常の単体テストでは実行しない。
+
+```powershell
+# Run from sample_code/ty_lib/TY_DaVinci_Resolve_Control_Lib
+python -m pytest -m countdown_regression tests/integration/test_countdown_regression.py
+```
+
+完全一致には、少なくともResolve 21.0.4、使用asset、DCTL、font、project/render設定が参照データ生成時と一致している必要がある。事前条件の差とライブラリの回帰を区別できるよう、これらをpreflight結果としてテスト出力へ記録する。
+
+## 9. 実装フェーズ
+
+### Phase 0: API契約の確定
+
+- 公開名、例外、戻り値、対象APIを本計画に沿って確定
+- 21.0.4公式文書の参照箇所を各機能のissue/checklistに記録
+
+### Phase 1: パッケージ基盤
+
+- `pyproject.toml`、`src` layout、README、pytest設定を作成
+- `errors.py`、`connection.py`、バージョン検査を実装
+- editable install、wheel build、import副作用なしを確認
+
+### Phase 2: 純粋関数と基本操作
+
+- `timecode.py`、定数、入力検証
+- project、media、timelineのP0機能を移植
+- Fakeを使った単体テストを先行して追加
+
+### Phase 3: レンダーとFusion
+
+- job ID単位のrender管理と実機テスト
+- Fusion基本操作を移植
+- ネイティブFusion Composition経路を検証し、ダミー動画方式の要否を決定
+
+### Phase 4: P1公式APIと用途特化機能
+
+- P1候補を利用頻度順に追加
+- line/rectangle/DCTL等の用途特化ビルダーを基本API上に再実装
+- RCMページ切替workaroundを21.0.4で再評価
+- 原本の `create_countdown_v2.py` は変更せず、`tests/countdown_regression/create_countdown_v2.py` に新パッケージ対応版を作り、384枚の16-bit RGB完全一致テストを追加
+
+### Phase 5: Python 3.13評価
+
+- 単体テスト、package install、`fusionscript.dll`ロード、Resolve接続、代表的な実機テストを3.13 64-bitで実行
+- 合格後に `requires-python` を `>=3.12,<3.14` へ変更
+
+## 10. 初期リリースの完了条件
+
+- Python 3.12 64-bitでeditable installとGit URL installが可能
+- import時にResolve未起動でも失敗しない
+- Resolve 21.0.4以外への接続を明確なメッセージで拒否できる
+- P0機能の単体テストが合格
+- Windows + Resolve 21.0.4で主要な実機テストが合格
+- Countdown V2が参照ZIPと同じ384枚を生成し、decode後の16-bit RGB値が全画素完全一致
+- 既存プロジェクト、既存render job、GUIで選択中のMedia Pool Folderに暗黙依存しない
+- READMEに最小の接続・プロジェクト作成・media追加・render例を掲載
+- 実装したラッパーから21.0.4公式APIの根拠を追跡できる
