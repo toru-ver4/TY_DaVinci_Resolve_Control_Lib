@@ -1,0 +1,2 @@
+# TY_DaVinci_Resolve_Control_Lib
+DaVinci Resolve 制御用のライブラリ
