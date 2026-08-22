@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ty-davinci-resolve-control"
+version = "0.1.0"
+description = "Python helpers for controlling DaVinci Resolve"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Toru Yoshihara" },
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8,<9",
+]
+countdown = [
+    "numpy>=2,<3",
+    "pypng>=0.20220715.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--basetemp=.pytest-tmp"]
+cache_dir = ".pytest-tmp/cache"
+markers = [
+    "resolve_integration: requires DaVinci Resolve 21.0.4 on Windows",
+    "resolve_restart: quits and relaunches DaVinci Resolve and must run alone",
+    "countdown_regression: renders and compares the Countdown V2 PNG sequence",
+]

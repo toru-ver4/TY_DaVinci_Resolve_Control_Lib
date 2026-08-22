@@ -109,6 +109,69 @@ TY_DaVinci_Resolve_Control_Lib/
 - `make_videoMonitorFormat_str()`: 対応する解像度とfpsを明示的に検証し、命名を snake_case に直す。
 - `add_line_comp()`、`add_rectangle_comp()` など用途特化ビルダー: 基本的なTool操作を先に実装した後、実利用を確認して第2段階で追加する。
 
+### 5.3 現行便利関数の実装状況（全関数の漏れ監査）
+
+旧ライブラリの全 `def` を、実装済みの新APIとP1/P2へ再度突き合わせた。後方互換用の旧名は作らず、複数の基本API呼び出しを安全にまとめるP1便利関数を新しい名前と契約で実装した。
+
+#### 実装済み：旧関数名との対応
+
+| 旧関数 | 実装済みの新API |
+|---|---|
+| `close_current_project()`、`delete_project()`、`create_project()`、`save_project()`、`load_project()`、`get_current_project()` | `close_project()`、`delete_project()`、`create_project()`、`save_project()`、`load_project()`、`get_current_project()` |
+| `get_media_pool()`、`create_empty_timeline()` | `get_media_pool()`、`create_empty_timeline()` |
+| `set_project_setting()`、`get_project_setting()`、`setup_project_settings()` | `set_setting()`、`get_setting()`、`set_settings()` |
+| `add_seq_file_to_media_pool()`、`append_clip_to_timeline()` | `import_sequence()`、`append_clip()` |
+| `sec_to_frame_idx()`、`timecode_to_frame_index()` | `seconds_to_frames()`、`timecode_to_frames()` |
+| `get_timeline_items_in_track()` | `get_track_items()` |
+| `set_render_format_codec_settings()`、`set_render_setting()` | `set_render_format_codec()`、`set_render_settings()` |
+| `add_fusion_comp()`、`get_comp_tool_by_name()`、`add_comp_tool()` | `add_comp()`、`get_tool()`、`add_tool()` |
+| `set_tool_input()`、`set_multiple_tool_input()`、`set_tool_position()` | `set_tool_input()`、`set_tool_inputs()`、`set_tool_position()` |
+
+`log_return_value()`内の `wrapper()` はdecorator実装の内部関数であり、独立した公開APIとしては数えない。
+
+#### P1：実装済みの便利関数
+
+| 旧機能・用途 | 実装名・配置 | 方針 |
+|---|---|---|
+| `append_fusion_composition_to_timeline()` | `append_fusion_composition()` (`fusion.py`) | 長さ指定なしではnative `InsertFusionCompositionIntoTimeline()`を使用し、固定frame長では呼出側が指定したdummy mediaを使う。package内の暗黙assetには依存しない |
+| `run_rendering_and_wait_until_finish()` | `render_current_settings()` (`render.py`) | render設定からjobを追加し、返されたjob IDだけを開始・待機する。完了後にそのjobを削除するかは明示引数にし、失敗時は削除しない |
+| `get_current_page()`、`open_page()` | `get_current_page()`、`open_page()` (`connection.py`) | `Page` enumで検証し、失敗時は例外にする。Fusionの`CurrentFrame`有効化にも利用する |
+| `get_current_timeline()`、`set_current_timecode()` | `get_current_timeline()`、`set_current_timecode()` (`timeline.py`) | project/timelineの存在とtimecode形式を操作前に検証し、既定では`GetCurrentTimecode()`で結果確認する。ResolveがTrueを返してもread-backが更新されない参照workflowでは`verify=False`を明示する |
+| `get_project_resolution()` | `get_timeline_resolution()` (`project.py`) | width/height設定を取得し、正の整数tupleとして返す |
+| `make_videoMonitorFormat_str()` | `make_video_monitor_format()` (`project.py`) | 1280/1920/2048/2560/3840/4096系の対応表とfpsを明示検証する。Resolveが受け付ける文字列生成だけを担当する |
+| `set_timeline_setting()`、`set_timeline_settings()` | `get_timeline_setting()`、`set_timeline_setting()`、`set_timeline_settings()` (`timeline.py`) | `useCustomSettings`を含む一括設定をfail-fastで行う。29.97/59.94だけを無条件に成功扱いする旧例外処理は引き継がない |
+| `add_file_to_media_pool(..., start_frame, end_frame)` | `import_media_storage_items()` (`media.py`) | `MediaStorage.AddItemListToMediaPool()`の`media/startFrame/endFrame`形式を追加し、通常file importとrange付きimportを区別する |
+| `insert_generator_into_timeline()` | `insert_generator()` (`timeline.py`) | generator名を検証し、`None`を操作例外へ変換する。title/Fusion generator等への拡張は要求時に別関数とする |
+| `delete_render_preset()`、`import_render_preset()` | `delete_render_preset()`、`import_render_preset()` (`render.py`) | preset fileの存在、preset名衝突、公式APIのBoolを検証する。既存presetの暗黙削除はしない |
+| `refresh_lut_list()` | `refresh_lut_list()` (`project.py`) | DCTL/LUT追加後の明示的な更新として提供し、現在projectがない場合は操作しない |
+| `connect_tool()`、`connect_mediaout()`、`connect_dctl()` | `connect_default_output()` (`fusion.py`) | `ConnectInput()`で名前指定できないdefault Output/Input接続を扱う。入力名が分かる場合は実装済み`connect_input()`を優先する |
+| `connect_merge_tool()` | `connect_merge()` (`fusion.py`) | Background/Foregroundの少なくとも一方を必須とし、指定された入力だけを接続する |
+| `set_tool_topleft_color()` | `set_background_color()` (`fusion.py`) | RGBAを4要素・有限値として検証し、4入力をread-back確認する |
+| `add_dctl_comp()` | `add_dctl_tool()` (`fusion.py`) | LUT rootからの相対path、file存在、option mappingを事前検証してからDCTL Toolを作る |
+| `is_font_available()` | `require_fusion_font()` (`fusion.py`) | family/styleをFusion FontManagerで検証し、Tool作成前に不足fontを明示する |
+| `add_transparent_background()` | `add_transparent_background()` (`fusion.py`) | `add_tool()`と`set_background_color()`を組み合わせる小さなbuilderとして追加する |
+| `add_line_comp()` | `build_line()` (`fusion.py`) | RectangleMask、Background、Mergeをまとめて構築する。位置、RGBA、幅、高さ、angle、foreground/background接続を検証する |
+| `force_rcm_update_via_page_switch()` | `refresh_fusion_color_management()` (`fusion.py`) | Resolve 21.0.4で再現条件と効果を実機テストし、必要な場合だけversion限定workaroundとして追加する |
+
+#### P2：利用頻度が低い、またはAPI契約を追加検討する便利関数
+
+| 旧機能・用途 | 新規候補名・配置 | 方針 |
+|---|---|---|
+| `add_rectangle_comp()` | `build_rectangle()` (`fusion.py`) | RectangleMask付きBackgroundを作る。`build_line()`との共通内部builderを整理した後に追加する |
+| `_get_font_list()` | `get_fusion_fonts()` (`fusion.py`) | 生のFontManager戻り値を公開せず、familyからstyleのimmutable mappingへ正規化する必要があるためP2とする |
+| page切替を伴うTool位置設定 | `set_tool_position(..., activate_fusion_page=True)`の拡張 (`fusion.py`) | `Composition.CurrentFrame`が`None`の場合のpage副作用を明示引数にするか、sessionを別引数にするかを決めてから追加する |
+| dummy videoの自動選択 | `select_fusion_duration_media()` (`fusion.py`または利用者側) | resolution/fps別assetをpackageへ同梱する設計は避ける。利用者がasset resolverを渡す方式が必要になった場合だけ追加する |
+
+#### 新規候補にしない旧関数
+
+- `log_return_value()`：廃止。標準`logging`を利用する。
+- `_close_project()`、`_frame_index_to_timecode()`、`_create_dummy_video_relative_path()`：公開せず、必要な処理は新API内部または利用者指定assetへ置き換える。
+- `get_project_manager()`、`get_media_storage()`：`ResolveSession.project_manager`、`ResolveSession.media_storage`で実装済み。
+- project lifecycle、project setting、Media Pool取得、file/連番import、clip append、track item取得、render format/codec/settings、Fusion comp/tool/input/position、timecode変換：新しい公開APIで実装済み。
+- `set_render_setting()`：実装済み`set_render_settings()`へ統合し、1項目専用aliasは作らない。
+- `is_rendering_in_progress()`：global状態ではなくjob ID指定の`get_render_job_status()`を使う。
+- `reboot_resolve()`：`ResolveSession.restart()`で実装済み。
+
 ## 6. 公式文書からの新規 API 候補
 
 候補は `official_documents/21.0.4_Scripting/README.txt` の非deprecated APIを基準とする。すべてを薄くラップするのではなく、失敗検出、入力検証、複数操作の一貫性を提供できるものを採用する。
@@ -277,8 +340,8 @@ python -m pytest -m countdown_regression tests/integration/test_countdown_regres
 
 ### Phase 4: P1公式APIと用途特化機能
 
-- P1候補を利用頻度順に追加
-- line/rectangle/DCTL等の用途特化ビルダーを基本API上に再実装
+- 5.3のP1便利関数を実装済み。固定長`append_fusion_composition()`、`render_current_settings()`、page/playhead/timeline setting、DCTL/transparent background/line builderを含む
+- `build_rectangle()`、font一覧正規化、dummy media resolverなど5.3のP2候補は、P1のAPI契約が安定した後に追加する
 - RCMページ切替workaroundを21.0.4で再評価
 - 原本の `create_countdown_v2.py` は変更せず、`tests/countdown_regression/create_countdown_v2.py` に新パッケージ対応版を作り、384枚の16-bit RGB完全一致テストを追加
 
