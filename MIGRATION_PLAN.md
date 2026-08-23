@@ -103,11 +103,26 @@ TY_DaVinci_Resolve_Control_Lib/
 
 - `log_return_value`: `print` ベースのデバッグ機能は削除する。必要なら標準 `logging` を利用者側で設定できるようにする。
 - `_create_dummy_video_relative_path()` とダミー動画依存: 公式の `Timeline.InsertFusionCompositionIntoTimeline()` をまず使用する。長さ指定が必要なユースケースだけ、独立した補助機能として実機検証する。
-- 大量の固定 render codec 定数: `Project.GetRenderFormats()` と `Project.GetRenderCodecs()` の実行結果を優先する。Resolve の版、OS、エディション、ハードウェアで変わり得る値を固定しない。
+- render codec定数: Windows版Resolve Studio 21.0.4.5で観測した識別子を移植するが、可用性判定は`Project.GetRenderFormats()`と`Project.GetRenderCodecs()`の実行結果を常に優先する。
 - `run_rendering_and_wait_until_finish()`: 現行実装は全ジョブ削除と完了待機の順序を再設計する。新実装では `AddRenderJob()` が返すジョブIDを保持し、`GetRenderJobStatus(jobId)` を監視して、そのジョブだけを扱う。
 - `sec_to_frame_idx()`: プロジェクト状態を暗黙参照せず、fpsを明示引数にする。
 - `make_videoMonitorFormat_str()`: 対応する解像度とfpsを明示的に検証し、命名を snake_case に直す。
 - `add_line_comp()`、`add_rectangle_comp()` など用途特化ビルダー: 基本的なTool操作を先に実装した後、実利用を確認して第2段階で追加する。
+
+### 5.2.1 旧定数の移植結果
+
+旧`ty_davinci_constants.py`の全カテゴリを監査し、page、project設定値、color管理、clip property、generator、拡張子、codec、render設定を公開Enum／定数へ移植した。旧名aliasは作らない。video monitor format 40定数は`make_video_monitor_format()`で置換し、旧BT.2100 sampleはimmutableな`BT2100_PROJECT_SETTINGS`へ移行した。
+
+公式Scripting README由来の値と、Windows版Resolve Studio 21.0.4.5の使い捨てprojectで`SetSetting()`成功かつreadback一致した値を区別する。ACES ODTは現行値の`nit`と`Rec.2100`を採用し、旧`nits`／`Rec.2020`値は残さない。`PlaybackFrameRate`はUIの19値へ更新するが、`timelinePlaybackFrameRate`キーは実機で書き込みを拒否するため適用用presetから除外する。
+
+Project snapshotの未収録122キーのうち再設定／readback一致した115キーを追加し、`ProjectSetting`を計151キーとする。解像度28寸法、render format 23件、runtime codec 196件も実機結果として定数化する。`VideoQuality`は公式仕様とUIで一致した5名称とAutomatic整数値を維持し、codec依存bitrateは列挙しない。
+
+Color processing mode `Custom`についてはUIの全ドロップダウンを監査し、Color
+space 43件（Outputは39件）、Gamma 63件、Timeline working luminance 11件を
+定数化する。Custom luminanceの数値範囲は実機境界検証済みの48–10,000 nitとする。
+UIに存在してもAPIが拒否する値は、設定可能値と明確に区別する。
+
+codecは旧識別子を`VideoCodec`へ移植するが、使用可能な組合せはOS、edition、hardware、format依存のため、`get_render_codecs()`によるruntime検証を必須方針とする。
 
 ### 5.3 現行便利関数の実装状況（全関数の漏れ監査）
 
@@ -133,7 +148,7 @@ TY_DaVinci_Resolve_Control_Lib/
 
 | 旧機能・用途 | 実装名・配置 | 方針 |
 |---|---|---|
-| `append_fusion_composition_to_timeline()` | `append_fusion_composition()` (`fusion.py`) | 長さ指定なしではnative `InsertFusionCompositionIntoTimeline()`を使用し、固定frame長では呼出側が指定したdummy mediaを使う。package内の暗黙assetには依存しない |
+| `append_fusion_composition_to_timeline()` | `append_fusion_composition()` (`fusion.py`) | 長さ指定なしではnative `InsertFusionCompositionIntoTimeline()`を使用し、固定frame長ではtimelineの解像度・fpsからpackage同梱dummy mediaを自動選択する |
 | `run_rendering_and_wait_until_finish()` | `render_current_settings()` (`render.py`) | render設定からjobを追加し、返されたjob IDだけを開始・待機する。完了後にそのjobを削除するかは明示引数にし、失敗時は削除しない |
 | `get_current_page()`、`open_page()` | `get_current_page()`、`open_page()` (`connection.py`) | `Page` enumで検証し、失敗時は例外にする。Fusionの`CurrentFrame`有効化にも利用する |
 | `get_current_timeline()`、`set_current_timecode()` | `get_current_timeline()`、`set_current_timecode()` (`timeline.py`) | project/timelineの存在とtimecode形式を操作前に検証し、既定では`GetCurrentTimecode()`で結果確認する。ResolveがTrueを返してもread-backが更新されない参照workflowでは`verify=False`を明示する |
@@ -160,7 +175,7 @@ TY_DaVinci_Resolve_Control_Lib/
 | `add_rectangle_comp()` | `build_rectangle()` (`fusion.py`) | RectangleMask付きBackgroundを作り、`build_line()`とmask付きBackgroundの内部builderを共有する |
 | `_get_font_list()` | `get_fusion_fonts()` (`fusion.py`) | 生のFontManager戻り値を公開せず、familyからstyle tupleへの読み取り専用mappingへ正規化する |
 | page切替を伴うTool位置設定 | `set_tool_position(..., session=..., activate_fusion_page=True)` (`fusion.py`) | `Composition.CurrentFrame`が`None`の場合だけ、明示許可とsessionが揃っていればFusion pageへ切り替える |
-| dummy videoの自動選択 | `select_fusion_duration_media()` (`fusion.py`) | resolution/fps別assetをpackageへ同梱せず、呼出側が指定した絶対directoryから厳密なfilenameで選択する |
+| dummy videoの自動選択 | `append_fusion_composition()`、`select_fusion_duration_media()` (`fusion.py`) | resolution/fps別assetをpackageへ同梱し、timeline settingに対応するfilenameを厳密に選択する。明示pathでの上書きも可能 |
 
 #### 新規候補にしない旧関数
 

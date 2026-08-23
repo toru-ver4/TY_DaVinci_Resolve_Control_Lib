@@ -273,6 +273,42 @@ def test_append_fusion_composition_native_and_fixed(tmp_path: Path) -> None:
     assert media_in.deleted
 
 
+def test_append_fusion_composition_selects_packaged_media_from_timeline(
+    tmp_path: Path,
+) -> None:
+    dummy = tmp_path / "dummy_video_1280x720_23.976P.mp4"
+    dummy.write_bytes(b"dummy")
+    settings = {
+        "timelineResolutionWidth": "1280",
+        "timelineResolutionHeight": "720",
+        "timelineFrameRate": "23.976",
+    }
+    timeline = SimpleNamespace(GetSetting=lambda name: settings[name])
+    media_in = FakeTool("MediaIn1")
+    comp = FakeComp([media_in])
+    fixed_item = SimpleNamespace(AddFusionComp=lambda: comp)
+    clip = object()
+    imported: list[str] = []
+    pool = SimpleNamespace(
+        ImportMedia=lambda items: imported.extend(items) or [clip],
+        AppendToTimeline=lambda items: [fixed_item],
+    )
+
+    with patch(
+        "ty_davinci_resolve.fusion.get_packaged_fusion_duration_media",
+        return_value=dummy,
+    ) as select_media:
+        append_fusion_composition(
+            timeline,
+            duration_frames=24,
+            media_pool=pool,
+        )
+
+    select_media.assert_called_once_with(1280, 720, "23.976")
+    assert imported == [str(dummy)]
+    assert media_in.deleted
+
+
 def test_rcm_workaround_is_version_limited() -> None:
     pages: list[str] = []
     resolve = SimpleNamespace(OpenPage=lambda page: pages.append(page) or True)

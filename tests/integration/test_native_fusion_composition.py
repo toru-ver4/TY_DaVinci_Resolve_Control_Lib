@@ -9,10 +9,14 @@ import pytest
 
 from ty_davinci_resolve import (
     ResolveSession,
+    close_project,
     create_empty_timeline,
     create_project,
+    delete_project,
     get_media_pool,
     insert_fusion_composition,
+    list_projects,
+    load_project,
 )
 
 
@@ -37,8 +41,8 @@ def test_insert_native_fusion_composition() -> None:
     finally:
         current = manager.GetCurrentProject()
         if current is not None and current.GetName() == project_name:
-            manager.CloseProject(current)
-        if project_name in manager.GetProjectListInCurrentFolder():
-            manager.DeleteProject(project_name)
+            close_project(session, current)
+        if project_name in list_projects(session):
+            delete_project(session, project_name)
         if original_name in original_names:
-            manager.LoadProject(original_name)
+            load_project(session, original_name)

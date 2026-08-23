@@ -15,14 +15,18 @@ from ty_davinci_resolve import (
     add_transparent_background,
     append_fusion_composition,
     build_line,
+    close_project,
     create_empty_timeline,
     create_project,
+    delete_project,
     get_current_page,
     get_current_timeline,
     get_media_pool,
     get_timeline_resolution,
     get_timeline_setting,
     insert_generator,
+    list_projects,
+    load_project,
     make_video_monitor_format,
     open_page,
     refresh_fusion_color_management,
@@ -42,8 +46,6 @@ def test_p1_helpers_on_resolve_21_0_4() -> None:
     original_name = original.GetName() if original is not None else None
     original_names = tuple(manager.GetProjectListInCurrentFolder())
     project_name = f"TY_P1_{uuid4().hex[:16]}"
-    package_root = Path(__file__).resolve().parents[2]
-    dummy_media = package_root.parent / "videos" / "dummy_video_1280x720_23.976P.mp4"
     lut_root = Path(r"C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\LUT")
 
     try:
@@ -66,15 +68,21 @@ def test_p1_helpers_on_resolve_21_0_4() -> None:
         open_page(session, Page.EDIT)
         assert get_current_page(session) is Page.EDIT
         set_current_timecode(timeline, "01:00:00:00")
-        set_timeline_settings(timeline, {"timelineResolutionWidth": "1280"})
+        set_timeline_settings(
+            timeline,
+            {
+                "timelineResolutionWidth": "1280",
+                "timelineResolutionHeight": "720",
+            },
+        )
         assert get_timeline_setting(timeline, "timelineResolutionWidth") == "1280"
+        assert get_timeline_setting(timeline, "timelineResolutionHeight") == "720"
 
         fixed_item, fixed_comp = append_fusion_composition(
             timeline,
             duration_frames=24,
             record_frame=86448,
             media_pool=media_pool,
-            dummy_media=dummy_media,
         )
         assert fixed_comp is not None
         assert fixed_item.GetDuration() == 24
@@ -99,8 +107,8 @@ def test_p1_helpers_on_resolve_21_0_4() -> None:
     finally:
         current = manager.GetCurrentProject()
         if current is not None and current.GetName() == project_name:
-            manager.CloseProject(current)
-        if project_name in manager.GetProjectListInCurrentFolder():
-            manager.DeleteProject(project_name)
+            close_project(session, current)
+        if project_name in list_projects(session):
+            delete_project(session, project_name)
         if original_name in original_names:
-            manager.LoadProject(original_name)
+            load_project(session, original_name)

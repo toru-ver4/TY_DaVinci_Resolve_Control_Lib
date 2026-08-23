@@ -14,6 +14,7 @@ from ty_davinci_resolve import (
     ResolveValidationError,
     build_rectangle,
     get_fusion_fonts,
+    get_packaged_fusion_duration_media,
     select_fusion_duration_media,
     set_tool_position,
 )
@@ -161,3 +162,9 @@ def test_select_fusion_duration_media_fails_before_use(tmp_path: Path) -> None:
     with pytest.raises(ResolveValidationError, match="does not exist"):
         select_fusion_duration_media(tmp_path, 1920, 1080, 24)
 
+
+def test_packaged_fusion_duration_media_exists() -> None:
+    selected = get_packaged_fusion_duration_media(1280, 720, "23.9760")
+
+    assert selected.is_file()
+    assert selected.name == "dummy_video_1280x720_23.976P.mp4"

@@ -118,7 +118,11 @@ def validate_assets(width, height, framerate):
         SOURCE_ASSET_DIR / "wav" / (
             "countdown.wav" if fps_value.is_integer() else "countdown_ntsc.wav"
         ),
-        dcl.LEGACY_VIDEO_PATH / f"dummy_video_{width}x{height}_{fps_text}P.mp4",
+        dcl.api.get_packaged_fusion_duration_media(
+            int(width),
+            int(height),
+            fps_text,
+        ),
     ]
     dctl_names = [
         "draw_45deg_lines.dctl",

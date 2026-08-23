@@ -470,7 +470,7 @@ def get_setting(project: Any, name: str) -> str:
     return str(result)
 
 
-def set_setting(project: Any, name: str, value: str) -> None:
+def set_setting(project: Any, name: str, value: str | int) -> None:
     """Set one project setting and fail immediately on rejection.
 
     Parameters
@@ -480,7 +480,8 @@ def set_setting(project: Any, name: str, value: str) -> None:
     name
         Setting name.
     value
-        Setting value.
+        Setting value. Most project settings use strings. ``superScale`` uses
+        an integer from 0 through 4 in the Resolve scripting API.
 
     Returns
     -------
@@ -491,7 +492,10 @@ def set_setting(project: Any, name: str, value: str) -> None:
     >>> set_setting(project, "timelineResolutionWidth", "1280")  # doctest: +SKIP
     """
     name = _non_empty_text(name, "name")
-    value = _non_empty_text(value, "value")
+    if isinstance(value, str):
+        value = _non_empty_text(value, "value")
+    elif isinstance(value, bool) or not isinstance(value, int):
+        raise ResolveValidationError("value must be a non-empty string or integer.")
     result = project.SetSetting(name, value)
     if result is not True:
         raise ResolveOperationError(
@@ -499,7 +503,12 @@ def set_setting(project: Any, name: str, value: str) -> None:
         )
 
 
-def set_settings(project: Any, settings: Mapping[str, str]) -> None:
+def set_settings(
+    project: Any,
+    settings: Mapping[str, str | int],
+    *,
+    settle_delay: float = 0.0,
+) -> None:
     """Set project settings in mapping order.
 
     Parameters
@@ -508,6 +517,9 @@ def set_settings(project: Any, settings: Mapping[str, str]) -> None:
         Resolve Project remote object.
     settings
         Ordered mapping of setting names to values.
+    settle_delay
+        Quiet period after each accepted setting. Use a positive delay when
+        applying dependent settings to Resolve.
 
     Returns
     -------
@@ -523,8 +535,17 @@ def set_settings(project: Any, settings: Mapping[str, str]) -> None:
     """
     if not isinstance(settings, Mapping) or not settings:
         raise ResolveValidationError("settings must be a non-empty mapping.")
+    if (
+        isinstance(settle_delay, bool)
+        or not isinstance(settle_delay, (int, float))
+        or not math.isfinite(settle_delay)
+        or settle_delay < 0
+    ):
+        raise ResolveValidationError("settle_delay must be finite and non-negative.")
     for name, value in settings.items():
         set_setting(project, name, value)
+        if settle_delay:
+            time.sleep(settle_delay)
 
 
 def get_timeline_resolution(project: Any) -> tuple[int, int]:

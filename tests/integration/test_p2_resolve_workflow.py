@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 from uuid import uuid4
 
 import pytest
@@ -13,14 +12,18 @@ from ty_davinci_resolve import (
     ResolveSession,
     append_fusion_composition,
     build_rectangle,
+    close_project,
     create_empty_timeline,
     create_project,
+    delete_project,
     get_current_page,
     get_fusion_fonts,
     get_media_pool,
+    get_packaged_fusion_duration_media,
+    list_projects,
+    load_project,
     make_video_monitor_format,
     open_page,
-    select_fusion_duration_media,
     set_settings,
     set_tool_position,
 )
@@ -34,8 +37,6 @@ def test_p2_helpers_on_resolve_21_0_4() -> None:
     original_name = original.GetName() if original is not None else None
     original_names = tuple(manager.GetProjectListInCurrentFolder())
     project_name = f"TY_P2_{uuid4().hex[:16]}"
-    package_root = Path(__file__).resolve().parents[2]
-    duration_media_root = package_root.parent / "videos"
 
     try:
         project = create_project(session, project_name)
@@ -69,12 +70,7 @@ def test_p2_helpers_on_resolve_21_0_4() -> None:
         assert "Noto Sans" in fonts
         assert "Regular" in fonts["Noto Sans"]
 
-        selected = select_fusion_duration_media(
-            duration_media_root,
-            1280,
-            720,
-            "23.9760",
-        )
+        selected = get_packaged_fusion_duration_media(1280, 720, "23.9760")
         assert selected.name == "dummy_video_1280x720_23.976P.mp4"
 
         open_page(session, Page.EDIT)
@@ -91,9 +87,8 @@ def test_p2_helpers_on_resolve_21_0_4() -> None:
     finally:
         current = manager.GetCurrentProject()
         if current is not None and current.GetName() == project_name:
-            manager.CloseProject(current)
-        if project_name in manager.GetProjectListInCurrentFolder():
-            manager.DeleteProject(project_name)
+            close_project(session, current)
+        if project_name in list_projects(session):
+            delete_project(session, project_name)
         if original_name in original_names:
-            manager.LoadProject(original_name)
-
+            load_project(session, original_name)

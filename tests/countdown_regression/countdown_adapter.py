@@ -12,7 +12,6 @@ import ty_davinci_resolve as api
 RESOLVE_LUT_PATH = Path(
     r"C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\LUT"
 )
-LEGACY_VIDEO_PATH = Path(__file__).resolve().parents[3] / "videos"
 
 
 @cache
@@ -350,20 +349,11 @@ def append_fusion_composition_to_timeline(
     --------
     >>> append_fusion_composition_to_timeline(24, 86400)  # doctest: +SKIP
     """
-    fps_value = get_project_setting("timelineFrameRate")
-    width, height = get_project_resolution()
-    dummy = api.select_fusion_duration_media(
-        LEGACY_VIDEO_PATH,
-        width,
-        height,
-        fps_value,
-    )
     return api.append_fusion_composition(
         get_current_timeline(),
         duration_frames=num_of_frame,
         record_frame=pos_frame_idx,
         media_pool=api.get_media_pool(get_current_project()),
-        dummy_media=dummy.resolve(),
     )
 
 

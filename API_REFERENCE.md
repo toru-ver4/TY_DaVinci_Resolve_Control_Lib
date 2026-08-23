@@ -23,7 +23,7 @@
 
 `fusion.py` の `Composition.AddTool()`、`Tool.ConnectInput()`、`SetInput()`、`GetInput()`、`FlowView.SetPos()` は、Resolve 21.0.4 Scripting READMEのオブジェクト一覧には掲載されていないResolve内蔵Fusion APIです。これらは実機テストとCountdown回帰テストで検証し、未検証の薄いラッパーは追加しません。
 
-P2の`build_rectangle()`、`get_fusion_fonts()`、page切替付き`set_tool_position()`もResolve内蔵Fusion APIを使用します。`select_fusion_duration_media()`はResolve APIを呼ばず、呼出側が管理するdirectoryから`dummy_video_{width}x{height}_{fps}P.mp4`を厳密に選択します。packageにはdummy mediaを同梱しません。
+P2の`build_rectangle()`、`get_fusion_fonts()`、page切替付き`set_tool_position()`もResolve内蔵Fusion APIを使用します。固定長`append_fusion_composition()`はTimeline settingから解像度とfpsを取得し、package同梱の`dummy_video_{width}x{height}_{fps}P.mp4`を自動選択します。`select_fusion_duration_media()`は、任意directoryのmediaを明示選択する用途にも使用できます。
 
 ## Project lifecycleの完了待機
 
@@ -36,6 +36,43 @@ Resolve 21.0.4ではproject lifecycle APIが成功を返しても、内部の状
 ```powershell
 python tests/stress/project_lifecycle_stress.py --iterations 20
 ```
+
+## 定数の根拠と実機検証
+
+`Project.GetSetting()`／`SetSetting()`の調査方法、`superScale`、frame rate、render setting値は、同梱の公式Scripting README 679–711行、832–864行を根拠にしています。Windows版Resolve Studio 21.0.4.5の新規projectで取得した158-key snapshotを既存36キーと照合し、未収録122キーのうち現在値の`SetSetting()`成功とreadback一致を確認した115キーを追加しました。拒否された7キー（codec／format、Super Scale strength、deck format）は除外し、`ProjectSetting`は計151キーです。なお既存キーの`timelinePlaybackFrameRate`はquery可能ですがread-onlyで、`"24"`と旧値`"24.0"`の双方が拒否されました。
+
+Windows操作でProject／Deliverの全リストを確認し、`ResolutionValue` 28寸法、`PlaybackFrameRate` 19値、Deliver UIのvideo format 19件を確認しました。`FrameRate`は同じUIの19値に、公式Scripting READMEで規定されたDrop Frame値`29.97 DF`／`59.94 DF`を加えた21件です。Drop Frame値の設定は成功しますが、readbackは数値部分の`timelineFrameRate`と`timelineDropFrameTimecode=1`に分離されます。APIの`GetRenderFormats()`はvideo以外を含む23識別子を返し、`RenderFormat`はこちらを完全収録します。UIに表示された`HEIF`はこの実機の`GetRenderFormats()`には返らずAPI識別子を確認できないため、推測して追加していません。format別`GetRenderCodecs()`の和集合は196識別子で、すべて`VideoCodec`に収録しました。さらに旧移植値3件を残すためEnum総数は199件です。利用可能な組合せは実行環境依存なので、固定Enumだけで可否を判断してはいけません。
+
+`VideoQuality`はDeliver UIと公式Scripting README 846–850行で`Least`、`Low`、`Medium`、`High`、`Best`の5件を確認しました。Automaticは整数`0`、正整数はcodec別bitrateであり、追加の固定Enum値ではありません。
+
+`ColorSpace`、`Gamma`、`ColorSpaceGamma`、`WorkingLuminanceMode`、`AcesInputTransform`、`AcesOutputTransform`は、使い捨てprojectで設定間に0.35秒置き、API成功値とreadbackを確認した値だけを公開します。旧ACES ODTはResolve 21.0.4.5で拒否されたため、`nits`→`nit`、`Rec.2020`→`Rec.2100`の現行値へ変更しました。rejectされた`DaVinci Wide Gamut`、`Alexa Wide Gamut`、`ACES AP0/AP1`、`Sony S-Log3`、`HDR 400`などは公開Enumへ含めません。
+
+Custom 条件は`colorScienceMode=davinciYRGBColorManagedv2`、
+`rcmPresetMode=Custom`、`separateColorSpaceAndGamma=1`です。Resolve Studio
+21.0.4.5のUI全件調査とAPI readbackにより、Input／Timeline color space 43件、
+Output color space 39件（`OUTPUT_COLOR_SPACES`）、3種のGamma各63件、Timeline
+working luminance 11件を確認しました。Custom luminance の数値境界は48–10,000
+nitです。`colorSpaceOutputGamutMapping`はsnapshotに存在しますが、UI表示値のうち
+APIで設定できたのは`None`だけでした。White point adaptation は158-key snapshotに
+対応keyを特定できていないため、推測した定数を公開していません。
+
+UI/API表記差は`P3 DCI`→`P3-DCI`、`SMPTE C`→`SMPTE-C`、`YUV`→`Y'UV`、
+`AstroDesign A Log`→`AstroDesign A-Log`、`DJI D Log`→`DJI D-Log`、
+`Leica L Log`→`Leica L-Log`、`Nikon N Log`→`Nikon N-Log`、
+`S Log2`→`S-Log2`です。Inputの`Same as Timeline`はUIには存在しますが、
+`SetSetting()`では拒否されます。
+
+旧定数カテゴリとの対応は次のとおりです。
+
+| 旧カテゴリ | 新API |
+|---|---|
+| page、project key/toggle、resolution、fps、SDI、data level | `Page`、`ProjectSetting`、`SettingToggle`、`ResolutionValue`、`FrameRate`／`PlaybackFrameRate`、`SDIConfiguration`、`VideoDataLevel` |
+| color science、gamut、gamma、ACES、luminance | `ColorScienceMode`、`ColorSpace`、`Gamma`、`ColorSpaceGamma`、`AcesOutputTransform`、`WorkingLuminanceMode` |
+| clip property、generator、拡張子、codec | `ClipProperty`、`GeneratorName`、`RenderFormat`、`STILL_SEQUENCE_FORMATS`、`VideoCodec` |
+| render setting | `UniqueFilenameStyle`、`VIDEO_QUALITY_AUTOMATIC`／`VideoQuality`、`AudioCodec`、`AudioBitDepth`、`AudioSampleRate` |
+| monitor format 40定数、BT.2100 sample | `make_video_monitor_format()`、`BT2100_PROJECT_SETTINGS` |
+
+固定codec値は利用可能性を保証しません。`get_render_codecs()`の実機結果でformatごとに検証します。
 
 非対応方針は次のとおりです。
 

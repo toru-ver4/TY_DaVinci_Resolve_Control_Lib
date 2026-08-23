@@ -14,7 +14,17 @@ from .connection import ResolveSession, open_page
 from .constants import Page, SUPPORTED_RESOLVE_VERSION
 from .errors import ResolveOperationError, ResolveValidationError
 from .media import import_files
-from .timeline import MediaType, append_clip, insert_fusion_composition
+from .timeline import (
+    MediaType,
+    append_clip,
+    get_timeline_setting,
+    insert_fusion_composition,
+)
+
+
+PACKAGED_DURATION_MEDIA_DIRECTORY = (
+    Path(__file__).resolve().parent / "assets" / "duration_media"
+)
 
 
 def add_comp(timeline_item: Any) -> Any:
@@ -801,6 +811,40 @@ def select_fusion_duration_media(
     return candidate
 
 
+def get_packaged_fusion_duration_media(
+    width: int,
+    height: int,
+    frame_rate: int | float | str,
+) -> Path:
+    """Return packaged dummy media for a timeline format.
+
+    Parameters
+    ----------
+    width
+        Positive frame width.
+    height
+        Positive frame height.
+    frame_rate
+        Positive finite frame rate used in the filename.
+
+    Returns
+    -------
+    pathlib.Path
+        Existing absolute path inside the installed package.
+
+    Examples
+    --------
+    >>> get_packaged_fusion_duration_media(1280, 720, 23.976).name
+    'dummy_video_1280x720_23.976P.mp4'
+    """
+    return select_fusion_duration_media(
+        PACKAGED_DURATION_MEDIA_DIRECTORY,
+        width,
+        height,
+        frame_rate,
+    )
+
+
 def append_fusion_composition(
     timeline: Any,
     *,
@@ -822,7 +866,8 @@ def append_fusion_composition(
     media_pool
         Media Pool required for fixed-duration insertion.
     dummy_media
-        Caller-owned media file used only for fixed-duration insertion.
+        Optional media override for fixed-duration insertion. When omitted,
+        packaged media is selected from the timeline resolution and frame rate.
 
     Returns
     -------
@@ -833,7 +878,8 @@ def append_fusion_composition(
     -----
     Resolve 21.0.4 cannot set the native Fusion Composition duration. The
     fixed-duration route reproduces the tested dummy-media workaround and
-    removes ``MediaIn1`` after adding the composition.
+    removes ``MediaIn1`` after adding the composition. Packaged files cover the
+    supported resolution and frame-rate combinations.
 
     Examples
     --------
@@ -852,8 +898,22 @@ def append_fusion_composition(
         return item, comp
     if isinstance(duration_frames, bool) or not isinstance(duration_frames, int) or duration_frames <= 0:
         raise ResolveValidationError("duration_frames must be a positive integer.")
-    if media_pool is None or dummy_media is None:
-        raise ResolveValidationError("media_pool and dummy_media are required for fixed-duration insertion.")
+    if media_pool is None:
+        raise ResolveValidationError(
+            "media_pool is required for fixed-duration insertion."
+        )
+    if dummy_media is None:
+        try:
+            width = int(get_timeline_setting(timeline, "timelineResolutionWidth"))
+            height = int(get_timeline_setting(timeline, "timelineResolutionHeight"))
+        except ValueError as error:
+            raise ResolveOperationError(
+                "Timeline.GetSetting",
+                None,
+                "Timeline resolution settings must be integers.",
+            ) from error
+        frame_rate = get_timeline_setting(timeline, "timelineFrameRate")
+        dummy_media = get_packaged_fusion_duration_media(width, height, frame_rate)
     clip = import_files(media_pool, [dummy_media])[0]
     item = append_clip(media_pool, clip, record_frame=record_frame, start_frame=0, end_frame=duration_frames, media_type=MediaType.VIDEO_ONLY)
     comp = add_comp(item)

@@ -33,6 +33,9 @@ countdown = [
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+ty_davinci_resolve = ["assets/duration_media/*.mp4"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = ["--basetemp=.pytest-tmp"]
