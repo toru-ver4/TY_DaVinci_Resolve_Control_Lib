@@ -48,8 +48,8 @@ def test_project_create_save_close_load_delete() -> None:
     finally:
         current = manager.GetCurrentProject()
         if current is not None and current.GetName() == test_name:
-            manager.CloseProject(current)
-        if test_name in manager.GetProjectListInCurrentFolder():
-            manager.DeleteProject(test_name)
-        if original_name and original_name in manager.GetProjectListInCurrentFolder():
-            manager.LoadProject(original_name)
+            close_project(session, current)
+        if test_name in list_projects(session):
+            delete_project(session, test_name)
+        if original_name and original_name in list_projects(session):
+            load_project(session, original_name)

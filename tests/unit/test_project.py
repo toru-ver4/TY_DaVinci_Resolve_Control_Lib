@@ -6,12 +6,14 @@ from types import SimpleNamespace
 import pytest
 
 from ty_davinci_resolve import (
+    ProjectLifecycleTiming,
     ResolveOperationError,
     ResolveSession,
     ResolveValidationError,
     create_project,
     get_timeline,
     list_projects,
+    load_project,
     set_settings,
 )
 
@@ -20,13 +22,19 @@ class FakeProjectManager:
     def __init__(self) -> None:
         self.names = ["Existing"]
         self.created: list[str] = []
+        self.current = None
 
     def GetProjectListInCurrentFolder(self) -> list[str]:
         return self.names
 
     def CreateProject(self, name: str) -> object:
         self.created.append(name)
-        return object()
+        self.names.append(name)
+        self.current = SimpleNamespace(GetName=lambda: name)
+        return self.current
+
+    def GetCurrentProject(self) -> object | None:
+        return self.current
 
 
 def make_session(manager: FakeProjectManager) -> ResolveSession:
@@ -50,6 +58,36 @@ def test_create_project_calls_official_api() -> None:
     created = create_project(make_session(manager), "New")
     assert created is not None
     assert manager.created == ["New"]
+
+
+def test_load_project_waits_before_touching_returned_proxy(monkeypatch) -> None:
+    slept = False
+    project = SimpleNamespace(GetName=lambda: "Existing")
+
+    class Manager(FakeProjectManager):
+        def LoadProject(self, name: str) -> object:
+            self.current = project
+            return SimpleNamespace(
+                GetName=lambda: pytest.fail("returned proxy must not be touched")
+            )
+
+        def GetCurrentProject(self) -> object:
+            assert slept
+            return self.current
+
+    def fake_sleep(seconds: float) -> None:
+        nonlocal slept
+        assert seconds == 1.5
+        slept = True
+
+    monkeypatch.setattr("ty_davinci_resolve.project.time.sleep", fake_sleep)
+    loaded = load_project(make_session(Manager()), "Existing")
+    assert loaded is project
+
+
+def test_project_lifecycle_timing_rejects_negative_delay() -> None:
+    with pytest.raises(ResolveValidationError):
+        ProjectLifecycleTiming(load_delay=-0.1)
 
 
 def test_set_settings_stops_at_first_failure() -> None:

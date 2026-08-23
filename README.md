@@ -63,6 +63,8 @@ set_settings(
 )
 ```
 
+Projectの作成・保存・終了・読込・削除では、Resolve内部の非同期処理を待ってから次のAPIへ進みます。待機時間を調整する場合は`ProjectLifecycleTiming`を各project lifecycle関数の`timing=`へ指定してください。
+
 メディアは、import先のMedia Poolを明示して追加します。
 
 ```python
@@ -106,6 +108,40 @@ open_page(session, Page.EDIT)
 status = render_current_settings(
     project,
     delete_completed_job=True,
+)
+```
+
+P2ではRectangle builder、immutableなfont一覧、明示的なFusion page切替付きTool位置設定、呼出側管理のdummy media選択を提供します。
+
+```python
+from pathlib import Path
+
+from ty_davinci_resolve import (
+    build_rectangle,
+    get_fusion_fonts,
+    select_fusion_duration_media,
+    set_tool_position,
+)
+
+fonts = get_fusion_fonts(session.fusion)
+rectangle = build_rectangle(
+    comp,
+    (1.0, 1.0, 1.0, 1.0),
+    width=0.2,
+    height=0.1,
+)
+set_tool_position(
+    comp,
+    rectangle,
+    (2, 3),
+    session=session,
+    activate_fusion_page=True,
+)
+dummy_media = select_fusion_duration_media(
+    Path(r"C:\media\resolve_duration_media"),
+    1280,
+    720,
+    23.976,
 )
 ```
 
@@ -154,6 +190,7 @@ Resolve 21.0.4を使用する短い実機テストは次のコマンドで分離
 python -m pytest -m resolve_integration tests/integration/test_project_lifecycle.py
 python -m pytest -m resolve_integration tests/integration/test_native_fusion_composition.py
 python -m pytest -m resolve_integration tests/integration/test_p1_resolve_workflow.py
+python -m pytest -m resolve_integration tests/integration/test_p2_resolve_workflow.py
 ```
 
 Resolveを終了・再起動するテストは、他の実機テストが動いていない状態で単独実行します。

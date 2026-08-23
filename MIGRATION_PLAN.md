@@ -153,14 +153,14 @@ TY_DaVinci_Resolve_Control_Lib/
 | `add_line_comp()` | `build_line()` (`fusion.py`) | RectangleMask、Background、Mergeをまとめて構築する。位置、RGBA、幅、高さ、angle、foreground/background接続を検証する |
 | `force_rcm_update_via_page_switch()` | `refresh_fusion_color_management()` (`fusion.py`) | Resolve 21.0.4で再現条件と効果を実機テストし、必要な場合だけversion限定workaroundとして追加する |
 
-#### P2：利用頻度が低い、またはAPI契約を追加検討する便利関数
+#### P2：実装済みの便利関数
 
-| 旧機能・用途 | 新規候補名・配置 | 方針 |
+| 旧機能・用途 | 実装名・配置 | 方針 |
 |---|---|---|
-| `add_rectangle_comp()` | `build_rectangle()` (`fusion.py`) | RectangleMask付きBackgroundを作る。`build_line()`との共通内部builderを整理した後に追加する |
-| `_get_font_list()` | `get_fusion_fonts()` (`fusion.py`) | 生のFontManager戻り値を公開せず、familyからstyleのimmutable mappingへ正規化する必要があるためP2とする |
-| page切替を伴うTool位置設定 | `set_tool_position(..., activate_fusion_page=True)`の拡張 (`fusion.py`) | `Composition.CurrentFrame`が`None`の場合のpage副作用を明示引数にするか、sessionを別引数にするかを決めてから追加する |
-| dummy videoの自動選択 | `select_fusion_duration_media()` (`fusion.py`または利用者側) | resolution/fps別assetをpackageへ同梱する設計は避ける。利用者がasset resolverを渡す方式が必要になった場合だけ追加する |
+| `add_rectangle_comp()` | `build_rectangle()` (`fusion.py`) | RectangleMask付きBackgroundを作り、`build_line()`とmask付きBackgroundの内部builderを共有する |
+| `_get_font_list()` | `get_fusion_fonts()` (`fusion.py`) | 生のFontManager戻り値を公開せず、familyからstyle tupleへの読み取り専用mappingへ正規化する |
+| page切替を伴うTool位置設定 | `set_tool_position(..., session=..., activate_fusion_page=True)` (`fusion.py`) | `Composition.CurrentFrame`が`None`の場合だけ、明示許可とsessionが揃っていればFusion pageへ切り替える |
+| dummy videoの自動選択 | `select_fusion_duration_media()` (`fusion.py`) | resolution/fps別assetをpackageへ同梱せず、呼出側が指定した絶対directoryから厳密なfilenameで選択する |
 
 #### 新規候補にしない旧関数
 
@@ -341,7 +341,7 @@ python -m pytest -m countdown_regression tests/integration/test_countdown_regres
 ### Phase 4: P1公式APIと用途特化機能
 
 - 5.3のP1便利関数を実装済み。固定長`append_fusion_composition()`、`render_current_settings()`、page/playhead/timeline setting、DCTL/transparent background/line builderを含む
-- `build_rectangle()`、font一覧正規化、dummy media resolverなど5.3のP2候補は、P1のAPI契約が安定した後に追加する
+- `build_rectangle()`、font一覧正規化、page切替付きTool位置設定、dummy media選択をP2として実装済み
 - RCMページ切替workaroundを21.0.4で再評価
 - 原本の `create_countdown_v2.py` は変更せず、`tests/countdown_regression/create_countdown_v2.py` に新パッケージ対応版を作り、384枚の16-bit RGB完全一致テストを追加
 

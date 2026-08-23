@@ -23,6 +23,20 @@
 
 `fusion.py` の `Composition.AddTool()`、`Tool.ConnectInput()`、`SetInput()`、`GetInput()`、`FlowView.SetPos()` は、Resolve 21.0.4 Scripting READMEのオブジェクト一覧には掲載されていないResolve内蔵Fusion APIです。これらは実機テストとCountdown回帰テストで検証し、未検証の薄いラッパーは追加しません。
 
+P2の`build_rectangle()`、`get_fusion_fonts()`、page切替付き`set_tool_position()`もResolve内蔵Fusion APIを使用します。`select_fusion_duration_media()`はResolve APIを呼ばず、呼出側が管理するdirectoryから`dummy_video_{width}x{height}_{fps}P.mp4`を厳密に選択します。packageにはdummy mediaを同梱しません。
+
+## Project lifecycleの完了待機
+
+Resolve 21.0.4ではproject lifecycle APIが成功を返しても、内部の状態遷移が完了していない場合があります。実機ログでは`LoadProject()`の処理完了後、current projectの切替までさらに約0.27秒を要し、返されたremote objectへ直ちにアクセスした際にResolveが異常終了しました。
+
+`create_project()`、`save_project()`、`close_project()`、`load_project()`、`delete_project()`は、API呼出し後に静穏時間を置き、観測可能な操作では低頻度pollingで状態遷移を確認します。既定値は`DEFAULT_PROJECT_LIFECYCLE_TIMING`、環境に応じた値は`ProjectLifecycleTiming`を各関数の`timing=`へ渡せます。特に`load_project()`は、返されたremote objectには触れず1.5秒待ってから、`GetCurrentProject()`で安定したobjectを取得して返します。
+
+反復検証は次のコマンドで実行します。各反復は別processで実行され、45秒を超える停止も失敗として検出します。
+
+```powershell
+python tests/stress/project_lifecycle_stress.py --iterations 20
+```
+
 非対応方針は次のとおりです。
 
 - deprecated APIは `README.txt` 1099行以降を参照し、新規ラッパーを作りません。

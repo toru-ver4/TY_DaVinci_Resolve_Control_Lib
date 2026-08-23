@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from decimal import Decimal, InvalidOperation
 import math
 from pathlib import Path
 import time
+from types import MappingProxyType
 from typing import Any
 
 from .connection import ResolveSession, open_page
@@ -292,6 +294,8 @@ def set_tool_position(
     position: Sequence[float],
     *,
     tolerance: float = 0.1,
+    session: ResolveSession | None = None,
+    activate_fusion_page: bool = False,
 ) -> None:
     """Set and verify a Fusion tool's flow-view position.
 
@@ -305,6 +309,10 @@ def set_tool_position(
         Two-element flow-view position.
     tolerance
         Absolute position verification tolerance.
+    session
+        Resolve session used only when Fusion page activation is required.
+    activate_fusion_page
+        Allow switching to the Fusion page when ``CurrentFrame`` is unavailable.
 
     Returns
     -------
@@ -314,9 +322,44 @@ def set_tool_position(
     --------
     >>> set_tool_position(comp, background, (1, 2))  # doctest: +SKIP
     """
-    if len(position) != 2:
-        raise ResolveValidationError("position must contain two numbers.")
-    flow = comp.CurrentFrame.FlowView
+    if len(position) != 2 or not all(
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(value)
+        for value in position
+    ):
+        raise ResolveValidationError("position must contain two finite numbers.")
+    if (
+        isinstance(tolerance, bool)
+        or not isinstance(tolerance, (int, float))
+        or not math.isfinite(tolerance)
+        or tolerance < 0
+    ):
+        raise ResolveValidationError("tolerance must be a non-negative finite number.")
+    if not isinstance(activate_fusion_page, bool):
+        raise ResolveValidationError("activate_fusion_page must be a bool.")
+    current_frame = comp.CurrentFrame
+    if current_frame is None:
+        if not activate_fusion_page:
+            raise ResolveOperationError(
+                "Composition.CurrentFrame",
+                current_frame,
+                "Fusion CurrentFrame is unavailable; pass a session and "
+                "activate_fusion_page=True to permit a page switch.",
+            )
+        if not isinstance(session, ResolveSession):
+            raise ResolveValidationError(
+                "session is required when activate_fusion_page is True."
+            )
+        open_page(session, Page.FUSION)
+        current_frame = comp.CurrentFrame
+        if current_frame is None:
+            raise ResolveOperationError(
+                "Composition.CurrentFrame",
+                current_frame,
+                "Fusion CurrentFrame remained unavailable after opening the Fusion page.",
+            )
+    flow = current_frame.FlowView
     flow.SetPos(tool, position[0], position[1])
     actual = tuple(flow.GetPosTable(tool).values())
     if len(actual) < 2 or not all(
@@ -355,6 +398,63 @@ def set_background_color(tool: Any, rgba: Sequence[float]) -> None:
     set_tool_inputs(tool, values)
 
 
+def get_fusion_fonts(fusion: Any) -> Mapping[str, tuple[str, ...]]:
+    """Return Fusion fonts as an immutable normalized mapping.
+
+    Parameters
+    ----------
+    fusion
+        Fusion application remote object.
+
+    Returns
+    -------
+    Mapping of str to tuple of str
+        Read-only family-to-style mapping sorted by family and style.
+
+    Examples
+    --------
+    >>> fonts = get_fusion_fonts(session.fusion)  # doctest: +SKIP
+    >>> fonts["Noto Sans"]  # doctest: +SKIP
+    ('Regular',)
+    """
+    try:
+        raw_fonts = fusion.FontManager.GetFontList()
+    except AttributeError as error:
+        raise ResolveOperationError(
+            "Fusion.FontManager.GetFontList", None
+        ) from error
+    if not isinstance(raw_fonts, Mapping):
+        raise ResolveOperationError("Fusion.FontManager.GetFontList", raw_fonts)
+    normalized: dict[str, tuple[str, ...]] = {}
+    for family, raw_styles in raw_fonts.items():
+        if not isinstance(family, str) or not family:
+            raise ResolveOperationError(
+                "Fusion.FontManager.GetFontList",
+                raw_fonts,
+                f"Fusion returned an invalid font family: {family!r}.",
+            )
+        if isinstance(raw_styles, Mapping):
+            styles = tuple(raw_styles.keys())
+        elif isinstance(raw_styles, Sequence) and not isinstance(
+            raw_styles, (str, bytes)
+        ):
+            styles = tuple(raw_styles)
+        else:
+            raise ResolveOperationError(
+                "Fusion.FontManager.GetFontList",
+                raw_fonts,
+                f"Fusion returned invalid styles for {family!r}: {raw_styles!r}.",
+            )
+        if not styles or not all(isinstance(style, str) and style for style in styles):
+            raise ResolveOperationError(
+                "Fusion.FontManager.GetFontList",
+                raw_fonts,
+                f"Fusion returned invalid styles for {family!r}: {styles!r}.",
+            )
+        normalized[family] = tuple(sorted(set(styles)))
+    return MappingProxyType(dict(sorted(normalized.items())))
+
+
 def require_fusion_font(fusion: Any, family: str, style: str) -> None:
     """Require a Fusion font family and style before tool creation.
 
@@ -377,14 +477,8 @@ def require_fusion_font(fusion: Any, family: str, style: str) -> None:
     """
     if not isinstance(family, str) or not family.strip() or not isinstance(style, str) or not style.strip():
         raise ResolveValidationError("family and style must be non-empty strings.")
-    try:
-        fonts = fusion.FontManager.GetFontList()
-    except AttributeError as error:
-        raise ResolveOperationError("Fusion.FontManager.GetFontList", None) from error
-    if not isinstance(fonts, Mapping):
-        raise ResolveOperationError("Fusion.FontManager.GetFontList", fonts)
-    styles = fonts.get(family)
-    if not isinstance(styles, (Mapping, Sequence)) or isinstance(styles, (str, bytes)) or style not in styles:
+    fonts = get_fusion_fonts(fusion)
+    if family not in fonts or style not in fonts[family]:
         raise ResolveValidationError(f"Required Fusion font is unavailable: {family} {style}.")
 
 
@@ -466,6 +560,95 @@ def add_transparent_background(
     return tool
 
 
+def _build_masked_background(
+    comp: Any,
+    rgba: Sequence[float],
+    mask_inputs: Mapping[str, Any],
+    *,
+    mask_position: Sequence[float],
+    background_position: Sequence[float],
+) -> Any:
+    mask = add_tool(comp, "RectangleMask", mask_position)
+    background = add_tool(comp, "Background", background_position)
+    set_tool_inputs(mask, mask_inputs)
+    set_background_color(background, rgba)
+    set_tool_input(background, "EffectMask", mask)
+    return background
+
+
+def build_rectangle(
+    comp: Any,
+    rgba: Sequence[float] = (1.0, 1.0, 1.0, 1.0),
+    *,
+    center: Sequence[float] = (0.5, 0.5),
+    width: float = 0.1,
+    height: float = 0.1,
+    position: Sequence[float] = (0.0, 0.0),
+) -> Any:
+    """Build a masked Fusion Background representing a rectangle.
+
+    Parameters
+    ----------
+    comp
+        Fusion Composition remote object.
+    rgba
+        Four finite rectangle color values.
+    center
+        Two finite normalized center coordinates.
+    width
+        Positive RectangleMask width.
+    height
+        Positive RectangleMask height.
+    position
+        Background flow-view position; the mask is placed one row above it.
+
+    Returns
+    -------
+    Any
+        Created Background Tool remote object.
+
+    Examples
+    --------
+    >>> build_rectangle(comp, width=0.2, height=0.1)  # doctest: +SKIP
+    """
+    for value, name in ((width, "width"), (height, "height")):
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not math.isfinite(value)
+            or value <= 0
+        ):
+            raise ResolveValidationError(
+                f"{name} must be a positive finite number."
+            )
+    if len(center) != 2 or not all(
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(value)
+        for value in center
+    ):
+        raise ResolveValidationError("center must contain two finite numbers.")
+    if len(position) != 2 or not all(
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(value)
+        for value in position
+    ):
+        raise ResolveValidationError("position must contain two finite numbers.")
+    x, y = position
+    return _build_masked_background(
+        comp,
+        rgba,
+        {
+            "Center": {1: center[0], 2: center[1], 3: 0.0},
+            "Width": width,
+            "Height": height,
+        },
+        mask_position=(x, y - 1),
+        background_position=(x, y),
+    )
+
+
 def build_line(
     comp: Any,
     rgba: Sequence[float],
@@ -519,17 +702,103 @@ def build_line(
     if len(position) != 2:
         raise ResolveValidationError("position must contain two numbers.")
     x, y = position
-    mask = add_tool(comp, "RectangleMask", (x, y - 2))
-    foreground = add_tool(comp, "Background", (x, y - 1))
+    foreground = _build_masked_background(
+        comp,
+        rgba,
+        {
+            "Width": width,
+            "Height": height,
+            "Angle": angle,
+            "Center": {1: center[0], 2: center[1], 3: 0.0},
+        },
+        mask_position=(x, y - 2),
+        background_position=(x, y - 1),
+    )
     merge = add_tool(comp, "Merge", (x, y))
-    set_tool_inputs(mask, {"Width": width, "Height": height, "Angle": angle, "Center": {1: center[0], 2: center[1], 3: 0.0}})
-    set_background_color(foreground, rgba)
-    set_tool_input(foreground, "EffectMask", mask)
     if connect_as_foreground:
         connect_merge(merge, foreground=foreground)
     else:
         connect_merge(merge, background=foreground)
     return merge
+
+
+def select_fusion_duration_media(
+    directory: str | Path,
+    width: int,
+    height: int,
+    frame_rate: int | float | str,
+    *,
+    prefix: str = "dummy_video",
+    extension: str = ".mp4",
+) -> Path:
+    """Select caller-owned dummy media by resolution and frame rate.
+
+    Parameters
+    ----------
+    directory
+        Absolute directory containing duration media files.
+    width
+        Positive frame width.
+    height
+        Positive frame height.
+    frame_rate
+        Positive finite frame rate used in the filename.
+    prefix
+        Filename prefix without path separators.
+    extension
+        Filename extension including the leading dot.
+
+    Returns
+    -------
+    pathlib.Path
+        Existing absolute media path.
+
+    Notes
+    -----
+    The expected filename is
+    ``{prefix}_{width}x{height}_{frame_rate}P{extension}``.
+
+    Examples
+    --------
+    >>> select_fusion_duration_media(Path("C:/media"), 1280, 720, 23.976)  # doctest: +SKIP
+    WindowsPath('C:/media/dummy_video_1280x720_23.976P.mp4')
+    """
+    root = Path(directory).expanduser()
+    if not root.is_absolute() or not root.is_dir():
+        raise ResolveValidationError(
+            f"duration media directory does not exist: {root}."
+        )
+    for value, name in ((width, "width"), (height, "height")):
+        if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+            raise ResolveValidationError(f"{name} must be a positive integer.")
+    if (
+        not isinstance(prefix, str)
+        or not prefix
+        or Path(prefix).name != prefix
+        or not isinstance(extension, str)
+        or not extension.startswith(".")
+        or Path(extension).name != extension
+    ):
+        raise ResolveValidationError(
+            "prefix and extension must be filename components."
+        )
+    try:
+        rate = Decimal(str(frame_rate))
+    except (InvalidOperation, ValueError) as error:
+        raise ResolveValidationError(
+            "frame_rate must be a positive finite number."
+        ) from error
+    if not rate.is_finite() or rate <= 0:
+        raise ResolveValidationError(
+            "frame_rate must be a positive finite number."
+        )
+    rate_text = format(rate.normalize(), "f")
+    candidate = root / f"{prefix}_{width}x{height}_{rate_text}P{extension}"
+    if not candidate.is_file():
+        raise ResolveValidationError(
+            f"Fusion duration media does not exist: {candidate}."
+        )
+    return candidate
 
 
 def append_fusion_composition(

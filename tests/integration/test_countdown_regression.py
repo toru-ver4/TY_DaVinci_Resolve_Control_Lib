@@ -9,7 +9,13 @@ from uuid import uuid4
 
 import pytest
 
-from ty_davinci_resolve import ResolveSession
+from ty_davinci_resolve import (
+    ResolveSession,
+    close_project,
+    delete_project,
+    list_projects,
+    load_project,
+)
 
 COUNTDOWN_DIR = Path(__file__).resolve().parents[1] / "countdown_regression"
 sys.path.insert(0, str(COUNTDOWN_DIR))
@@ -59,8 +65,8 @@ def test_countdown_matches_16_bit_reference(tmp_path: Path) -> None:
     finally:
         current = manager.GetCurrentProject()
         if current is not None and current.GetName() == project_name:
-            manager.CloseProject(current)
-        if project_name in manager.GetProjectListInCurrentFolder():
-            manager.DeleteProject(project_name)
-        if original_is_saved and original_name in manager.GetProjectListInCurrentFolder():
-            manager.LoadProject(original_name)
+            close_project(session, current)
+        if project_name in list_projects(session):
+            delete_project(session, project_name)
+        if original_is_saved and original_name in list_projects(session):
+            load_project(session, original_name)

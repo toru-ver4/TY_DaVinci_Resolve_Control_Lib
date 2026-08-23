@@ -350,10 +350,14 @@ def append_fusion_composition_to_timeline(
     --------
     >>> append_fusion_composition_to_timeline(24, 86400)  # doctest: +SKIP
     """
-    fps_value = float(get_project_setting("timelineFrameRate"))
-    fps_text = str(int(fps_value)) if fps_value.is_integer() else str(fps_value)
+    fps_value = get_project_setting("timelineFrameRate")
     width, height = get_project_resolution()
-    dummy = LEGACY_VIDEO_PATH / f"dummy_video_{width}x{height}_{fps_text}P.mp4"
+    dummy = api.select_fusion_duration_media(
+        LEGACY_VIDEO_PATH,
+        width,
+        height,
+        fps_value,
+    )
     return api.append_fusion_composition(
         get_current_timeline(),
         duration_frames=num_of_frame,
@@ -830,9 +834,13 @@ def set_tool_position(comp: Any, tool: Any, pos: tuple[float, float] | list[floa
     >>> set_tool_position(comp, tool, (1, 2))  # doctest: +SKIP
     True
     """
-    if comp.CurrentFrame is None:
-        open_page("fusion")
-    api.set_tool_position(comp, tool, pos)
+    api.set_tool_position(
+        comp,
+        tool,
+        pos,
+        session=_session(),
+        activate_fusion_page=True,
+    )
     return True
 
 

@@ -3,11 +3,210 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from dataclasses import dataclass
 import math
+import time
 from typing import Any
 
 from .connection import ResolveSession
 from .errors import ResolveOperationError, ResolveValidationError
+
+
+@dataclass(frozen=True, slots=True)
+class ProjectLifecycleTiming:
+    """Timing policy for asynchronous Resolve project operations.
+
+    Parameters
+    ----------
+    create_delay
+        Quiet period after creating a project.
+    save_delay
+        Quiet period after saving a project.
+    close_delay
+        Quiet period after closing a project.
+    load_delay
+        Quiet period after loading a project, before touching its proxy.
+    delete_delay
+        Quiet period after deleting a project.
+    timeout
+        Maximum time to wait for an observable state transition.
+    poll_interval
+        Delay between state checks.
+
+    Returns
+    -------
+    ProjectLifecycleTiming
+        Immutable timing policy.
+
+    Notes
+    -----
+    Resolve can return from a project API before its internal state transition is
+    complete. In particular, immediately calling a method on the object returned
+    by ``LoadProject`` can make Resolve 21.0.4 unstable.
+
+    Examples
+    --------
+    >>> ProjectLifecycleTiming(load_delay=2.0)
+    ProjectLifecycleTiming(create_delay=0.75, save_delay=0.75, close_delay=0.75, load_delay=2.0, delete_delay=0.75, timeout=15.0, poll_interval=0.25)
+    """
+
+    create_delay: float = 0.75
+    save_delay: float = 0.75
+    close_delay: float = 0.75
+    load_delay: float = 1.5
+    delete_delay: float = 0.75
+    timeout: float = 15.0
+    poll_interval: float = 0.25
+
+    def __post_init__(self) -> None:
+        """Validate timing values.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        >>> ProjectLifecycleTiming(timeout=1.0).timeout
+        1.0
+        """
+        delays = (
+            self.create_delay,
+            self.save_delay,
+            self.close_delay,
+            self.load_delay,
+            self.delete_delay,
+        )
+        if any(not math.isfinite(value) or value < 0 for value in delays):
+            raise ResolveValidationError("Lifecycle delays must be finite and non-negative.")
+        if not math.isfinite(self.timeout) or self.timeout <= 0:
+            raise ResolveValidationError("timeout must be a positive finite number.")
+        if not math.isfinite(self.poll_interval) or self.poll_interval <= 0:
+            raise ResolveValidationError("poll_interval must be a positive finite number.")
+
+
+DEFAULT_PROJECT_LIFECYCLE_TIMING = ProjectLifecycleTiming()
+
+
+def _wait_for_current_project(
+    session: ResolveSession,
+    name: str,
+    initial_delay: float,
+    timing: ProjectLifecycleTiming,
+    operation: str,
+) -> Any:
+    """Wait for a named project to become the stable current project.
+
+    Parameters
+    ----------
+    session
+        Connected Resolve session.
+    name
+        Expected project name.
+    initial_delay
+        Quiet period before the first remote-object access.
+    timing
+        Polling and timeout policy.
+    operation
+        API operation name used in an error.
+
+    Returns
+    -------
+    Any
+        Stable Resolve Project remote object.
+
+    Examples
+    --------
+    >>> _wait_for_current_project(session, "Test", 1.5, timing, "LoadProject")  # doctest: +SKIP
+    """
+    time.sleep(initial_delay)
+    deadline = time.monotonic() + timing.timeout
+    while True:
+        project = session.project_manager.GetCurrentProject()
+        if project is not None and project.GetName() == name:
+            return project
+        if time.monotonic() >= deadline:
+            raise ResolveOperationError(
+                operation,
+                project,
+                f"Timed out waiting for project {name!r} to become current.",
+            )
+        time.sleep(timing.poll_interval)
+
+
+def _wait_until_project_is_not_current(
+    session: ResolveSession,
+    name: str,
+    timing: ProjectLifecycleTiming,
+) -> None:
+    """Wait until a named project is no longer current.
+
+    Parameters
+    ----------
+    session
+        Connected Resolve session.
+    name
+        Closed project name.
+    timing
+        Polling and timeout policy.
+
+    Returns
+    -------
+    None
+
+    Examples
+    --------
+    >>> _wait_until_project_is_not_current(session, "Test", timing)  # doctest: +SKIP
+    """
+    time.sleep(timing.close_delay)
+    deadline = time.monotonic() + timing.timeout
+    while True:
+        project = session.project_manager.GetCurrentProject()
+        if project is None or project.GetName() != name:
+            return
+        if time.monotonic() >= deadline:
+            raise ResolveOperationError(
+                "ProjectManager.CloseProject",
+                project,
+                f"Timed out waiting for project {name!r} to close.",
+            )
+        time.sleep(timing.poll_interval)
+
+
+def _wait_until_project_is_deleted(
+    session: ResolveSession,
+    name: str,
+    timing: ProjectLifecycleTiming,
+) -> None:
+    """Wait until a named project disappears from the current folder.
+
+    Parameters
+    ----------
+    session
+        Connected Resolve session.
+    name
+        Deleted project name.
+    timing
+        Polling and timeout policy.
+
+    Returns
+    -------
+    None
+
+    Examples
+    --------
+    >>> _wait_until_project_is_deleted(session, "Test", timing)  # doctest: +SKIP
+    """
+    time.sleep(timing.delete_delay)
+    deadline = time.monotonic() + timing.timeout
+    while name in session.project_manager.GetProjectListInCurrentFolder():
+        if time.monotonic() >= deadline:
+            raise ResolveOperationError(
+                "ProjectManager.DeleteProject",
+                name,
+                f"Timed out waiting for project {name!r} to be deleted.",
+            )
+        time.sleep(timing.poll_interval)
 
 
 def _non_empty_text(value: object, name: str) -> str:
@@ -69,7 +268,12 @@ def get_current_project(session: ResolveSession) -> Any:
     return project
 
 
-def create_project(session: ResolveSession, name: str) -> Any:
+def create_project(
+    session: ResolveSession,
+    name: str,
+    *,
+    timing: ProjectLifecycleTiming = DEFAULT_PROJECT_LIFECYCLE_TIMING,
+) -> Any:
     """Create and open a project whose name is not already in use.
 
     Parameters
@@ -78,6 +282,8 @@ def create_project(session: ResolveSession, name: str) -> Any:
         Connected Resolve session.
     name
         New project name.
+    timing
+        Delays and timeout used while Resolve completes the operation.
 
     Returns
     -------
@@ -94,10 +300,17 @@ def create_project(session: ResolveSession, name: str) -> Any:
     project = session.project_manager.CreateProject(name)
     if project is None:
         raise ResolveOperationError("ProjectManager.CreateProject", project)
-    return project
+    return _wait_for_current_project(
+        session, name, timing.create_delay, timing, "ProjectManager.CreateProject"
+    )
 
 
-def load_project(session: ResolveSession, name: str) -> Any:
+def load_project(
+    session: ResolveSession,
+    name: str,
+    *,
+    timing: ProjectLifecycleTiming = DEFAULT_PROJECT_LIFECYCLE_TIMING,
+) -> Any:
     """Load an existing project by name.
 
     Parameters
@@ -106,6 +319,8 @@ def load_project(session: ResolveSession, name: str) -> Any:
         Connected Resolve session.
     name
         Existing project name.
+    timing
+        Delays and timeout used while Resolve completes the operation.
 
     Returns
     -------
@@ -122,16 +337,24 @@ def load_project(session: ResolveSession, name: str) -> Any:
     project = session.project_manager.LoadProject(name)
     if project is None:
         raise ResolveOperationError("ProjectManager.LoadProject", project)
-    return project
+    return _wait_for_current_project(
+        session, name, timing.load_delay, timing, "ProjectManager.LoadProject"
+    )
 
 
-def save_project(session: ResolveSession) -> None:
+def save_project(
+    session: ResolveSession,
+    *,
+    timing: ProjectLifecycleTiming = DEFAULT_PROJECT_LIFECYCLE_TIMING,
+) -> None:
     """Save the currently open project.
 
     Parameters
     ----------
     session
         Connected Resolve session.
+    timing
+        Delays used while Resolve completes the operation.
 
     Returns
     -------
@@ -144,9 +367,15 @@ def save_project(session: ResolveSession) -> None:
     result = session.project_manager.SaveProject()
     if result is not True:
         raise ResolveOperationError("ProjectManager.SaveProject", result)
+    time.sleep(timing.save_delay)
 
 
-def close_project(session: ResolveSession, project: Any | None = None) -> None:
+def close_project(
+    session: ResolveSession,
+    project: Any | None = None,
+    *,
+    timing: ProjectLifecycleTiming = DEFAULT_PROJECT_LIFECYCLE_TIMING,
+) -> None:
     """Close a project without saving it.
 
     Parameters
@@ -155,6 +384,8 @@ def close_project(session: ResolveSession, project: Any | None = None) -> None:
         Connected Resolve session.
     project
         Project to close. The current project is used when omitted.
+    timing
+        Delays and timeout used while Resolve completes the operation.
 
     Returns
     -------
@@ -165,12 +396,21 @@ def close_project(session: ResolveSession, project: Any | None = None) -> None:
     >>> close_project(session)  # doctest: +SKIP
     """
     target = project if project is not None else get_current_project(session)
+    target_name = target.GetName()
+    if not isinstance(target_name, str) or not target_name:
+        raise ResolveOperationError("Project.GetName", target_name)
     result = session.project_manager.CloseProject(target)
     if result is not True:
         raise ResolveOperationError("ProjectManager.CloseProject", result)
+    _wait_until_project_is_not_current(session, target_name, timing)
 
 
-def delete_project(session: ResolveSession, name: str) -> None:
+def delete_project(
+    session: ResolveSession,
+    name: str,
+    *,
+    timing: ProjectLifecycleTiming = DEFAULT_PROJECT_LIFECYCLE_TIMING,
+) -> None:
     """Delete an existing project by name.
 
     Parameters
@@ -179,6 +419,8 @@ def delete_project(session: ResolveSession, name: str) -> None:
         Connected Resolve session.
     name
         Existing project name.
+    timing
+        Delays and timeout used while Resolve completes the operation.
 
     Returns
     -------
@@ -198,6 +440,7 @@ def delete_project(session: ResolveSession, name: str) -> None:
     result = session.project_manager.DeleteProject(name)
     if result is not True:
         raise ResolveOperationError("ProjectManager.DeleteProject", result)
+    _wait_until_project_is_deleted(session, name, timing)
 
 
 def get_setting(project: Any, name: str) -> str:
