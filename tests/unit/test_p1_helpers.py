@@ -16,6 +16,7 @@ from ty_davinci_resolve import (
     ResolveOperationError,
     ResolveSession,
     ResolveValidationError,
+    TimelineSetting,
     add_dctl_tool,
     add_transparent_background,
     append_fusion_composition,
@@ -154,8 +155,14 @@ def test_timeline_playhead_settings_and_generator() -> None:
     assert get_current_timeline(project) is timeline
     set_current_timecode(timeline, "01:00:01:00")
     assert get_timeline_setting(timeline, "timelineFrameRate") == "24"
-    set_timeline_settings(timeline, {"timelineResolutionWidth": "1280"})
-    assert timeline.setting_calls == [("useCustomSettings", "1"), ("timelineResolutionWidth", "1280")]
+    set_timeline_settings(
+        timeline,
+        {TimelineSetting.TIMELINE_RESOLUTION_WIDTH: "1280"},
+    )
+    assert timeline.setting_calls == [
+        (TimelineSetting.USE_CUSTOM_SETTINGS, "1"),
+        (TimelineSetting.TIMELINE_RESOLUTION_WIDTH, "1280"),
+    ]
     assert insert_generator(timeline, "Solid Color") == {"name": "Solid Color"}
 
 

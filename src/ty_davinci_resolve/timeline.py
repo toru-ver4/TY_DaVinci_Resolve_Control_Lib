@@ -7,7 +7,7 @@ from enum import IntEnum
 import re
 from typing import Any
 
-from .constants import TrackType
+from .constants import TimelineSetting, TrackType
 from .errors import ResolveOperationError, ResolveValidationError
 
 
@@ -408,8 +408,8 @@ def set_timeline_settings(
             raise ResolveValidationError("setting names and values must be non-empty strings.")
     if not isinstance(enable_custom_settings, bool):
         raise ResolveValidationError("enable_custom_settings must be a bool.")
-    if enable_custom_settings and "useCustomSettings" not in settings:
-        set_timeline_setting(timeline, "useCustomSettings", "1")
+    if enable_custom_settings and TimelineSetting.USE_CUSTOM_SETTINGS not in settings:
+        set_timeline_setting(timeline, TimelineSetting.USE_CUSTOM_SETTINGS, "1")
     for name, value in settings.items():
         set_timeline_setting(timeline, name, value)
 

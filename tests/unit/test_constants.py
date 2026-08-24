@@ -14,30 +14,47 @@ from ty_davinci_resolve import (
     AcesOutputTransform,
     AlphaMode,
     AudioBitDepth,
+    AudioChannelCount,
     AudioCodec,
+    AudioMeterLoudnessScale,
     AudioSampleRate,
+    BroadcastSafeLevel,
     ClipProperty,
     ColorScienceMode,
     ColorSpace,
     ColorSpaceGamma,
     DynamicRangeTransform,
+    DeinterlaceQuality,
     FrameRate,
+    FrameRateMismatchBehavior,
     Gamma,
     GeneratorName,
+    ImageResizeMode,
     InputColorSpaceMode,
+    MotionEstimationMode,
+    MotionEstimationRange,
+    NodeStackLayerCount,
+    OptimizedMediaResolution,
     OUTPUT_COLOR_SPACES,
     PlaybackFrameRate,
     PixelAspectRatio,
     ProjectSetting,
+    ProxyMediaMode,
+    ProxyResolution,
     RenderFormat,
     ResolutionValue,
     ResizeTransformation,
+    RenderCacheMode,
+    RetimeInterpolation,
     SDIConfiguration,
     SettingToggle,
     SubtitleFormat,
     SuperScale,
+    SuperScaleDetail,
+    TimelineSetting,
     UniqueFilenameStyle,
     VideoCodec,
+    VideoBitDepth,
     VideoDataLevel,
     VideoQuality,
     WorkingLuminanceMode,
@@ -55,6 +72,9 @@ def test_legacy_project_values_are_migrated() -> None:
     assert FrameRate.FPS_23_976 == "23.976"
     assert FrameRate.FPS_59_94 == "59.94"
     assert PlaybackFrameRate.FPS_24 == "24"
+    assert TimelineSetting.USE_CUSTOM_SETTINGS == "useCustomSettings"
+    assert TimelineSetting.TIMELINE_FRAME_RATE == "timelineFrameRate"
+    assert TimelineSetting.TIMELINE_PLAYBACK_FRAME_RATE == "timelinePlaybackFrameRate"
     assert SDIConfiguration.SINGLE_LINK == "single_link"
     assert VideoDataLevel.VIDEO == "Video"
     assert VideoDataLevel.FULL == "Full"
@@ -95,6 +115,7 @@ def test_new_official_and_readback_values_are_defined() -> None:
     assert len(ProjectSetting) == 151
     assert len(ResolutionValue) == 28
     assert len(PlaybackFrameRate) == 19
+    assert len(TimelineSetting) == 6
     assert len(RenderFormat) == 23
     assert len(VideoCodec) == 199
     assert len(VideoQuality) == 5
@@ -128,6 +149,23 @@ def test_new_official_and_readback_values_are_defined() -> None:
     assert AcesOutputTransform.P3_D65_ST2084_1000_NIT == (
         "P3-D65 ST2084 (1000 nit)"
     )
+    assert AudioChannelCount.CHANNELS_16 == "16"
+    assert DeinterlaceQuality.HIGH == "high"
+    assert MotionEstimationMode.ENHANCED_BETTER == "enhancedBetter"
+    assert MotionEstimationRange.MEDIUM == "medium"
+    assert ImageResizeMode.BICUBIC == "bicubic"
+    assert RetimeInterpolation.OPTICAL_FLOW == "opticalFlow"
+    assert AudioMeterLoudnessScale.EBU_18 == "ebu_18_scale"
+    assert BroadcastSafeLevel.RANGE_10_110 == "10_110"
+    assert NodeStackLayerCount.LAYERS_4 == "4"
+    assert OptimizedMediaResolution.QUARTER == "quarter"
+    assert ProxyMediaMode.WHEN_SOURCE_UNAVAILABLE == "2"
+    assert ProxyResolution.HALF == "half"
+    assert RenderCacheMode.USER == "user"
+    assert SuperScaleDetail.HIGH == "High"
+    assert FrameRateMismatchBehavior.NONE == "none"
+    assert VideoBitDepth.BIT_10 == "10"
+    assert SDIConfiguration.QUAD_LINK == "quad_link"
 
 
 def test_setting_enums_can_be_passed_directly() -> None:

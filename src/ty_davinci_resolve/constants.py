@@ -222,6 +222,25 @@ class ProjectSetting(StrEnum):
     VIDEO_PLAYOUT_SHOW_SOURCE_TIMECODE = "videoPlayoutShowSourceTimecode"
 
 
+class TimelineSetting(StrEnum):
+    """Timeline setting keys verified with Resolve 21.0.4.
+
+    Notes
+    -----
+    ``TIMELINE_FRAME_RATE`` changes the Timeline Settings ``Timeline frame
+    rate`` after ``USE_CUSTOM_SETTINGS`` is enabled. The similarly named
+    ``TIMELINE_PLAYBACK_FRAME_RATE`` can be read but was rejected by
+    ``Timeline.SetSetting`` in Resolve Studio 21.0.4.5.
+    """
+
+    USE_CUSTOM_SETTINGS = "useCustomSettings"
+    TIMELINE_RESOLUTION_WIDTH = "timelineResolutionWidth"
+    TIMELINE_RESOLUTION_HEIGHT = "timelineResolutionHeight"
+    TIMELINE_FRAME_RATE = "timelineFrameRate"
+    TIMELINE_PLAYBACK_FRAME_RATE = "timelinePlaybackFrameRate"
+    TIMELINE_DROP_FRAME_TIMECODE = "timelineDropFrameTimecode"
+
+
 class SettingToggle(StrEnum):
     """String booleans accepted by Project settings."""
 
@@ -318,6 +337,7 @@ class SDIConfiguration(StrEnum):
     NONE = "none"
     SINGLE_LINK = "single_link"
     DUAL_LINK = "dual_link"
+    QUAD_LINK = "quad_link"
 
 
 class VideoDataLevel(StrEnum):
@@ -559,6 +579,135 @@ class DynamicRangeTransform(StrEnum):
     LUMINANCE_MAPPING = "Luminance Mapping"
     DAVINCI = "DaVinci"
     SATURATION_PRESERVING = "Saturation Preserving"
+
+
+class AudioChannelCount(StrEnum):
+    """Audio channel counts verified by project setting readback."""
+
+    CHANNELS_2 = "2"
+    CHANNELS_4 = "4"
+    CHANNELS_6 = "6"
+    CHANNELS_8 = "8"
+    CHANNELS_16 = "16"
+
+
+class DeinterlaceQuality(StrEnum):
+    """Deinterlace quality values verified by project setting readback."""
+
+    NORMAL = "normal"
+    HIGH = "high"
+
+
+class MotionEstimationMode(StrEnum):
+    """Motion-estimation modes verified by project setting readback."""
+
+    STANDARD_FASTER = "standardFaster"
+    STANDARD_BETTER = "standardBetter"
+    ENHANCED_FASTER = "enhancedFaster"
+    ENHANCED_BETTER = "enhancedBetter"
+
+
+class MotionEstimationRange(StrEnum):
+    """Motion-estimation ranges verified by project setting readback."""
+
+    SMALL = "small"
+    MEDIUM = "medium"
+
+
+class ImageResizeMode(StrEnum):
+    """Image resize filters verified by project setting readback."""
+
+    SHARPER = "sharper"
+    SMOOTHER = "smoother"
+    BICUBIC = "bicubic"
+    BILINEAR = "bilinear"
+
+
+class RetimeInterpolation(StrEnum):
+    """Retime interpolation modes verified by project setting readback."""
+
+    NEAREST = "nearest"
+    FRAME_BLEND = "frameBlend"
+    OPTICAL_FLOW = "opticalFlow"
+
+
+class AudioMeterLoudnessScale(StrEnum):
+    """Audio-meter loudness scales verified by project setting readback."""
+
+    EBU_9 = "ebu_9_scale"
+    EBU_18 = "ebu_18_scale"
+
+
+class BroadcastSafeLevel(StrEnum):
+    """Broadcast-safe level ranges verified by project setting readback."""
+
+    RANGE_0_100 = "0_100"
+    RANGE_10_110 = "10_110"
+    RANGE_20_120 = "20_120"
+
+
+class NodeStackLayerCount(StrEnum):
+    """Color node-stack layer counts verified by project setting readback."""
+
+    LAYERS_1 = "1"
+    LAYERS_2 = "2"
+    LAYERS_3 = "3"
+    LAYERS_4 = "4"
+
+
+class OptimizedMediaResolution(StrEnum):
+    """Optimized-media resolutions verified by project setting readback."""
+
+    AUTO = "auto"
+    ORIGINAL = "original"
+    HALF = "half"
+    QUARTER = "quarter"
+
+
+class ProxyMediaMode(StrEnum):
+    """Proxy-media modes documented by Resolve 21.0.4."""
+
+    DISABLED = "0"
+    WHEN_AVAILABLE = "1"
+    WHEN_SOURCE_UNAVAILABLE = "2"
+
+
+class ProxyResolution(StrEnum):
+    """Proxy resolutions verified by project setting readback."""
+
+    ORIGINAL = "original"
+    HALF = "half"
+    QUARTER = "quarter"
+
+
+class RenderCacheMode(StrEnum):
+    """Render-cache modes verified by project setting readback."""
+
+    NONE = "none"
+    SMART = "smart"
+    USER = "user"
+
+
+class SuperScaleDetail(StrEnum):
+    """Super Scale sharpness and noise-reduction levels."""
+
+    LOW = "Low"
+    MEDIUM = "Medium"
+    HIGH = "High"
+
+
+class FrameRateMismatchBehavior(StrEnum):
+    """Timeline frame-rate mismatch behaviors verified by readback."""
+
+    RESOLVE = "resolve"
+    NONE = "none"
+
+
+class VideoBitDepth(StrEnum):
+    """Video-monitor bit depths verified by project setting readback."""
+
+    BIT_8 = "8"
+    BIT_10 = "10"
 
 
 class ClipProperty(StrEnum):

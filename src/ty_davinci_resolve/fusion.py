@@ -25,6 +25,8 @@ from .timeline import (
 PACKAGED_DURATION_MEDIA_DIRECTORY = (
     Path(__file__).resolve().parent / "assets" / "duration_media"
 )
+_FUSION_PAGE_ACTIVATION_TIMEOUT = 5.0
+_FUSION_PAGE_ACTIVATION_POLL_INTERVAL = 0.1
 
 
 def add_comp(timeline_item: Any) -> Any:
@@ -322,7 +324,8 @@ def set_tool_position(
     session
         Resolve session used only when Fusion page activation is required.
     activate_fusion_page
-        Allow switching to the Fusion page when ``CurrentFrame`` is unavailable.
+        Allow switching to the Fusion page and waiting for ``CurrentFrame``
+        when it is unavailable.
 
     Returns
     -------
@@ -363,12 +366,17 @@ def set_tool_position(
             )
         open_page(session, Page.FUSION)
         current_frame = comp.CurrentFrame
-        if current_frame is None:
-            raise ResolveOperationError(
-                "Composition.CurrentFrame",
-                current_frame,
-                "Fusion CurrentFrame remained unavailable after opening the Fusion page.",
-            )
+        deadline = time.monotonic() + _FUSION_PAGE_ACTIVATION_TIMEOUT
+        while current_frame is None:
+            if time.monotonic() >= deadline:
+                raise ResolveOperationError(
+                    "Composition.CurrentFrame",
+                    current_frame,
+                    "Fusion CurrentFrame remained unavailable after opening "
+                    "the Fusion page and waiting 5 seconds.",
+                )
+            time.sleep(_FUSION_PAGE_ACTIVATION_POLL_INTERVAL)
+            current_frame = comp.CurrentFrame
     flow = current_frame.FlowView
     flow.SetPos(tool, position[0], position[1])
     actual = tuple(flow.GetPosTable(tool).values())
@@ -927,7 +935,7 @@ def append_fusion_composition(
 def refresh_fusion_color_management(
     session: ResolveSession,
     *,
-    delay: float = 0.1,
+    delay: float = 0.5,
 ) -> None:
     """Apply the Resolve 21.0.4 Fusion-page RCM refresh workaround.
 

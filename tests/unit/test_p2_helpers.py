@@ -7,6 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
+import ty_davinci_resolve.fusion as fusion_module
 
 from ty_davinci_resolve import (
     ResolveOperationError,
@@ -147,6 +148,39 @@ def test_set_tool_position_rejects_activation_without_session() -> None:
             (1, 2),
             activate_fusion_page=True,
         )
+
+
+def test_set_tool_position_waits_for_current_frame(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    tool = object()
+    flow = FakeFlow()
+
+    class DelayedComp:
+        def __init__(self) -> None:
+            self.read_count = 0
+
+        @property
+        def CurrentFrame(self) -> object | None:
+            self.read_count += 1
+            if self.read_count < 4:
+                return None
+            return SimpleNamespace(FlowView=flow)
+
+    comp = DelayedComp()
+    session = make_session(SimpleNamespace(OpenPage=lambda page: True))
+    monkeypatch.setattr(fusion_module.time, "sleep", lambda seconds: None)
+
+    set_tool_position(
+        comp,
+        tool,
+        (3, 4),
+        session=session,
+        activate_fusion_page=True,
+    )
+
+    assert comp.read_count == 4
+    assert flow.positions[id(tool)] == (3, 4)
 
 
 def test_select_fusion_duration_media_uses_normalized_filename(tmp_path: Path) -> None:
