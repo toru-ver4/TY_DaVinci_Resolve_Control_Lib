@@ -14,6 +14,7 @@ from ty_davinci_resolve import (
     create_project,
     delete_project,
     list_projects,
+    load_project,
 )
 
 
@@ -198,6 +199,19 @@ WORKING_LUMINANCE_MODES = (
     "Custom",
 )
 
+RCM_PRESET_MODES = (
+    "SDR Rec.2020",
+    "SDR Rec.2020 (P3-D65 limited)",
+    "SDR P3-D60 Cinema",
+    "HDR DaVinci Wide Gamut Intermediate",
+    "HDR Rec.2020 Intermediate",
+    "HDR Rec.2020 HLG",
+    "HDR Rec.2020 HLG (P3-D65 limited)",
+    "HDR Rec.2020 PQ",
+    "HDR Rec.2020 PQ (P3-D65 limited)",
+    "Custom",
+)
+
 
 def _probe(project: object, key: str, candidates: tuple[str, ...]) -> None:
     """Print candidates accepted and read back by Resolve.
@@ -252,18 +266,22 @@ def main() -> None:
     >>> main()  # doctest: +SKIP
     """
     session = ResolveSession.connect()
+    manager = session.project_manager
+    original = manager.GetCurrentProject()
+    original_name = original.GetName() if original is not None else None
     name = f"TY_SETTING_PROBE_{uuid4().hex}"
     project = None
     try:
         project = create_project(session, name)
         for key, value in (
             ("colorScienceMode", "davinciYRGBColorManagedv2"),
-            ("rcmPresetMode", "Custom"),
+            ("isAutoColorManage", "0"),
             ("separateColorSpaceAndGamma", "1"),
         ):
             result = project.SetSetting(key, value)
             time.sleep(0.5)
             print(key, result, project.GetSetting(key), flush=True)
+        _probe(project, "rcmPresetMode", RCM_PRESET_MODES)
         for key in (
             "colorSpaceInput",
             "colorSpaceTimeline",
@@ -303,6 +321,8 @@ def main() -> None:
             close_project(session, current)
         if name in list_projects(session):
             delete_project(session, name)
+        if original_name and original_name in list_projects(session):
+            load_project(session, original_name)
 
 
 if __name__ == "__main__":

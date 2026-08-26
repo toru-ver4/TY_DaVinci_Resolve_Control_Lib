@@ -41,6 +41,7 @@ from ty_davinci_resolve import (
     ProjectSetting,
     ProxyMediaMode,
     ProxyResolution,
+    ProjectPresetMode,
     RenderFormat,
     ResolutionValue,
     ResizeTransformation,
@@ -80,6 +81,12 @@ def test_legacy_project_values_are_migrated() -> None:
     assert VideoDataLevel.FULL == "Full"
     assert ColorScienceMode.DAVINCI_YRGB == "davinciYRGB"
     assert ColorScienceMode.ACES_CCT == "acescct"
+    assert len(ProjectPresetMode) == 10
+    assert ProjectPresetMode.SDR_REC_2020 == "SDR Rec.2020"
+    assert ProjectPresetMode.HDR_REC_2020_PQ_P3_D65_LIMITED == (
+        "HDR Rec.2020 PQ (P3-D65 limited)"
+    )
+    assert ProjectPresetMode.CUSTOM == "Custom"
     assert ColorSpace.P3_D65 == "P3-D65"
     assert ColorSpace.REC_2020 == "Rec.2020"
     assert Gamma.ST2084 == "ST2084"

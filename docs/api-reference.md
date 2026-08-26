@@ -63,7 +63,9 @@ Custom 条件は`colorScienceMode=davinciYRGBColorManagedv2`、
 Output color space 39件（`OUTPUT_COLOR_SPACES`）、3種のGamma各63件、Timeline
 working luminance 11件を確認しました。Custom luminance の数値境界は48–10,000
 nitです。`colorSpaceOutputGamutMapping`はsnapshotに存在しますが、UI表示値のうち
-APIで設定できたのは`None`だけでした。White point adaptation は158-key snapshotに
+APIで設定できたのは`None`だけでした。この設定キーは、GUIの`Limit output gamut to`
+には対応しません。GUIを`P3-D65`と`Output color space`の間で変更しても、158-key
+snapshotに差がなかったためです。White point adaptation は158-key snapshotに
 推測した定数は公開していません。対応keyを特定できていないためです。
 
 UI/API表記差は`P3 DCI`→`P3-DCI`、`SMPTE C`→`SMPTE-C`、`YUV`→`Y'UV`、

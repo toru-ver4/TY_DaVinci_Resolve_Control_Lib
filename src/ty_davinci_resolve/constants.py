@@ -357,8 +357,23 @@ class ColorScienceMode(StrEnum):
 
 
 class ProjectPresetMode(StrEnum):
-    """Project color-management preset modes."""
+    """Color processing modes accepted by Resolve 21.0.4."""
 
+    SDR_REC_2020 = "SDR Rec.2020"
+    SDR_REC_2020_P3_D65_LIMITED = "SDR Rec.2020 (P3-D65 limited)"
+    SDR_P3_D60_CINEMA = "SDR P3-D60 Cinema"
+    HDR_DAVINCI_WIDE_GAMUT_INTERMEDIATE = (
+        "HDR DaVinci Wide Gamut Intermediate"
+    )
+    HDR_REC_2020_INTERMEDIATE = "HDR Rec.2020 Intermediate"
+    HDR_REC_2020_HLG = "HDR Rec.2020 HLG"
+    HDR_REC_2020_HLG_P3_D65_LIMITED = (
+        "HDR Rec.2020 HLG (P3-D65 limited)"
+    )
+    HDR_REC_2020_PQ = "HDR Rec.2020 PQ"
+    HDR_REC_2020_PQ_P3_D65_LIMITED = (
+        "HDR Rec.2020 PQ (P3-D65 limited)"
+    )
     CUSTOM = "Custom"
 
 

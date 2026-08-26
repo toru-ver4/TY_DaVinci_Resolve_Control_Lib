@@ -155,6 +155,8 @@ def test_project_setting_constants_on_resolve_21_0_4() -> None:
             ProjectSetting.COLOR_SCIENCE_MODE,
             ColorScienceMode.DAVINCI_YRGB_COLOR_MANAGED,
         )
+        for value in ProjectPresetMode:
+            _assert_setting(project, ProjectSetting.RCM_PRESET_MODE, value)
         _assert_setting(
             project,
             ProjectSetting.RCM_PRESET_MODE,

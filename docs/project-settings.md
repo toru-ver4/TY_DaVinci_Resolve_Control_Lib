@@ -99,16 +99,42 @@ set_timeline_settings(
 | Image Scaling | Super Scale | `SUPER_SCALE` | `SuperScale`（整数`0`–`4`） | 公式、GUI、設定確認 |
 | Image Scaling | Super Scale sharpness / noise reduction | `SUPER_SCALE_SHARPNESS`, `SUPER_SCALE_NOISE_REDUCTION` | `SuperScaleDetail` | GUI、設定確認 |
 | Color Management | Color science | `COLOR_SCIENCE_MODE` | `ColorScienceMode` | GUI、設定確認 |
-| Color Management | Input / Timeline / Output color space | `COLOR_SPACE_INPUT`, `COLOR_SPACE_TIMELINE`, `COLOR_SPACE_OUTPUT` | `ColorSpace`, `OUTPUT_COLOR_SPACES` | GUI、設定確認 |
+| Color Management | Automatic color management | `AUTO_COLOR_MANAGEMENT` | `SettingToggle`（`DISABLED="0"`, `ENABLED="1"`） | GUI、設定確認 |
+| Color Management | Color processing mode | `RCM_PRESET_MODE` | `ProjectPresetMode` | GUI、設定確認 |
+| Color Management | Use separate color space and gamma | `SEPARATE_COLOR_SPACE_AND_GAMMA` | `SettingToggle` | GUI、設定確認 |
+| Color Management | Input / Timeline / Output color space | `COLOR_SPACE_INPUT`, `COLOR_SPACE_TIMELINE`, `COLOR_SPACE_OUTPUT` | Input／Timeline: `ColorSpace`。Output: `OUTPUT_COLOR_SPACES`に含まれる`ColorSpace`の要素 | GUI、設定確認 |
 | Color Management | Input / Timeline / Output gamma | `COLOR_SPACE_INPUT_GAMMA`, `COLOR_SPACE_TIMELINE_GAMMA`, `COLOR_SPACE_OUTPUT_GAMMA` | `Gamma` | GUI、設定確認 |
 | Color Management | Combined color space and gamma | `COLOR_SPACE_TIMELINE` | `ColorSpaceGamma` | GUI、設定確認 |
 | Color Management | Timeline working luminance | `TIMELINE_WORKING_LUMINANCE_MODE`, `TIMELINE_WORKING_LUMINANCE` | `WorkingLuminanceMode`, 48–10,000 nit | GUI、設定確認 |
 | Color Management | Input / Output DRT | `INPUT_DRT`, `OUTPUT_DRT` | `DynamicRangeTransform` | GUI、設定確認 |
+| Color Management | Use inverse DRT for SDR to HDR conversion | `USE_INVERSE_DRT` | `SettingToggle` | GUI、設定確認 |
+| Color Management | Use color space aware grading tools | `USE_COLOR_SPACE_AWARE_GRADING_TOOLS` | `SettingToggle` | GUI、設定確認 |
+| Color Management | Apply resize transformations in | `IMAGE_RESIZING_GAMMA` | `ResizeTransformation` | GUI、設定確認 |
+| Color Management | Disable tone mapping for Fusion conversions | `DISABLE_FUSION_TONE_MAPPING` | `SettingToggle` | GUI、設定確認 |
+| Color Management | Graphics white level | `GRAPHICS_WHITE_LEVEL` | nit値を表す文字列 | GUI、設定確認 |
 | Color Management > ACES | ACES IDT / ODT | `COLOR_ACES_IDT`, `COLOR_ACES_ODT` | `AcesInputTransform`, `AcesOutputTransform` | GUI、設定確認 |
+| Color Management > ACES | Apply ACES reference gamut compress | `COLOR_ACES_GAMUT_COMPRESS_TYPE` | Resolveへ渡す文字列 | GUI、設定確認 |
+| Color Management > ACES | Process node LUTs in | `COLOR_ACES_NODE_LUT_PROCESSING_SPACE` | Resolveへ渡す文字列 | GUI、設定確認 |
 | Fairlight | Audio capture / playout channels | `AUDIO_CAPTURE_NUM_CHANNELS`, `AUDIO_PLAYOUT_NUM_CHANNELS` | `AudioChannelCount` | GUI、設定確認 |
 | Fairlight | Loudness scale | `LIMIT_AUDIO_METER_LOUDNESS_SCALE` | `AudioMeterLoudnessScale` | GUI、設定確認 |
 | Color | Broadcast safe levels | `LIMIT_BROADCAST_SAFE_LEVELS` | `BroadcastSafeLevel` | GUI、設定確認 |
 | Color | Node stack layers | `NODE_STACK_LAYERS` | `NodeStackLayerCount` | GUI、設定確認 |
+
+Output color spaceには、［TY API］`OUTPUT_COLOR_SPACES`に含まれる［TY API］`ColorSpace`の要素を1つ指定します。`OUTPUT_COLOR_SPACES`はOutputで選択できる39個の色空間をまとめたタプルであり、タプル自体を設定値として渡すものではありません。
+
+```python
+{
+    ProjectSetting.COLOR_SPACE_OUTPUT: ColorSpace.REC_2020,
+}
+```
+
+［Resolve GUI］`Limit output gamut to`はPythonから自動設定できません。納品先の色域に制限する必要がある場合は、Project SettingsのGUIで設定してください。GUIを`P3-D65`と`Output color space`の間で変更しても、［Resolve API］`Project.GetSetting()`が返す158個の設定値には差がなく、対応する設定キーは見つかりませんでした（Resolve Studio 21.0.4.5で確認）。
+
+名前が似ている［TY API］`ProjectSetting.OUTPUT_GAMUT_MAPPING`は、このGUI項目には対応しません。これは［Resolve API］設定キー`"colorSpaceOutputGamutMapping"`を表す定数ですが、上記のGUI変更後も値は`"None"`のままでした。制作設定の自動化には使用せず、GUI上の対応項目が特定できていない内部的な設定キーとして扱ってください。
+
+`Color processing mode`は、［Resolve GUI］Color scienceを`DaVinci YRGB Color Managed`にし、`Automatic color management`をオフにしたときに表示されます。制作方式をResolveのプリセットから選ぶ場合は［TY API］`ProjectPresetMode`を指定してください。`CUSTOM`を選ぶと、Input／Timeline／Output color space、Timeline working luminance、DRTなどを個別に決められます。
+
+自動管理をオンにした場合は、GUIの`Color processing mode`がSDR／HDRの簡易選択へ変わります。この状態は［TY API］`RCM_PRESET_MODE`の10個のプリセットとは別です。細かな色管理を自動化する場合は、先に`AUTO_COLOR_MANAGEMENT=DISABLED`を設定してから`RCM_PRESET_MODE`を設定してください。
 
 ### Color scienceのGUI表示とAPI値
 
@@ -144,35 +170,21 @@ GUIラベルと`Project.SetSetting("colorScienceMode", value)`へ渡す文字列
 | `FrameRateMismatchBehavior` | `resolve`, `none` |
 | `VideoBitDepth` | `8`, `10` |
 | `SDIConfiguration` | `none`, `single_link`, `dual_link`, `quad_link`（項目により使用可能値が異なる） |
+| `ProjectPresetMode` | `SDR Rec.2020`, `SDR Rec.2020 (P3-D65 limited)`, `SDR P3-D60 Cinema`, `HDR DaVinci Wide Gamut Intermediate`, `HDR Rec.2020 Intermediate`, `HDR Rec.2020 HLG`, `HDR Rec.2020 HLG (P3-D65 limited)`, `HDR Rec.2020 PQ`, `HDR Rec.2020 PQ (P3-D65 limited)`, `Custom` |
 
 Resolve画面に選択肢が表示されても、Pythonから同じ値を設定できるとは限りません。自動化で使えなかった候補は定数へ追加していません。
+
+## 開発者向け：GUI対応表の確認漏れを防ぐ
+
+［Resolve GUI］Color Managementは設定状態によって項目が入れ替わります。この文書では、少なくとも次の状態へ切り替えて表示項目を確認します。
+
+- DaVinci YRGB
+- DaVinci YRGB Color Managed：Automatic color managementのオン／オフ
+- DaVinci YRGB Color Managed：Automatic color managementをオフにし、既定プリセット／Customを切り替え
+- ACEScc／ACEScct
+
+確認状況は[`project-setting-gui-coverage.json`](project-setting-gui-coverage.json)で管理します。［TY API］`ProjectSetting`の全定数を「GUI対応を本文に掲載済み」または「GUI対応を継続調査中」のどちらかへ明示的に分類します。定数を追加したのに分類し忘れた場合や、掲載済みの定数が本文から消えた場合は、単体テストが失敗します。
 
 ## 開発者向け：設定値の再検証
 
 Resolveの更新後に設定の互換性を調べ直す場合は、Pythonの`tests/integration/test_setting_constants.py`を使用します。このテストはProject Settingsのキーと候補値を実際に設定し、設定後の値を確認して、使い捨てprojectを削除します。ProjectとTimelineのフレームレート適用範囲は`test_timeline_frame_rate_settings.py`、詳細な調査出力が必要な場合は`probe_timeline_playback_frame_rate.py`で確認できます。
-
-## スクリーンショット
-
-次の画像は対象環境のWindows版Resolve Studio 21.0.4.5から取得しました。個別のdropdownを開いた画像は選択肢の観察だけを目的とし、値は変更していません。
-
-### Master Settings
-
-Timeline Format、Video Monitoring、Optimized Media and Render Cacheと、上表の主要な対応項目を確認できます。
-
-![Resolve 21.0.4 Project SettingsのMaster Settings](images/resolve21-project-settings-master.jpg)
-
-### Color Management
-
-新規projectの既定表示はColor scienceがDaVinci YRGB、Timeline／Output color spaceがRec.709 (Scene)でした。
-
-![Resolve 21.0.4 Project SettingsのColor Management](images/resolve21-project-settings-color-management.jpg)
-
-Color science dropdownにはDaVinci YRGB、DaVinci YRGB Color Managed、ACEScc、ACEScctの4項目が表示されます。APIへ渡す値は上の対応表のとおりです。
-
-![Resolve 21.0.4のColor science選択肢](images/resolve21-color-management-color-science-options.jpg)
-
-### Image Scaling
-
-ResolveのGUI項目Resize filterは、本ライブラリの`ProjectSetting.IMAGE_RESIZE_MODE`／`ImageResizeMode`に対応します。同様にDeinterlace qualityは`ProjectSetting.IMAGE_DEINTERLACE_QUALITY`／`DeinterlaceQuality`、Super Scaleは`ProjectSetting.SUPER_SCALE`／`SuperScale`に対応します。画面のSharper、Normal、Noneをコードで指定するときは、表示名をそのまま書かず、本ライブラリの対応する定数を使用してください。Resolve公式APIへ実際に渡る値は`sharper`、`normal`、`0`です。
-
-![Resolve 21.0.4 Project SettingsのImage Scaling](images/resolve21-project-settings-image-scaling.jpg)
