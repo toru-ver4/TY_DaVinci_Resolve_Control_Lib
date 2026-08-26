@@ -58,7 +58,7 @@ set_timeline_settings(
 
 この文書はWindows版DaVinci Resolve Studio 21.0.4.5を対象とします。APIの基準資料は同梱の[Resolve 21.0.4 Scripting README](../official_documents/21.0.4_Scripting/README.txt)です（679–711行）。
 
-［TY API］`ProjectSetting`クラスには、Pythonから設定できることを確認した151個の設定キーを定数として収録しています。調査対象は、［Resolve API］`Project.GetSetting()`から取得した158個の設定キーです。［TY API］`ProjectSetting`はResolveの画面名ではなく、設定キーの入力間違いを防ぐために本ライブラリが用意したPythonクラスです。
+［TY API］`ProjectSetting`クラスには、調査対象158個のうち151個の設定キーを定数として収録しています。151は収録数であり、すべてをPythonから変更できるという意味ではありません。読み取り専用やGUIとの対応を特定できていないキーは、この文書で個別に区別します。［TY API］`ProjectSetting`はResolveの画面名ではなく、設定キーの入力間違いを防ぐために本ライブラリが用意したPythonクラスです。
 
 次の7個の設定キーは、［TY API］`ProjectSetting`には収録していません。自動設定には使用できないためです。［Resolve API］`Project.GetSetting()`で現在値を読み取ることはできますが、［Resolve API］`Project.SetSetting()`へ同じ値を書き戻してもResolveに拒否されます。
 
@@ -176,15 +176,12 @@ Resolve画面に選択肢が表示されても、Pythonから同じ値を設定�
 
 ## 開発者向け：GUI対応表の確認漏れを防ぐ
 
-［Resolve GUI］Color Managementは設定状態によって項目が入れ替わります。この文書では、少なくとも次の状態へ切り替えて表示項目を確認します。
-
-- DaVinci YRGB
-- DaVinci YRGB Color Managed：Automatic color managementのオン／オフ
-- DaVinci YRGB Color Managed：Automatic color managementをオフにし、既定プリセット／Customを切り替え
-- ACEScc／ACEScct
-
 確認状況は[`project-setting-gui-coverage.json`](project-setting-gui-coverage.json)で管理します。［TY API］`ProjectSetting`の全定数を「GUI対応を本文に掲載済み」または「GUI対応を継続調査中」のどちらかへ明示的に分類します。定数を追加したのに分類し忘れた場合や、掲載済みの定数が本文から消えた場合は、単体テストが失敗します。
+
+Resolve更新時に確認するGUI状態、名前による誤対応を防ぐ判定基準、変更前後の全snapshot比較、テストと完了条件は[Resolveバージョン更新時の検証手順](resolve-version-upgrade.md)にまとめています。
 
 ## 開発者向け：設定値の再検証
 
 Resolveの更新後に設定の互換性を調べ直す場合は、Pythonの`tests/integration/test_setting_constants.py`を使用します。このテストはProject Settingsのキーと候補値を実際に設定し、設定後の値を確認して、使い捨てprojectを削除します。ProjectとTimelineのフレームレート適用範囲は`test_timeline_frame_rate_settings.py`、詳細な調査出力が必要な場合は`probe_timeline_playback_frame_rate.py`で確認できます。
+
+実施順序と判定基準は[Resolveバージョン更新時の検証手順](resolve-version-upgrade.md)を参照してください。

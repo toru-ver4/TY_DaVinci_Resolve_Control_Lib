@@ -45,7 +45,7 @@ python tests/stress/project_lifecycle_stress.py --iterations 20
 
 ## 定数の根拠と実機検証
 
-Resolve公式APIの`Project.GetSetting()`／`Project.SetSetting()`の調査方法、`superScale`、frame rate、render setting値は、同梱の[公式Scripting README](../official_documents/21.0.4_Scripting/README.txt) 679–711行、832–864行を根拠にしています。Windows版Resolve Studio 21.0.4.5から取得した158個の設定キーのうち、実際に設定して同じ値を読み取れた151個を、本ライブラリの`ProjectSetting`クラスへ定数として収録しました。codec／format、Super Scale strength、deck formatに関する7個は除外しています。Resolveが書き込みを拒否し、自動設定には使用できないためです。
+Resolve公式APIの`Project.GetSetting()`／`Project.SetSetting()`の調査方法、`superScale`、frame rate、render setting値は、同梱の[公式Scripting README](../official_documents/21.0.4_Scripting/README.txt) 679–711行、832–864行を根拠にしています。Windows版Resolve Studio 21.0.4.5から取得した158個の設定キーのうち151個を、本ライブラリの`ProjectSetting`クラスへ定数として収録しました。151は収録数であり、全項目の書き込みを保証する数ではありません。例えば`timelinePlaybackFrameRate`は読み取り専用で、`colorSpaceOutputGamutMapping`はGUIとの対応を特定できていません。codec／format、Super Scale strength、deck formatに関する残り7個は、同値の書き戻しも拒否されたため収録していません。
 
 Project scopeでは、`timelineFrameRate`をproject作成直後に設定できます。`timelinePlaybackFrameRate`は値を読み取れますが、`Project.SetSetting()`による変更は拒否されました。
 

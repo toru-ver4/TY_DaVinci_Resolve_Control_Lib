@@ -236,7 +236,9 @@ deprecated欄（README.txt 1099行以降）およびunsupported欄（1140行以�
 
 ## 7. 公式文書を更新したときの API 棚卸し手順
 
-Resolve の対応版を上げるたびに、次を実施する。
+Resolveの対応版を上げる際のGUI/API対応、設定snapshot、実機テスト、証拠、完了条件を含む手順は[Resolveバージョン更新時の検証手順](resolve-version-upgrade.md)に集約する。この節では公式APIの棚卸しだけを扱う。
+
+次を実施する。
 
 1. `official_documents/<version>_Scripting/` を追加し、旧版を削除しない。
 2. 新旧 `CHANGELOG.txt` と `README.txt` のオブジェクト別メソッド一覧を比較する。
