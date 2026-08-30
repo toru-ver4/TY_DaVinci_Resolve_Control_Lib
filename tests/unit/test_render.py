@@ -6,12 +6,14 @@ from collections.abc import Iterator
 import pytest
 
 from ty_davinci_resolve import (
+    RenderSetting,
     ResolveOperationError,
     ResolveValidationError,
     add_render_job,
     delete_render_job,
     get_render_codecs,
     set_render_format_codec,
+    set_render_settings,
     start_render_job,
     wait_for_render_job,
 )
@@ -22,6 +24,7 @@ class FakeRenderProject:
         self.selected: tuple[str, str] | None = None
         self.started: list[str] = []
         self.deleted: list[str] = []
+        self.settings: dict[str, object] | None = None
         self.statuses: Iterator[dict[str, object]] = iter(
             [
                 {"JobStatus": "Rendering", "CompletionPercentage": 50},
@@ -38,6 +41,10 @@ class FakeRenderProject:
 
     def SetCurrentRenderFormatAndCodec(self, render_format: str, codec: str) -> bool:
         self.selected = (render_format, codec)
+        return True
+
+    def SetRenderSettings(self, settings: dict[str, object]) -> bool:
+        self.settings = settings
         return True
 
     def AddRenderJob(self) -> str:
@@ -70,6 +77,23 @@ def test_unknown_codec_is_rejected_before_mutation() -> None:
     with pytest.raises(ResolveValidationError):
         set_render_format_codec(project, "mov", "unknown")
     assert project.selected is None
+
+
+def test_render_setting_enum_can_be_passed_directly() -> None:
+    project = FakeRenderProject()
+    set_render_settings(
+        project,
+        {
+            RenderSetting.TARGET_DIR: "C:/output",
+            RenderSetting.CUSTOM_NAME: "sample",
+            RenderSetting.EXPORT_VIDEO: True,
+        },
+    )
+    assert project.settings == {
+        "TargetDir": "C:/output",
+        "CustomName": "sample",
+        "ExportVideo": True,
+    }
 
 
 def test_job_operations_only_use_returned_job_id() -> None:

@@ -25,6 +25,42 @@ class TrackType(StrEnum):
     SUBTITLE = "subtitle"
 
 
+class RenderSetting(StrEnum):
+    """Render setting keys documented by Resolve 21.0.4."""
+
+    SELECT_ALL_FRAMES = "SelectAllFrames"
+    MARK_IN = "MarkIn"
+    MARK_OUT = "MarkOut"
+    TARGET_DIR = "TargetDir"
+    CUSTOM_NAME = "CustomName"
+    UNIQUE_FILENAME_STYLE = "UniqueFilenameStyle"
+    EXPORT_VIDEO = "ExportVideo"
+    EXPORT_AUDIO = "ExportAudio"
+    FORMAT_WIDTH = "FormatWidth"
+    FORMAT_HEIGHT = "FormatHeight"
+    FRAME_RATE = "FrameRate"
+    PIXEL_ASPECT_RATIO = "PixelAspectRatio"
+    VIDEO_QUALITY = "VideoQuality"
+    AUDIO_CODEC = "AudioCodec"
+    AUDIO_BIT_DEPTH = "AudioBitDepth"
+    AUDIO_SAMPLE_RATE = "AudioSampleRate"
+    COLOR_SPACE_TAG = "ColorSpaceTag"
+    GAMMA_TAG = "GammaTag"
+    EXPORT_ALPHA = "ExportAlpha"
+    ENCODING_PROFILE = "EncodingProfile"
+    MULTI_PASS_ENCODE = "MultiPassEncode"
+    ALPHA_MODE = "AlphaMode"
+    NETWORK_OPTIMIZATION = "NetworkOptimization"
+    CLIP_START_FRAME = "ClipStartFrame"
+    TIMELINE_START_TIMECODE = "TimelineStartTimecode"
+    REPLACE_EXISTING_FILES_IN_PLACE = "ReplaceExistingFilesInPlace"
+    EXPORT_SUBTITLE = "ExportSubtitle"
+    SUBTITLE_FORMAT = "SubtitleFormat"
+    USE_FULL_EXTENTS = "UseFullExtents"
+    ADD_FRAME_HANDLES = "AddFrameHandles"
+    DATA_BURN_IN = "DataBurnIn"
+
+
 class ProjectSetting(StrEnum):
     """Project setting keys observed in a Resolve 21.0.4 snapshot.
 

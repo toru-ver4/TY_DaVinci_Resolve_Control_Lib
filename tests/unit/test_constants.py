@@ -43,6 +43,7 @@ from ty_davinci_resolve import (
     ProxyResolution,
     ProjectPresetMode,
     RenderFormat,
+    RenderSetting,
     ResolutionValue,
     ResizeTransformation,
     RenderCacheMode,
@@ -99,6 +100,10 @@ def test_legacy_project_values_are_migrated() -> None:
 
 
 def test_legacy_render_values_are_migrated() -> None:
+    assert RenderSetting.TARGET_DIR == "TargetDir"
+    assert RenderSetting.CUSTOM_NAME == "CustomName"
+    assert RenderSetting.EXPORT_VIDEO == "ExportVideo"
+    assert RenderSetting.FRAME_RATE == "FrameRate"
     assert VideoCodec.PRORES_422_HQ == "ProRes422HQ"
     assert VideoCodec.PRORES_4444_XQ == "ProRes4444XQ"
     assert VideoCodec.DNXHR_HQX_12 == "DNxHRHQX_12"
@@ -124,6 +129,7 @@ def test_new_official_and_readback_values_are_defined() -> None:
     assert len(PlaybackFrameRate) == 19
     assert len(TimelineSetting) == 6
     assert len(RenderFormat) == 23
+    assert len(RenderSetting) == 31
     assert len(VideoCodec) == 199
     assert len(VideoQuality) == 5
     assert FrameRate.FPS_29_97_DF == "29.97 DF"
