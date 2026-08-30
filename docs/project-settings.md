@@ -20,10 +20,14 @@
 |---|---|---|---|
 | Project | Timeline frame rate | 新しく作るtimelineの基準となるフレームレート | ［TY API］`ProjectSetting.TIMELINE_FRAME_RATE`で設定可能。project作成直後に設定する |
 | Project | Playback frame rate | Project Settingsで指定する再生フレームレート | 変更不可。［TY API］`ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE`で現在値の確認だけが可能 |
-| 個別timeline | Timeline frame rate | そのtimelineを編集・再生するフレームレート | ［TY API］`TimelineSetting.TIMELINE_FRAME_RATE`で設定可能。空timelineに設定する |
+| 個別timeline | Timeline frame rate | そのtimelineを編集・再生するフレームレート | 整数のframe rateは、空timelineに［TY API］`TimelineSetting.TIMELINE_FRAME_RATE`で設定できる。23.976、29.97、59.94などの小数値は設定できない |
 | 個別timeline | Playback frame rate | 個別timelineには独立した設定項目がない | 設定不要。GUIにも選択項目がなく、［Resolve API］`Timeline.SetSetting()`からも変更できない |
 
-作品を狙ったフレームレートで作るときは、まずProjectの「Timeline frame rate」を設定してください。特定のtimelineだけ別のフレームレートにする場合は、そのtimelineの「Timeline frame rate」を設定します。個別timelineはこの値で再生されるため、「Playback frame rate」を追加で設定する必要はありません。
+作品を狙ったフレームレートで確実に作るには、timelineを作る前にProjectの「Timeline frame rate」を設定してください。新しいtimelineはその値を引き継ぐため、23.976や59.94の作品もPythonだけで準備できます。
+
+特定のtimelineだけProjectと異なるframe rateにしたい場合は、値によって判断が変わります。空timelineを使った実機試験では、24、25、30、50、60は［Resolve API］`Timeline.SetSetting()`で変更できました。一方、23.976、29.97、59.94は変更を拒否されました。したがって、小数のframe rateが必要な作品では、最初からProjectをそのframe rateにしてtimelineへ引き継がせてください。Projectとは異なる小数のframe rateを特定のtimelineだけに設定する作業は、Pythonでは自動化せず、Timeline SettingsのGUIで行ってください（Resolve Studio 21.0.4.5で確認）。
+
+個別timelineは「Timeline frame rate」で編集・再生されます。個別timeline用の「Playback frame rate」はGUIに存在しないため、追加設定は不要です。
 
 一方、Projectの「Playback frame rate」を「Timeline frame rate」と異なる値にしたい場合、［Resolve API］`Project.SetSetting()`では変更できず、［TY API］からも自動化できません。必要な場合はProject SettingsのGUIで設定してください（Resolve Studio 21.0.4.5で確認）。
 
@@ -44,7 +48,7 @@ set_settings(
     {ProjectSetting.TIMELINE_FRAME_RATE: FrameRate.FPS_24},
 )
 
-# この空timelineだけを25 fpsにする
+# この空timelineだけを25 fpsにする（整数の25 fpsは実機で設定成功を確認済み）
 timeline = create_empty_timeline(get_media_pool(project), "25 fps Timeline")
 set_timeline_settings(
     timeline,
@@ -52,7 +56,7 @@ set_timeline_settings(
 )
 ```
 
-［TY API］`set_timeline_settings()`は、最初に［Resolve API］設定キー`"useCustomSettings"`へ`"1"`を設定してから、指定されたtimeline設定を適用します。どちらの一括設定関数も、Resolveが設定を拒否した時点で例外を出して停止します。
+［TY API］`set_timeline_settings()`は、最初に［Resolve API］設定キー`"useCustomSettings"`へ`"1"`を設定してから、指定されたtimeline設定を適用します。ただし、この処理によってResolveが小数のframe rateを受け付けるようになるわけではありません。どちらの一括設定関数も、Resolveが設定を拒否した時点で例外を出して停止します。
 
 ## 対象環境と収録範囲
 
