@@ -27,6 +27,8 @@
 
 `fusion.py` の `Composition.AddTool()`、`Tool.ConnectInput()`、`SetInput()`、`GetInput()`、`FlowView.SetPos()` は、Resolve 21.0.4 Scripting READMEのオブジェクト一覧には掲載されていないResolve内蔵Fusion APIです。これらは実機テストとCountdown回帰テストで検証し、未検証の薄いラッパーは追加しません。
 
+`FusionTool`と`FusionResolveFxTool`は、Fusion 8 Scripting Guideの`Fusion.GetRegSummary(CT_Tool, False)`および`Registry.GetAttrs()`に従い、Resolve Studio 21.0.4.5の実機Registryから取得したRegIDです。Blackmagic提供の通常ToolとResolve FXを分離し、第三者提供の追加Fuse/OFXやKrokodoveの内部Toolなどinstall環境に依存する項目は収録していません。一覧の再調査には`tests/integration/probe_fusion_tool_registry.py`を使用します。
+
 `refresh_fusion_color_management()`はFusion pageからEdit pageへ切り替えるResolve 21.0.4向けworkaroundです。0.1秒待機では連続して作成した3つ目のCompositionから16-bit出力差が発生しましたが、0.5秒待機では4条件・384枚が参照画像と完全一致したため、既定値を0.5秒としています。この待機時間は公式仕様ではなく、Windows版Resolve Studio 21.0.4.5の実機結果です。
 
 P2の`build_rectangle()`、`get_fusion_fonts()`、page切替付き`set_tool_position()`もResolve内蔵Fusion APIを使用します。固定長`append_fusion_composition()`はTimeline settingから解像度とfpsを取得し、package同梱の`dummy_video_{width}x{height}_{fps}P.mp4`を自動選択します。`select_fusion_duration_media()`は、任意directoryのmediaを明示選択する用途にも使用できます。

@@ -188,6 +188,15 @@ status = render_current_settings(
 
 Fusionでは、Rectangleの作成、利用可能fontの確認、Flow上でのTool配置も行えます。次の例は白いRectangleを作成し、Flow上の座標`(2, 3)`へ配置します。
 
+`Composition.AddTool()`へ渡すRegistry IDは、`FusionTool`から指定できます。Resolve FX（OFX）は`FusionResolveFxTool`へ分けています。
+
+```python
+from ty_davinci_resolve import FusionTool, add_tool
+
+background = add_tool(comp, FusionTool.BACKGROUND, (0, 0))
+mask = add_tool(comp, FusionTool.RECTANGLE_MASK, (0, -1))
+```
+
 ```python
 from pathlib import Path
 

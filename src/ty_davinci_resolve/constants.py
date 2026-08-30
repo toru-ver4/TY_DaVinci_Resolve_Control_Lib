@@ -3,6 +3,8 @@
 from enum import IntEnum, StrEnum
 from types import MappingProxyType
 
+from .fusion_tool_constants import FusionResolveFxTool, FusionTool
+
 
 class Page(StrEnum):
     """DaVinci Resolve page names documented by Resolve 21.0.4."""

@@ -29,12 +29,12 @@ class PackageImportTests(unittest.TestCase):
         self.assertEqual(VideoCodec.PRORES_4444_XQ, "ProRes4444XQ")
 
     def test_page_and_track_values_match_official_api(self) -> None:
-        from ty_davinci_resolve import Page, TrackType
+        from ty_davinci_resolve import FusionTool, Page, TrackType
 
         self.assertEqual(Page.FUSION, "fusion")
         self.assertEqual(TrackType.SUBTITLE, "subtitle")
+        self.assertEqual(FusionTool.RECTANGLE_MASK, "RectangleMask")
 
 
 if __name__ == "__main__":
     unittest.main()
-

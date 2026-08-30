@@ -27,6 +27,8 @@ from ty_davinci_resolve import (
     DeinterlaceQuality,
     FrameRate,
     FrameRateMismatchBehavior,
+    FusionResolveFxTool,
+    FusionTool,
     Gamma,
     GeneratorName,
     ImageResizeMode,
@@ -97,6 +99,16 @@ def test_legacy_project_values_are_migrated() -> None:
     assert ColorSpaceGamma.REC_709_SCENE == "Rec.709 (Scene)"
     assert ClipProperty.INPUT_COLOR_SPACE == "Input Color Space"
     assert GeneratorName.SOLID_COLOR == "Solid Color"
+
+
+def test_fusion_tool_registry_ids_are_exposed_as_string_enums() -> None:
+    assert FusionTool.BACKGROUND == "Background"
+    assert FusionTool.RECTANGLE_MASK == "RectangleMask"
+    assert FusionTool.MERGE == "Merge"
+    assert FusionResolveFxTool.DCTL == (
+        "ofx.com.blackmagicdesign.resolvefx.DCTL"
+    )
+    assert all(not tool.value.startswith("KD_") for tool in FusionTool)
 
 
 def test_legacy_render_values_are_migrated() -> None:

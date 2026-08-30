@@ -11,7 +11,12 @@ from types import MappingProxyType
 from typing import Any
 
 from .connection import ResolveSession, open_page
-from .constants import Page, SUPPORTED_RESOLVE_VERSION
+from .constants import (
+    FusionResolveFxTool,
+    FusionTool,
+    Page,
+    SUPPORTED_RESOLVE_VERSION,
+)
 from .errors import ResolveOperationError, ResolveValidationError
 from .media import import_files
 from .timeline import (
@@ -543,7 +548,7 @@ def add_dctl_tool(
         raise ResolveValidationError(f"DCTL file does not exist: {target}.")
     if options is not None and not isinstance(options, Mapping):
         raise ResolveValidationError("options must be a mapping or None.")
-    tool = add_tool(comp, "ofx.com.blackmagicdesign.resolvefx.DCTL", position)
+    tool = add_tool(comp, FusionResolveFxTool.DCTL, position)
     values: dict[str, Any] = {"DCTLs": str(relative_path), "reloadDCTLButton": 1.0}
     if options:
         values.update(options)
@@ -573,7 +578,7 @@ def add_transparent_background(
     --------
     >>> add_transparent_background(comp, (0, 0))  # doctest: +SKIP
     """
-    tool = add_tool(comp, "Background", position)
+    tool = add_tool(comp, FusionTool.BACKGROUND, position)
     set_background_color(tool, (0.0, 0.0, 0.0, 0.0))
     return tool
 
@@ -586,8 +591,8 @@ def _build_masked_background(
     mask_position: Sequence[float],
     background_position: Sequence[float],
 ) -> Any:
-    mask = add_tool(comp, "RectangleMask", mask_position)
-    background = add_tool(comp, "Background", background_position)
+    mask = add_tool(comp, FusionTool.RECTANGLE_MASK, mask_position)
+    background = add_tool(comp, FusionTool.BACKGROUND, background_position)
     set_tool_inputs(mask, mask_inputs)
     set_background_color(background, rgba)
     set_tool_input(background, "EffectMask", mask)
@@ -732,7 +737,7 @@ def build_line(
         mask_position=(x, y - 2),
         background_position=(x, y - 1),
     )
-    merge = add_tool(comp, "Merge", (x, y))
+    merge = add_tool(comp, FusionTool.MERGE, (x, y))
     if connect_as_foreground:
         connect_merge(merge, foreground=foreground)
     else:
