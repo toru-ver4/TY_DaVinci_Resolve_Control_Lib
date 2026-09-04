@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from types import MappingProxyType
 
 import pytest
@@ -27,6 +28,7 @@ from ty_davinci_resolve import (
     DeinterlaceQuality,
     FrameRate,
     FrameRateMismatchBehavior,
+    FusionModifier,
     FusionResolveFxTool,
     FusionTool,
     Gamma,
@@ -102,13 +104,46 @@ def test_legacy_project_values_are_migrated() -> None:
 
 
 def test_fusion_tool_registry_ids_are_exposed_as_string_enums() -> None:
+    expected_snapshots = {
+        FusionModifier: (
+            11,
+            "05b661cf1faf1ae242b271cc455dcf4e94b294f47fcbc66b227a6dfc80e88921",
+        ),
+        FusionTool: (
+            296,
+            "2eb47043f4846a794f3bdbce7372579493fdeb20d23eeb68cf45ae1c725b1a69",
+        ),
+        FusionResolveFxTool: (
+            83,
+            "f53aab8d56eef420d0ba0c326ed09533f78f33bb917f8aed27809c3a0079687f",
+        ),
+    }
+    for enum_type, (expected_count, expected_digest) in expected_snapshots.items():
+        members = tuple(enum_type)
+        assert len(members) == expected_count
+        assert len({member.name for member in members}) == expected_count
+        assert len({member.value for member in members}) == expected_count
+        assert all(member.value for member in members)
+        snapshot = "\n".join(
+            f"{member.name}={member.value}" for member in members
+        )
+        assert hashlib.sha256(snapshot.encode()).hexdigest() == expected_digest
+
     assert FusionTool.BACKGROUND == "Background"
     assert FusionTool.RECTANGLE_MASK == "RectangleMask"
     assert FusionTool.MERGE == "Merge"
+    assert FusionTool.XY_PATH == "XYPath"
+    assert FusionModifier.BEZIER_SPLINE == "BezierSpline"
+    assert FusionModifier.PATH == "Path"
+    assert FusionModifier.XY_PATH == "XYPath"
     assert FusionResolveFxTool.DCTL == (
         "ofx.com.blackmagicdesign.resolvefx.DCTL"
     )
     assert all(not tool.value.startswith("KD_") for tool in FusionTool)
+    assert all(
+        tool.value.startswith("ofx.com.blackmagicdesign.")
+        for tool in FusionResolveFxTool
+    )
 
 
 def test_legacy_render_values_are_migrated() -> None:

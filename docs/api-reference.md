@@ -27,7 +27,9 @@
 
 `fusion.py` の `Composition.AddTool()`、`Tool.ConnectInput()`、`SetInput()`、`GetInput()`、`FlowView.SetPos()` は、Resolve 21.0.4 Scripting READMEのオブジェクト一覧には掲載されていないResolve内蔵Fusion APIです。これらは実機テストとCountdown回帰テストで検証し、未検証の薄いラッパーは追加しません。
 
-`FusionTool`と`FusionResolveFxTool`は、Fusion 8 Scripting Guideの`Fusion.GetRegSummary(CT_Tool, False)`および`Registry.GetAttrs()`に従い、Resolve Studio 21.0.4.5の実機Registryから取得したRegIDです。Blackmagic提供の通常ToolとResolve FXを分離し、第三者提供の追加Fuse/OFXやKrokodoveの内部Toolなどinstall環境に依存する項目は収録していません。一覧の再調査には`tests/integration/probe_fusion_tool_registry.py`を使用します。
+`FusionTool`、`FusionModifier`、`FusionResolveFxTool`は、Fusion 8 Scripting Guideの`Fusion.GetRegSummary()`および`Registry.GetAttrs()`に従い、Resolve Studio 21.0.4.5の実機Registryから取得したRegIDです。Blackmagic提供の通常Tool、代表的なModifier、Resolve FXを分離し、第三者提供の追加Fuse/OFXやKrokodoveの内部Toolなどinstall環境に依存する項目は収録していません。`FusionTool.XY_PATH`は初期APIとの互換性用で、新規コードでは`FusionModifier.XY_PATH`を使用します。一覧の再調査には`tests/integration/probe_fusion_tool_registry.py`を使用します。
+
+`fusion.pyi`と`fusion_tool_types.pyi`は、各enum memberに対応する`add_tool()`・`add_modifier()` overloadとTool/Modifier別入力名を提供します。Resolve 21.0.4実機から再生成する場合は、Resolveを起動した状態で`python tests/integration/generate_fusion_type_stubs.py --output-directory src/ty_davinci_resolve`を実行します。生成処理は非表示の一時Compositionを使用し、作成したTool/Modifierを調査後に削除します。生成できない項目は再試行せず、入力なしのProtocolとして扱います。
 
 `refresh_fusion_color_management()`はFusion pageからEdit pageへ切り替えるResolve 21.0.4向けworkaroundです。0.1秒待機では連続して作成した3つ目のCompositionから16-bit出力差が発生しましたが、0.5秒待機では4条件・384枚が参照画像と完全一致したため、既定値を0.5秒としています。この待機時間は公式仕様ではなく、Windows版Resolve Studio 21.0.4.5の実機結果です。
 

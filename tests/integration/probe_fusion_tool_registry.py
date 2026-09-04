@@ -23,6 +23,19 @@ _BLACKMAGIC_OFX_PREFIXES = (
     "ofx.com.blackmagicdesign.openfx.",
 )
 _BUILTIN_WITHOUT_FILENAME = frozenset({"MtlBlinn", "Note", "Underlay"})
+_CURATED_FUSION_MODIFIER_IDS = (
+    "BezierSpline",
+    "BSplinePath",
+    "Expression",
+    "Offset",
+    "Path",
+    "PerturbNumber",
+    "PerturbPoint",
+    "PolyPath",
+    "Shake",
+    "TrackerModifier",
+    "XYPath",
+)
 
 
 def _member_name(registry_id: str, *, prefixes: tuple[str, ...] = ()) -> str:
@@ -166,6 +179,21 @@ def main() -> None:
         rows.append(registry.GetAttrs())
 
     fusion_rows = [row for row in rows if _is_blackmagic_fusion_tool(row)]
+    modifier_rows = []
+    for registry_id in _CURATED_FUSION_MODIFIER_IDS:
+        registry = session.fusion.FindReg(registry_id)
+        if registry is None:
+            raise RuntimeError(
+                f"Fusion.FindReg failed for Modifier {registry_id!r}."
+            )
+        modifier_rows.append(registry.GetAttrs())
+
+    # Compatibility: XYPath was initially exposed through FusionTool.
+    fusion_rows.append(
+        next(
+            row for row in modifier_rows if row.get("REGS_ID") == "XYPath"
+        )
+    )
     resolve_fx_rows = [
         row
         for row in rows
@@ -182,6 +210,12 @@ def main() -> None:
     print('    """Blackmagic-provided Fusion Tool Registry IDs."""')
     print()
     print(*_enum_lines(fusion_rows), sep="\n")
+    print()
+    print()
+    print("class FusionModifier(StrEnum):")
+    print('    """Blackmagic-provided Fusion Modifier Registry IDs."""')
+    print()
+    print(*_enum_lines(modifier_rows), sep="\n")
     print()
     print()
     print("class FusionResolveFxTool(StrEnum):")

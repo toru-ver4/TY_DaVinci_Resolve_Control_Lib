@@ -197,6 +197,97 @@ background = add_tool(comp, FusionTool.BACKGROUND, (0, 0))
 mask = add_tool(comp, FusionTool.RECTANGLE_MASK, (0, -1))
 ```
 
+`FusionTool`または`FusionResolveFxTool`のenum memberを`add_tool()`へ直接渡すと、同梱の型stubによりTool固有の入力名が補完されます。例えば`FusionTool.RECTANGLE_MASK`の戻り値では`Width`、`Height`、`Center`などが候補に表示されます。Fusion remote objectの入力値型は実行時に変化し得るため、入力名はTool別に定義し、値自体は`Any`としています。
+
+PointやNumber入力へ接続するModifierは、`FusionModifier`と`add_modifier()`を使用します。`FusionTool.XY_PATH`は互換性用で、新規コードでは`FusionModifier.XY_PATH`を指定します。
+
+```python
+from ty_davinci_resolve import FusionModifier, add_modifier
+
+xy_path = add_modifier(comp, FusionModifier.XY_PATH)
+mask.Center = xy_path
+```
+
+### Toolの入力名を実機から調べる
+
+各Toolで利用できる入力は、Tool remote objectの`GetInputList()`で取得できます。各Inputの`GetAttrs()`に含まれる`INPS_ID`が、`Width`や`Center`のようにPython APIへ渡す入力IDです。`INPS_Name`はGUI上の表示名、`INPS_DataType`は`Number`や`Point`などの概略データ型です。
+
+次の関数は、実機から入力ID、表示名、データ型を取得して、入力ID順に返します。
+
+```python
+from typing import Any
+
+
+def get_fusion_tool_input_info(
+    tool: Any,
+) -> tuple[tuple[str, str, str], ...]:
+    """Return input information reported by a Fusion Tool.
+
+    Parameters
+    ----------
+    tool
+        Fusion Tool remote object.
+
+    Returns
+    -------
+    tuple of tuple of str
+        Input ID, display name, and data type for every reported input.
+
+    Examples
+    --------
+    >>> get_fusion_tool_input_info(rectangle_mask)  # doctest: +SKIP
+    """
+    input_list = tool.GetInputList()
+    if not isinstance(input_list, dict):
+        raise RuntimeError("Tool.GetInputList returned an invalid value.")
+
+    rows: list[tuple[str, str, str]] = []
+    for input_object in input_list.values():
+        attrs = input_object.GetAttrs()
+        if not isinstance(attrs, dict):
+            raise RuntimeError("Input.GetAttrs returned an invalid value.")
+        input_id = attrs.get("INPS_ID")
+        if not isinstance(input_id, str) or not input_id:
+            continue
+        display_name = attrs.get("INPS_Name")
+        data_type = attrs.get("INPS_DataType")
+        rows.append(
+            (
+                input_id,
+                display_name if isinstance(display_name, str) else "",
+                data_type if isinstance(data_type, str) else "",
+            )
+        )
+    return tuple(sorted(rows, key=lambda row: row[0].casefold()))
+```
+
+RectangleMaskを調べる例です。`comp`は前述の`append_fusion_composition()`などで取得したCompositionを使用します。
+
+```python
+from ty_davinci_resolve import FusionTool, add_tool
+
+rectangle_mask = add_tool(
+    comp,
+    FusionTool.RECTANGLE_MASK,
+    (0, -1),
+)
+for input_id, display_name, data_type in get_fusion_tool_input_info(
+    rectangle_mask
+):
+    print(f"{input_id:24} {data_type:10} {display_name}")
+```
+
+出力には共通設定も含まれますが、Rectangle固有の主要部分は次のように確認できます。
+
+```text
+Angle                    Number     Angle
+Center                   Point      Center
+Height                   Number     Height
+Width                    Number     Width
+```
+
+表示される入力はResolveのversion、edition、Tool設定によって変わる可能性があります。入力IDが有効なPython識別子なら`rectangle_mask.Width`のようにアクセスできます。識別子として扱えない入力や補完に未収録の入力も、`set_tool_input(rectangle_mask, input_id, value)`なら入力ID文字列で指定できます。調査だけのために追加したToolは、確認後に`rectangle_mask.Delete()`で削除してください。
+
 ```python
 from pathlib import Path
 

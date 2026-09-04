@@ -300,7 +300,24 @@ class FusionTool(StrEnum):
     WAND_MASK = "WandMask"  # Wand
     WELD_3D = "Weld3D"  # Weld 3D
     WHITE_BALANCE = "WhiteBalance"  # White Balance
+    XY_PATH = "XYPath"  # XY Path
     ZTO_WORLD_POS = "ZtoWorldPos"  # Z to WorldPos
+
+
+class FusionModifier(StrEnum):
+    """Blackmagic-provided Fusion Modifier Registry IDs."""
+
+    BEZIER_SPLINE = "BezierSpline"
+    B_SPLINE_PATH = "BSplinePath"  # BSpline Path
+    EXPRESSION = "Expression"
+    OFFSET = "Offset"
+    PATH = "Path"
+    PERTURB_NUMBER = "PerturbNumber"  # Perturb
+    PERTURB_POINT = "PerturbPoint"  # Perturb
+    POLY_PATH = "PolyPath"  # Path
+    SHAKE = "Shake"
+    TRACKER_MODIFIER = "TrackerModifier"  # Track
+    XY_PATH = "XYPath"  # XY Path
 
 
 class FusionResolveFxTool(StrEnum):

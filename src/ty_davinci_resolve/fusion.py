@@ -12,6 +12,7 @@ from typing import Any
 
 from .connection import ResolveSession, open_page
 from .constants import (
+    FusionModifier,
     FusionResolveFxTool,
     FusionTool,
     Page,
@@ -126,6 +127,35 @@ def add_tool(
     if tool is None:
         raise ResolveOperationError("Composition.AddTool", tool)
     return tool
+
+
+def add_modifier(comp: Any, modifier_type: str) -> Any:
+    """Add a Fusion modifier outside the flow view.
+
+    Parameters
+    ----------
+    comp
+        Fusion Composition remote object.
+    modifier_type
+        Fusion modifier type, such as ``XYPath`` or ``Expression``.
+
+    Returns
+    -------
+    Any
+        Created Fusion Modifier remote object.
+
+    Examples
+    --------
+    >>> add_modifier(comp, FusionModifier.XY_PATH)  # doctest: +SKIP
+    """
+    if not isinstance(modifier_type, str) or not modifier_type:
+        raise ResolveValidationError(
+            "modifier_type must be a non-empty string."
+        )
+    modifier = comp.AddTool(modifier_type, 0.0, 0.0)
+    if modifier is None:
+        raise ResolveOperationError("Composition.AddTool", modifier)
+    return modifier
 
 
 def connect_input(target: Any, input_name: str, source: Any) -> None:

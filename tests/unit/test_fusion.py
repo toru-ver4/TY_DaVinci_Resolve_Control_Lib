@@ -7,6 +7,7 @@ import pytest
 
 from ty_davinci_resolve import (
     ResolveOperationError,
+    add_modifier,
     add_tool,
     connect_input,
     get_tool,
@@ -40,6 +41,19 @@ def test_add_and_find_tool() -> None:
     )
     assert add_tool(comp, "Background", (1, 2)) is tool
     assert get_tool(comp, "Background1") is tool
+
+
+def test_add_modifier_uses_hidden_flow_position() -> None:
+    modifier = FakeTool("XYPath1")
+    calls: list[tuple[str, float, float]] = []
+
+    def add_tool_call(tool_type: str, x: float, y: float) -> FakeTool:
+        calls.append((tool_type, x, y))
+        return modifier
+
+    comp = SimpleNamespace(AddTool=add_tool_call)
+    assert add_modifier(comp, "XYPath") is modifier
+    assert calls == [("XYPath", 0.0, 0.0)]
 
 
 def test_missing_tool_raises_operation_error() -> None:
