@@ -8,6 +8,16 @@ DaVinci Resolve 21.0.4をPythonから制御するためのライブラリです�
 
 名前の直前に、Resolveの画面名は**［Resolve GUI］**、Resolve公式Scripting APIは**［Resolve API］**、本ライブラリ`ty_davinci_resolve`のPython APIは**［TY API］**と表記します。例えば［Resolve GUI］「Timeline frame rate」、［Resolve API］`Project.SetSetting()`、［TY API］`ProjectSetting`です。ダブルクォートは実際の文字列にだけ使用します。
 
+公開関数名は操作対象を明示します。プロジェクト設定には
+`get_project_setting()`／`set_project_setting()`／`set_project_settings()`、
+Media Poolのフォルダー操作には`get_current_media_pool_folder()`など、
+Fusionノードの操作には`add_fusion_tool()`などを使用します。旧名の互換エイリアスは提供しません。
+
+`get_project_timeline_resolution()`はプロジェクト設定の解像度を返します。
+個別タイムラインの設定は`get_timeline_setting()`で読み取ります。
+`set_timeline_playhead_timecode()`は再生ヘッドを移動し、
+`set_fusion_tool_flow_position()`はノードエディター上の配置を変更します。
+
 ## インストール
 
 開発時はリポジトリ直下でeditable installします。
@@ -59,12 +69,12 @@ from ty_davinci_resolve import (
     ResolutionValue,
     ResolveSession,
     create_project,
-    set_settings,
+    set_project_settings,
 )
 
 session = ResolveSession.connect()
 project = create_project(session, "Automation Test")
-set_settings(
+set_project_settings(
     project,
     {
         ProjectSetting.TIMELINE_RESOLUTION_WIDTH: ResolutionValue.PX_1280,
@@ -86,12 +96,12 @@ from ty_davinci_resolve import (
     ColorSpace,
     Gamma,
     ProjectSetting,
-    set_settings,
+    set_project_settings,
 )
 
 assert ColorSpace.P3_D65 == "P3-D65"
 assert Gamma.ST2084 == "ST2084"
-set_settings(project, BT2100_PROJECT_SETTINGS, settle_delay=0.35)
+set_project_settings(project, BT2100_PROJECT_SETTINGS, settle_delay=0.35)
 ```
 
 `BT2100_PROJECT_SETTINGS`のようなpresetは、設定する順番も含めたひとまとまりの制作条件です。依存するColor Management項目を連続して変更するときは、例のように`settle_delay=0.35`を指定し、Resolveが各変更を反映する時間を確保します。
@@ -146,10 +156,10 @@ Windows版Resolve Studio 21.0.4.5では20回すべて成功しました。この
 ```python
 from pathlib import Path
 
-from ty_davinci_resolve import get_media_pool, import_files
+from ty_davinci_resolve import get_media_pool, import_media_files
 
 media_pool = get_media_pool(project)
-clips = import_files(media_pool, [Path(r"C:\media\clip.mov")])
+clips = import_media_files(media_pool, [Path(r"C:\media\clip.mov")])
 ```
 
 ## Fusion Compositionを自動で配置する
@@ -158,13 +168,13 @@ clips = import_files(media_pool, [Path(r"C:\media\clip.mov")])
 
 ```python
 from ty_davinci_resolve import (
-    append_fusion_composition,
+    add_fusion_composition_to_timeline,
     get_current_timeline,
     get_media_pool,
 )
 
 timeline = get_current_timeline(project)
-item, comp = append_fusion_composition(
+item, comp = add_fusion_composition_to_timeline(
     timeline,
     duration_frames=24,
     record_frame=86400,
@@ -191,20 +201,20 @@ Fusionでは、Rectangleの作成、利用可能fontの確認、Flow上でのToo
 `Composition.AddTool()`へ渡すRegistry IDは、`FusionTool`から指定できます。Resolve FX（OFX）は`FusionResolveFxTool`へ分けています。
 
 ```python
-from ty_davinci_resolve import FusionTool, add_tool
+from ty_davinci_resolve import FusionTool, add_fusion_tool
 
-background = add_tool(comp, FusionTool.BACKGROUND, (0, 0))
-mask = add_tool(comp, FusionTool.RECTANGLE_MASK, (0, -1))
+background = add_fusion_tool(comp, FusionTool.BACKGROUND, (0, 0))
+mask = add_fusion_tool(comp, FusionTool.RECTANGLE_MASK, (0, -1))
 ```
 
-`FusionTool`または`FusionResolveFxTool`のenum memberを`add_tool()`へ直接渡すと、同梱の型stubによりTool固有の入力名が補完されます。例えば`FusionTool.RECTANGLE_MASK`の戻り値では`Width`、`Height`、`Center`などが候補に表示されます。Fusion remote objectの入力値型は実行時に変化し得るため、入力名はTool別に定義し、値自体は`Any`としています。
+`FusionTool`または`FusionResolveFxTool`のenum memberを`add_fusion_tool()`へ直接渡すと、同梱の型stubによりTool固有の入力名が補完されます。例えば`FusionTool.RECTANGLE_MASK`の戻り値では`Width`、`Height`、`Center`などが候補に表示されます。Fusion remote objectの入力値型は実行時に変化し得るため、入力名はTool別に定義し、値自体は`Any`としています。
 
-PointやNumber入力へ接続するModifierは、`FusionModifier`と`add_modifier()`を使用します。`FusionTool.XY_PATH`は互換性用で、新規コードでは`FusionModifier.XY_PATH`を指定します。
+PointやNumber入力へ接続するModifierは、`FusionModifier`と`add_fusion_modifier()`を使用します。`FusionTool.XY_PATH`は互換性用で、新規コードでは`FusionModifier.XY_PATH`を指定します。
 
 ```python
-from ty_davinci_resolve import FusionModifier, add_modifier
+from ty_davinci_resolve import FusionModifier, add_fusion_modifier
 
-xy_path = add_modifier(comp, FusionModifier.XY_PATH)
+xy_path = add_fusion_modifier(comp, FusionModifier.XY_PATH)
 mask.Center = xy_path
 ```
 
@@ -261,12 +271,12 @@ def get_fusion_tool_input_info(
     return tuple(sorted(rows, key=lambda row: row[0].casefold()))
 ```
 
-RectangleMaskを調べる例です。`comp`は前述の`append_fusion_composition()`などで取得したCompositionを使用します。
+RectangleMaskを調べる例です。`comp`は前述の`add_fusion_composition_to_timeline()`などで取得したCompositionを使用します。
 
 ```python
-from ty_davinci_resolve import FusionTool, add_tool
+from ty_davinci_resolve import FusionTool, add_fusion_tool
 
-rectangle_mask = add_tool(
+rectangle_mask = add_fusion_tool(
     comp,
     FusionTool.RECTANGLE_MASK,
     (0, -1),
@@ -286,26 +296,26 @@ Height                   Number     Height
 Width                    Number     Width
 ```
 
-表示される入力はResolveのversion、edition、Tool設定によって変わる可能性があります。入力IDが有効なPython識別子なら`rectangle_mask.Width`のようにアクセスできます。識別子として扱えない入力や補完に未収録の入力も、`set_tool_input(rectangle_mask, input_id, value)`なら入力ID文字列で指定できます。調査だけのために追加したToolは、確認後に`rectangle_mask.Delete()`で削除してください。
+表示される入力はResolveのversion、edition、Tool設定によって変わる可能性があります。入力IDが有効なPython識別子なら`rectangle_mask.Width`のようにアクセスできます。識別子として扱えない入力や補完に未収録の入力も、`set_fusion_tool_input(rectangle_mask, input_id, value)`なら入力ID文字列で指定できます。調査だけのために追加したToolは、確認後に`rectangle_mask.Delete()`で削除してください。
 
 ```python
 from pathlib import Path
 
 from ty_davinci_resolve import (
-    build_rectangle,
+    build_fusion_rectangle,
     get_fusion_fonts,
     select_fusion_duration_media,
-    set_tool_position,
+    set_fusion_tool_flow_position,
 )
 
 fonts = get_fusion_fonts(session.fusion)
-rectangle = build_rectangle(
+rectangle = build_fusion_rectangle(
     comp,
     (1.0, 1.0, 1.0, 1.0),
     width=0.2,
     height=0.1,
 )
-set_tool_position(
+set_fusion_tool_flow_position(
     comp,
     rectangle,
     (2, 3),

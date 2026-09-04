@@ -10,10 +10,10 @@ from ty_davinci_resolve import (
     MediaType,
     ResolveOperationError,
     ResolveValidationError,
-    append_clip,
+    append_clip_to_current_timeline,
     get_track_items,
-    import_files,
-    import_sequence,
+    import_media_files,
+    import_image_sequence,
     insert_fusion_composition,
 )
 
@@ -32,33 +32,33 @@ class FakeMediaPool:
         return self.result
 
 
-def test_import_files_validates_all_paths_before_api_call(tmp_path: Path) -> None:
+def test_import_media_files_validates_all_paths_before_api_call(tmp_path: Path) -> None:
     existing = tmp_path / "clip.mov"
     existing.write_bytes(b"test")
     media_pool = FakeMediaPool()
 
     with pytest.raises(ResolveValidationError):
-        import_files(media_pool, [existing, tmp_path / "missing.mov"])
+        import_media_files(media_pool, [existing, tmp_path / "missing.mov"])
 
     assert media_pool.arguments is None
 
 
-def test_import_files_calls_import_media(tmp_path: Path) -> None:
+def test_import_media_files_calls_import_media(tmp_path: Path) -> None:
     existing = tmp_path / "clip.mov"
     existing.write_bytes(b"test")
     media_pool = FakeMediaPool()
 
-    items = import_files(media_pool, [existing])
+    items = import_media_files(media_pool, [existing])
 
     assert len(items) == 1
     assert media_pool.arguments == [str(existing)]
 
 
-def test_import_sequence_builds_documented_clip_info(tmp_path: Path) -> None:
+def test_import_image_sequence_builds_documented_clip_info(tmp_path: Path) -> None:
     media_pool = FakeMediaPool()
     pattern = tmp_path / "frame_%04d.png"
 
-    item = import_sequence(media_pool, pattern, 0, 95)
+    item = import_image_sequence(media_pool, pattern, 0, 95)
 
     assert item is not None
     assert media_pool.arguments == [
@@ -66,11 +66,11 @@ def test_import_sequence_builds_documented_clip_info(tmp_path: Path) -> None:
     ]
 
 
-def test_append_clip_builds_documented_clip_info() -> None:
+def test_append_clip_to_current_timeline_builds_documented_clip_info() -> None:
     media_pool = FakeMediaPool()
     clip = object()
 
-    item = append_clip(
+    item = append_clip_to_current_timeline(
         media_pool,
         clip,
         record_frame=100,
@@ -93,10 +93,10 @@ def test_append_clip_builds_documented_clip_info() -> None:
     ]
 
 
-def test_append_clip_rejects_incomplete_source_range_before_api() -> None:
+def test_append_clip_to_current_timeline_rejects_incomplete_source_range_before_api() -> None:
     media_pool = FakeMediaPool()
     with pytest.raises(ResolveValidationError):
-        append_clip(media_pool, object(), start_frame=0)
+        append_clip_to_current_timeline(media_pool, object(), start_frame=0)
     assert media_pool.arguments is None
 
 

@@ -75,7 +75,7 @@ def get_current_timeline(project: Any) -> Any:
     return timeline
 
 
-def append_clip(
+def append_clip_to_current_timeline(
     media_pool: Any,
     clip: Any,
     *,
@@ -111,7 +111,7 @@ def append_clip(
 
     Examples
     --------
-    >>> append_clip(media_pool, clip, track_index=1)  # doctest: +SKIP
+    >>> append_clip_to_current_timeline(media_pool, clip, track_index=1)  # doctest: +SKIP
     """
     if clip is None:
         raise ResolveValidationError("clip must not be None.")
@@ -275,7 +275,7 @@ def insert_fusion_composition(timeline: Any) -> Any:
     return item
 
 
-def set_current_timecode(
+def set_timeline_playhead_timecode(
     timeline: Any,
     timecode: str,
     *,
@@ -298,7 +298,7 @@ def set_current_timecode(
 
     Examples
     --------
-    >>> set_current_timecode(timeline, "01:00:00:00")  # doctest: +SKIP
+    >>> set_timeline_playhead_timecode(timeline, "01:00:00:00")  # doctest: +SKIP
     """
     if not isinstance(timecode, str) or re.fullmatch(r"\d{2}:\d{2}:\d{2}:\d{2}", timecode) is None:
         raise ResolveValidationError("timecode must use HH:MM:SS:FF form.")

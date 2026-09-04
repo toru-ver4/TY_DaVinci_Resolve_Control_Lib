@@ -20,7 +20,7 @@ from ty_davinci_resolve import (
     list_projects,
     load_project,
     save_project,
-    set_settings,
+    set_project_settings,
 )
 
 
@@ -44,7 +44,7 @@ def _run_one(name: str) -> None:
     project = None
     try:
         project = create_project(session, name)
-        set_settings(
+        set_project_settings(
             project,
             {
                 "timelineResolutionWidth": "1280",

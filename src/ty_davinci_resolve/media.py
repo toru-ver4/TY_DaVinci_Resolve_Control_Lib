@@ -61,7 +61,7 @@ def get_media_pool(project: Any) -> Any:
     return media_pool
 
 
-def get_root_folder(media_pool: Any) -> Any:
+def get_media_pool_root_folder(media_pool: Any) -> Any:
     """Return the root Media Pool folder.
 
     Parameters
@@ -76,7 +76,7 @@ def get_root_folder(media_pool: Any) -> Any:
 
     Examples
     --------
-    >>> get_root_folder(media_pool)  # doctest: +SKIP
+    >>> get_media_pool_root_folder(media_pool)  # doctest: +SKIP
     """
     folder = media_pool.GetRootFolder()
     if folder is None:
@@ -84,7 +84,7 @@ def get_root_folder(media_pool: Any) -> Any:
     return folder
 
 
-def get_current_folder(media_pool: Any) -> Any:
+def get_current_media_pool_folder(media_pool: Any) -> Any:
     """Return the currently selected Media Pool folder.
 
     Parameters
@@ -99,7 +99,7 @@ def get_current_folder(media_pool: Any) -> Any:
 
     Examples
     --------
-    >>> get_current_folder(media_pool)  # doctest: +SKIP
+    >>> get_current_media_pool_folder(media_pool)  # doctest: +SKIP
     """
     folder = media_pool.GetCurrentFolder()
     if folder is None:
@@ -107,7 +107,7 @@ def get_current_folder(media_pool: Any) -> Any:
     return folder
 
 
-def set_current_folder(media_pool: Any, folder: Any) -> None:
+def set_current_media_pool_folder(media_pool: Any, folder: Any) -> None:
     """Select a Media Pool folder.
 
     Parameters
@@ -123,7 +123,7 @@ def set_current_folder(media_pool: Any, folder: Any) -> None:
 
     Examples
     --------
-    >>> set_current_folder(media_pool, folder)  # doctest: +SKIP
+    >>> set_current_media_pool_folder(media_pool, folder)  # doctest: +SKIP
     """
     if folder is None:
         raise ResolveValidationError("folder must not be None.")
@@ -132,7 +132,7 @@ def set_current_folder(media_pool: Any, folder: Any) -> None:
         raise ResolveOperationError("MediaPool.SetCurrentFolder", result)
 
 
-def import_files(media_pool: Any, paths: Iterable[str | Path]) -> tuple[Any, ...]:
+def import_media_files(media_pool: Any, paths: Iterable[str | Path]) -> tuple[Any, ...]:
     """Import existing files into the current Media Pool folder.
 
     Parameters
@@ -149,7 +149,7 @@ def import_files(media_pool: Any, paths: Iterable[str | Path]) -> tuple[Any, ...
 
     Examples
     --------
-    >>> import_files(media_pool, [Path("C:/media/clip.mov")])  # doctest: +SKIP
+    >>> import_media_files(media_pool, [Path("C:/media/clip.mov")])  # doctest: +SKIP
     """
     try:
         normalized = tuple(Path(path).expanduser() for path in paths)
@@ -168,7 +168,7 @@ def import_files(media_pool: Any, paths: Iterable[str | Path]) -> tuple[Any, ...
     return tuple(result)
 
 
-def import_sequence(
+def import_image_sequence(
     media_pool: Any,
     pattern: str | Path,
     start_index: int,
@@ -194,7 +194,7 @@ def import_sequence(
 
     Examples
     --------
-    >>> import_sequence(media_pool, "C:/seq/frame_%04d.png", 0, 95)  # doctest: +SKIP
+    >>> import_image_sequence(media_pool, "C:/seq/frame_%04d.png", 0, 95)  # doctest: +SKIP
     """
     pattern_path = Path(pattern).expanduser()
     if not pattern_path.is_absolute():

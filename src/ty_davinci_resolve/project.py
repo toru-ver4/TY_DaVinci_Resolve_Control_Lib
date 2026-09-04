@@ -443,7 +443,7 @@ def delete_project(
     _wait_until_project_is_deleted(session, name, timing)
 
 
-def get_setting(project: Any, name: str) -> str:
+def get_project_setting(project: Any, name: str) -> str:
     """Read one project setting.
 
     Parameters
@@ -460,7 +460,7 @@ def get_setting(project: Any, name: str) -> str:
 
     Examples
     --------
-    >>> get_setting(project, "timelineFrameRate")  # doctest: +SKIP
+    >>> get_project_setting(project, "timelineFrameRate")  # doctest: +SKIP
     '24'
     """
     name = _non_empty_text(name, "name")
@@ -470,7 +470,7 @@ def get_setting(project: Any, name: str) -> str:
     return str(result)
 
 
-def set_setting(project: Any, name: str, value: str | int) -> None:
+def set_project_setting(project: Any, name: str, value: str | int) -> None:
     """Set one project setting and fail immediately on rejection.
 
     Parameters
@@ -489,7 +489,7 @@ def set_setting(project: Any, name: str, value: str | int) -> None:
 
     Examples
     --------
-    >>> set_setting(project, "timelineResolutionWidth", "1280")  # doctest: +SKIP
+    >>> set_project_setting(project, "timelineResolutionWidth", "1280")  # doctest: +SKIP
     """
     name = _non_empty_text(name, "name")
     if isinstance(value, str):
@@ -503,7 +503,7 @@ def set_setting(project: Any, name: str, value: str | int) -> None:
         )
 
 
-def set_settings(
+def set_project_settings(
     project: Any,
     settings: Mapping[str, str | int],
     *,
@@ -531,7 +531,7 @@ def set_settings(
 
     Examples
     --------
-    >>> set_settings(project, {"timelineResolutionWidth": "1280"})  # doctest: +SKIP
+    >>> set_project_settings(project, {"timelineResolutionWidth": "1280"})  # doctest: +SKIP
     """
     if not isinstance(settings, Mapping) or not settings:
         raise ResolveValidationError("settings must be a non-empty mapping.")
@@ -543,13 +543,13 @@ def set_settings(
     ):
         raise ResolveValidationError("settle_delay must be finite and non-negative.")
     for name, value in settings.items():
-        set_setting(project, name, value)
+        set_project_setting(project, name, value)
         if settle_delay:
             time.sleep(settle_delay)
 
 
-def get_timeline_resolution(project: Any) -> tuple[int, int]:
-    """Return the configured timeline resolution.
+def get_project_timeline_resolution(project: Any) -> tuple[int, int]:
+    """Return the timeline resolution configured in project settings.
 
     Parameters
     ----------
@@ -559,14 +559,14 @@ def get_timeline_resolution(project: Any) -> tuple[int, int]:
     Returns
     -------
     tuple of int
-        Timeline width and height.
+        Project-level timeline width and height, without timeline overrides.
 
     Examples
     --------
-    >>> get_timeline_resolution(project)  # doctest: +SKIP
+    >>> get_project_timeline_resolution(project)  # doctest: +SKIP
     (1280, 720)
     """
-    values = (get_setting(project, "timelineResolutionWidth"), get_setting(project, "timelineResolutionHeight"))
+    values = (get_project_setting(project, "timelineResolutionWidth"), get_project_setting(project, "timelineResolutionHeight"))
     try:
         resolution = tuple(int(value) for value in values)
     except ValueError as error:

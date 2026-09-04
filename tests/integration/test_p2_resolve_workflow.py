@@ -10,8 +10,8 @@ import pytest
 from ty_davinci_resolve import (
     Page,
     ResolveSession,
-    append_fusion_composition,
-    build_rectangle,
+    add_fusion_composition_to_timeline,
+    build_fusion_rectangle,
     close_project,
     create_empty_timeline,
     create_project,
@@ -24,8 +24,8 @@ from ty_davinci_resolve import (
     load_project,
     make_video_monitor_format,
     open_page,
-    set_settings,
-    set_tool_position,
+    set_project_settings,
+    set_fusion_tool_flow_position,
 )
 
 
@@ -40,7 +40,7 @@ def test_p2_helpers_on_resolve_21_0_4() -> None:
 
     try:
         project = create_project(session, project_name)
-        set_settings(
+        set_project_settings(
             project,
             {
                 "timelineResolutionWidth": "1280",
@@ -54,9 +54,9 @@ def test_p2_helpers_on_resolve_21_0_4() -> None:
         media_pool = get_media_pool(project)
         timeline = create_empty_timeline(media_pool, "P2 Helpers")
         open_page(session, Page.EDIT)
-        _, comp = append_fusion_composition(timeline)
+        _, comp = add_fusion_composition_to_timeline(timeline)
 
-        rectangle = build_rectangle(
+        rectangle = build_fusion_rectangle(
             comp,
             (0.1, 0.2, 0.3, 0.4),
             center=(0.25, 0.75),
@@ -75,7 +75,7 @@ def test_p2_helpers_on_resolve_21_0_4() -> None:
 
         open_page(session, Page.EDIT)
         activation_was_required = comp.CurrentFrame is None
-        set_tool_position(
+        set_fusion_tool_flow_position(
             comp,
             rectangle,
             (5, 3),

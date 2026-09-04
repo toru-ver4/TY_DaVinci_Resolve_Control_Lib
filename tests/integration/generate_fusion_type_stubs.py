@@ -313,7 +313,7 @@ def _render_fusion_stub() -> str:
         lines.extend(
             [
                 "@overload",
-                "def add_tool(",
+                "def add_fusion_tool(",
                 "    comp: Any,",
                 f"    tool_type: Literal[FusionTool.{member.name}],",
                 "    position: Sequence[float] = ...,",
@@ -326,7 +326,7 @@ def _render_fusion_stub() -> str:
         lines.extend(
             [
                 "@overload",
-                "def add_tool(",
+                "def add_fusion_tool(",
                 "    comp: Any,",
                 f"    tool_type: Literal[FusionResolveFxTool.{member.name}],",
                 "    position: Sequence[float] = ...,",
@@ -336,7 +336,7 @@ def _render_fusion_stub() -> str:
         )
     lines.extend(
         [
-            "def add_tool(",
+            "def add_fusion_tool(",
             "    comp: Any,",
             "    tool_type: str,",
             "    position: Sequence[float] = ...,",
@@ -350,7 +350,7 @@ def _render_fusion_stub() -> str:
         lines.extend(
             [
                 "@overload",
-                "def add_modifier(",
+                "def add_fusion_modifier(",
                 "    comp: Any,",
                 f"    modifier_type: Literal[FusionModifier.{member.name}],",
                 f") -> {class_name}: ...",
@@ -359,7 +359,7 @@ def _render_fusion_stub() -> str:
         )
     lines.extend(
         [
-            "def add_modifier(",
+            "def add_fusion_modifier(",
             "    comp: Any,",
             "    modifier_type: str,",
             ") -> FusionToolProtocol: ...",
@@ -371,13 +371,13 @@ def _render_fusion_stub() -> str:
     for node in tree.body:
         if not isinstance(node, ast.FunctionDef) or node.name.startswith("_"):
             continue
-        if node.name in {"add_modifier", "add_tool"}:
+        if node.name in {"add_fusion_modifier", "add_fusion_tool"}:
             continue
-        if node.name == "add_comp":
+        if node.name == "add_fusion_composition_to_clip":
             node.returns = ast.Name(id="FusionCompositionProtocol")
-        elif node.name == "get_tool":
+        elif node.name == "get_fusion_tool":
             node.returns = ast.Name(id="FusionToolProtocol")
-        elif node.name == "append_fusion_composition":
+        elif node.name == "add_fusion_composition_to_timeline":
             node.returns = ast.parse(
                 "tuple[Any, FusionCompositionProtocol]", mode="eval"
             ).body

@@ -7,12 +7,12 @@ import pytest
 
 from ty_davinci_resolve import (
     ResolveOperationError,
-    add_modifier,
-    add_tool,
+    add_fusion_modifier,
+    add_fusion_tool,
     connect_input,
-    get_tool,
-    set_tool_input,
-    set_tool_inputs,
+    get_fusion_tool,
+    set_fusion_tool_input,
+    set_fusion_tool_inputs,
 )
 
 
@@ -39,11 +39,11 @@ def test_add_and_find_tool() -> None:
         AddTool=lambda tool_type, x, y: tool,
         GetToolList=lambda: {1: tool},
     )
-    assert add_tool(comp, "Background", (1, 2)) is tool
-    assert get_tool(comp, "Background1") is tool
+    assert add_fusion_tool(comp, "Background", (1, 2)) is tool
+    assert get_fusion_tool(comp, "Background1") is tool
 
 
-def test_add_modifier_uses_hidden_flow_position() -> None:
+def test_add_fusion_modifier_uses_hidden_flow_position() -> None:
     modifier = FakeTool("XYPath1")
     calls: list[tuple[str, float, float]] = []
 
@@ -52,14 +52,14 @@ def test_add_modifier_uses_hidden_flow_position() -> None:
         return modifier
 
     comp = SimpleNamespace(AddTool=add_tool_call)
-    assert add_modifier(comp, "XYPath") is modifier
+    assert add_fusion_modifier(comp, "XYPath") is modifier
     assert calls == [("XYPath", 0.0, 0.0)]
 
 
 def test_missing_tool_raises_operation_error() -> None:
     comp = SimpleNamespace(GetToolList=lambda: {})
     with pytest.raises(ResolveOperationError):
-        get_tool(comp, "Missing")
+        get_fusion_tool(comp, "Missing")
 
 
 def test_connect_input_uses_named_target_input() -> None:
@@ -69,15 +69,15 @@ def test_connect_input_uses_named_target_input() -> None:
     assert target.connections == [("Input", source)]
 
 
-def test_set_tool_inputs_verifies_scalars_and_dicts() -> None:
+def test_set_fusion_tool_inputs_verifies_scalars_and_dicts() -> None:
     tool = FakeTool()
     values = {"Gain": 0.5, "Label": "test", "Center": {1: 0.5, 2: 0.5}}
-    set_tool_inputs(tool, values)
+    set_fusion_tool_inputs(tool, values)
     assert tool.values == values
 
 
-def test_set_tool_input_detects_readback_mismatch() -> None:
+def test_set_fusion_tool_input_detects_readback_mismatch() -> None:
     tool = FakeTool()
     tool.GetInput = lambda name: 0.25  # type: ignore[method-assign]
     with pytest.raises(ResolveOperationError):
-        set_tool_input(tool, "Gain", 0.5)
+        set_fusion_tool_input(tool, "Gain", 0.5)

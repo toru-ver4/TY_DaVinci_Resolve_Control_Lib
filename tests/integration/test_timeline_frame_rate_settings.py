@@ -20,7 +20,7 @@ from ty_davinci_resolve import (
     get_timeline_setting,
     list_projects,
     load_project,
-    set_setting,
+    set_project_setting,
     set_timeline_settings,
 )
 
@@ -36,7 +36,7 @@ def test_project_and_timeline_frame_rate_settings_have_distinct_scopes() -> None
 
     try:
         project = create_project(session, project_name)
-        set_setting(
+        set_project_setting(
             project,
             ProjectSetting.TIMELINE_FRAME_RATE,
             FrameRate.FPS_24,

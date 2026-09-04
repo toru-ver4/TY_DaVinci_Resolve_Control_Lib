@@ -19,10 +19,10 @@ from .constants import (
     SUPPORTED_RESOLVE_VERSION,
 )
 from .errors import ResolveOperationError, ResolveValidationError
-from .media import import_files
+from .media import import_media_files
 from .timeline import (
     MediaType,
-    append_clip,
+    append_clip_to_current_timeline,
     get_timeline_setting,
     insert_fusion_composition,
 )
@@ -35,7 +35,7 @@ _FUSION_PAGE_ACTIVATION_TIMEOUT = 5.0
 _FUSION_PAGE_ACTIVATION_POLL_INTERVAL = 0.1
 
 
-def add_comp(timeline_item: Any) -> Any:
+def add_fusion_composition_to_clip(timeline_item: Any) -> Any:
     """Add a Fusion composition to a timeline item.
 
     Parameters
@@ -50,7 +50,7 @@ def add_comp(timeline_item: Any) -> Any:
 
     Examples
     --------
-    >>> add_comp(timeline_item)  # doctest: +SKIP
+    >>> add_fusion_composition_to_clip(timeline_item)  # doctest: +SKIP
     """
     if timeline_item is None:
         raise ResolveValidationError("timeline_item must not be None.")
@@ -60,7 +60,7 @@ def add_comp(timeline_item: Any) -> Any:
     return comp
 
 
-def get_tool(comp: Any, name: str) -> Any:
+def get_fusion_tool(comp: Any, name: str) -> Any:
     """Find a Fusion tool by its instance name.
 
     Parameters
@@ -77,7 +77,7 @@ def get_tool(comp: Any, name: str) -> Any:
 
     Examples
     --------
-    >>> get_tool(comp, "MediaOut1")  # doctest: +SKIP
+    >>> get_fusion_tool(comp, "MediaOut1")  # doctest: +SKIP
     """
     if not isinstance(name, str) or not name:
         raise ResolveValidationError("name must be a non-empty string.")
@@ -92,7 +92,7 @@ def get_tool(comp: Any, name: str) -> Any:
     )
 
 
-def add_tool(
+def add_fusion_tool(
     comp: Any,
     tool_type: str,
     position: Sequence[float] = (0.0, 0.0),
@@ -115,7 +115,7 @@ def add_tool(
 
     Examples
     --------
-    >>> add_tool(comp, "Background", (1, 2))  # doctest: +SKIP
+    >>> add_fusion_tool(comp, "Background", (1, 2))  # doctest: +SKIP
     """
     if not isinstance(tool_type, str) or not tool_type:
         raise ResolveValidationError("tool_type must be a non-empty string.")
@@ -129,7 +129,7 @@ def add_tool(
     return tool
 
 
-def add_modifier(comp: Any, modifier_type: str) -> Any:
+def add_fusion_modifier(comp: Any, modifier_type: str) -> Any:
     """Add a Fusion modifier outside the flow view.
 
     Parameters
@@ -146,7 +146,7 @@ def add_modifier(comp: Any, modifier_type: str) -> Any:
 
     Examples
     --------
-    >>> add_modifier(comp, FusionModifier.XY_PATH)  # doctest: +SKIP
+    >>> add_fusion_modifier(comp, FusionModifier.XY_PATH)  # doctest: +SKIP
     """
     if not isinstance(modifier_type, str) or not modifier_type:
         raise ResolveValidationError(
@@ -248,7 +248,7 @@ def connect_merge(
         connect_input(merge, "Foreground", foreground)
 
 
-def set_tool_input(
+def set_fusion_tool_input(
     tool: Any,
     name: str,
     value: Any,
@@ -278,7 +278,7 @@ def set_tool_input(
 
     Examples
     --------
-    >>> set_tool_input(background, "TopLeftRed", 0.18)  # doctest: +SKIP
+    >>> set_fusion_tool_input(background, "TopLeftRed", 0.18)  # doctest: +SKIP
     """
     if not isinstance(name, str) or not name:
         raise ResolveValidationError("name must be a non-empty string.")
@@ -307,7 +307,7 @@ def set_tool_input(
         )
 
 
-def set_tool_inputs(tool: Any, values: Mapping[str, Any]) -> None:
+def set_fusion_tool_inputs(tool: Any, values: Mapping[str, Any]) -> None:
     """Set and verify multiple Fusion tool inputs in mapping order.
 
     Parameters
@@ -327,15 +327,15 @@ def set_tool_inputs(tool: Any, values: Mapping[str, Any]) -> None:
 
     Examples
     --------
-    >>> set_tool_inputs(background, {"TopLeftRed": 0.18})  # doctest: +SKIP
+    >>> set_fusion_tool_inputs(background, {"TopLeftRed": 0.18})  # doctest: +SKIP
     """
     if not isinstance(values, Mapping) or not values:
         raise ResolveValidationError("values must be a non-empty mapping.")
     for name, value in values.items():
-        set_tool_input(tool, name, value)
+        set_fusion_tool_input(tool, name, value)
 
 
-def set_tool_position(
+def set_fusion_tool_flow_position(
     comp: Any,
     tool: Any,
     position: Sequence[float],
@@ -368,7 +368,7 @@ def set_tool_position(
 
     Examples
     --------
-    >>> set_tool_position(comp, background, (1, 2))  # doctest: +SKIP
+    >>> set_fusion_tool_flow_position(comp, background, (1, 2))  # doctest: +SKIP
     """
     if len(position) != 2 or not all(
         isinstance(value, (int, float))
@@ -427,7 +427,7 @@ def set_tool_position(
         )
 
 
-def set_background_color(tool: Any, rgba: Sequence[float]) -> None:
+def set_fusion_background_color(tool: Any, rgba: Sequence[float]) -> None:
     """Set and verify a Fusion Background tool's RGBA color.
 
     Parameters
@@ -443,12 +443,12 @@ def set_background_color(tool: Any, rgba: Sequence[float]) -> None:
 
     Examples
     --------
-    >>> set_background_color(background, (0.0, 0.0, 0.0, 1.0))  # doctest: +SKIP
+    >>> set_fusion_background_color(background, (0.0, 0.0, 0.0, 1.0))  # doctest: +SKIP
     """
     if len(rgba) != 4 or not all(isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) for value in rgba):
         raise ResolveValidationError("rgba must contain four finite numbers.")
     values = {f"TopLeft{channel}": value for channel, value in zip(("Red", "Green", "Blue", "Alpha"), rgba)}
-    set_tool_inputs(tool, values)
+    set_fusion_tool_inputs(tool, values)
 
 
 def get_fusion_fonts(fusion: Any) -> Mapping[str, tuple[str, ...]]:
@@ -578,11 +578,11 @@ def add_dctl_tool(
         raise ResolveValidationError(f"DCTL file does not exist: {target}.")
     if options is not None and not isinstance(options, Mapping):
         raise ResolveValidationError("options must be a mapping or None.")
-    tool = add_tool(comp, FusionResolveFxTool.DCTL, position)
+    tool = add_fusion_tool(comp, FusionResolveFxTool.DCTL, position)
     values: dict[str, Any] = {"DCTLs": str(relative_path), "reloadDCTLButton": 1.0}
     if options:
         values.update(options)
-    set_tool_inputs(tool, values)
+    set_fusion_tool_inputs(tool, values)
     return tool
 
 
@@ -608,8 +608,8 @@ def add_transparent_background(
     --------
     >>> add_transparent_background(comp, (0, 0))  # doctest: +SKIP
     """
-    tool = add_tool(comp, FusionTool.BACKGROUND, position)
-    set_background_color(tool, (0.0, 0.0, 0.0, 0.0))
+    tool = add_fusion_tool(comp, FusionTool.BACKGROUND, position)
+    set_fusion_background_color(tool, (0.0, 0.0, 0.0, 0.0))
     return tool
 
 
@@ -621,15 +621,15 @@ def _build_masked_background(
     mask_position: Sequence[float],
     background_position: Sequence[float],
 ) -> Any:
-    mask = add_tool(comp, FusionTool.RECTANGLE_MASK, mask_position)
-    background = add_tool(comp, FusionTool.BACKGROUND, background_position)
-    set_tool_inputs(mask, mask_inputs)
-    set_background_color(background, rgba)
-    set_tool_input(background, "EffectMask", mask)
+    mask = add_fusion_tool(comp, FusionTool.RECTANGLE_MASK, mask_position)
+    background = add_fusion_tool(comp, FusionTool.BACKGROUND, background_position)
+    set_fusion_tool_inputs(mask, mask_inputs)
+    set_fusion_background_color(background, rgba)
+    set_fusion_tool_input(background, "EffectMask", mask)
     return background
 
 
-def build_rectangle(
+def build_fusion_rectangle(
     comp: Any,
     rgba: Sequence[float] = (1.0, 1.0, 1.0, 1.0),
     *,
@@ -662,7 +662,7 @@ def build_rectangle(
 
     Examples
     --------
-    >>> build_rectangle(comp, width=0.2, height=0.1)  # doctest: +SKIP
+    >>> build_fusion_rectangle(comp, width=0.2, height=0.1)  # doctest: +SKIP
     """
     for value, name in ((width, "width"), (height, "height")):
         if (
@@ -702,7 +702,7 @@ def build_rectangle(
     )
 
 
-def build_line(
+def build_fusion_line(
     comp: Any,
     rgba: Sequence[float],
     width: float,
@@ -741,7 +741,7 @@ def build_line(
 
     Examples
     --------
-    >>> build_line(comp, (1, 1, 1, 1), 1.0, 0.01)  # doctest: +SKIP
+    >>> build_fusion_line(comp, (1, 1, 1, 1), 1.0, 0.01)  # doctest: +SKIP
     """
     for value, name in ((width, "width"), (height, "height")):
         if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:
@@ -767,7 +767,7 @@ def build_line(
         mask_position=(x, y - 2),
         background_position=(x, y - 1),
     )
-    merge = add_tool(comp, FusionTool.MERGE, (x, y))
+    merge = add_fusion_tool(comp, FusionTool.MERGE, (x, y))
     if connect_as_foreground:
         connect_merge(merge, foreground=foreground)
     else:
@@ -888,7 +888,7 @@ def get_packaged_fusion_duration_media(
     )
 
 
-def append_fusion_composition(
+def add_fusion_composition_to_timeline(
     timeline: Any,
     *,
     duration_frames: int | None = None,
@@ -896,7 +896,7 @@ def append_fusion_composition(
     media_pool: Any | None = None,
     dummy_media: str | Path | None = None,
 ) -> tuple[Any, Any]:
-    """Append a native or explicitly sized Fusion composition.
+    """Add a native or explicitly sized Fusion composition to the timeline.
 
     Parameters
     ----------
@@ -926,7 +926,7 @@ def append_fusion_composition(
 
     Examples
     --------
-    >>> item, comp = append_fusion_composition(timeline)  # doctest: +SKIP
+    >>> item, comp = add_fusion_composition_to_timeline(timeline)  # doctest: +SKIP
     """
     if duration_frames is None:
         if record_frame is not None or media_pool is not None or dummy_media is not None:
@@ -957,10 +957,10 @@ def append_fusion_composition(
             ) from error
         frame_rate = get_timeline_setting(timeline, "timelineFrameRate")
         dummy_media = get_packaged_fusion_duration_media(width, height, frame_rate)
-    clip = import_files(media_pool, [dummy_media])[0]
-    item = append_clip(media_pool, clip, record_frame=record_frame, start_frame=0, end_frame=duration_frames, media_type=MediaType.VIDEO_ONLY)
-    comp = add_comp(item)
-    media_in = get_tool(comp, "MediaIn1")
+    clip = import_media_files(media_pool, [dummy_media])[0]
+    item = append_clip_to_current_timeline(media_pool, clip, record_frame=record_frame, start_frame=0, end_frame=duration_frames, media_type=MediaType.VIDEO_ONLY)
+    comp = add_fusion_composition_to_clip(item)
+    media_in = get_fusion_tool(comp, "MediaIn1")
     result = media_in.Delete()
     if result is False:
         raise ResolveOperationError("Tool.Delete", result)

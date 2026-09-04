@@ -1,3 +1,6 @@
+# Run from: sample_code/ty_lib/TY_DaVinci_Resolve_Control_Lib
+# Command: python -m pytest -m countdown_regression tests/integration/test_countdown_regression.py -q
+
 """Test-only adapter from Countdown V2 calls to the redesigned package."""
 
 from __future__ import annotations
@@ -130,7 +133,7 @@ def setup_project_settings(params: dict[str, str]) -> bool:
     >>> setup_project_settings({"timelineFrameRate": "24"})  # doctest: +SKIP
     True
     """
-    api.set_settings(get_current_project(), params)
+    api.set_project_settings(get_current_project(), params)
     return True
 
 
@@ -152,7 +155,7 @@ def get_project_setting(name: str) -> str:
     >>> get_project_setting("timelineFrameRate")  # doctest: +SKIP
     '23.976'
     """
-    return api.get_setting(get_current_project(), name)
+    return api.get_project_setting(get_current_project(), name)
 
 
 def get_project_resolution() -> list[int]:
@@ -168,7 +171,7 @@ def get_project_resolution() -> list[int]:
     >>> get_project_resolution()  # doctest: +SKIP
     [1280, 720]
     """
-    return list(api.get_timeline_resolution(get_current_project()))
+    return list(api.get_project_timeline_resolution(get_current_project()))
 
 
 def make_videoMonitorFormat_str(width: int | str, height: int | str, framerate: float) -> str:
@@ -274,7 +277,7 @@ def add_file_to_media_pool(file_path: str, start_frame: int | None = None, end_f
             "Countdown adapter does not use ranged MediaStorage imports."
         )
     pool = api.get_media_pool(get_current_project())
-    return api.import_files(pool, [file_path])[0]
+    return api.import_media_files(pool, [file_path])[0]
 
 
 def append_clip_to_timeline(
@@ -311,7 +314,7 @@ def append_clip_to_timeline(
     --------
     >>> append_clip_to_timeline(clip, media_type=1)  # doctest: +SKIP
     """
-    return api.append_clip(
+    return api.append_clip_to_current_timeline(
         api.get_media_pool(get_current_project()),
         clip,
         record_frame=pos_frame_idx,
@@ -349,7 +352,7 @@ def append_fusion_composition_to_timeline(
     --------
     >>> append_fusion_composition_to_timeline(24, 86400)  # doctest: +SKIP
     """
-    return api.append_fusion_composition(
+    return api.add_fusion_composition_to_timeline(
         get_current_timeline(),
         duration_frames=num_of_frame,
         record_frame=pos_frame_idx,
@@ -402,7 +405,7 @@ def timecode_to_frame_index(timecode: str, fps_float: float) -> int:
     return api.timecode_to_frames(timecode, fps_float)
 
 
-def set_current_timecode(timecode: str) -> bool:
+def set_timeline_playhead_timecode(timecode: str) -> bool:
     """Set the current timeline playhead.
 
     Parameters
@@ -417,10 +420,10 @@ def set_current_timecode(timecode: str) -> bool:
 
     Examples
     --------
-    >>> set_current_timecode("01:00:00:00")  # doctest: +SKIP
+    >>> set_timeline_playhead_timecode("01:00:00:00")  # doctest: +SKIP
     True
     """
-    api.set_current_timecode(get_current_timeline(), timecode, verify=False)
+    api.set_timeline_playhead_timecode(get_current_timeline(), timecode, verify=False)
     return True
 
 
@@ -599,7 +602,7 @@ def get_comp_tool_by_name(comp: Any, name: str) -> Any:
     --------
     >>> get_comp_tool_by_name(comp, "MediaOut1")  # doctest: +SKIP
     """
-    return api.get_tool(comp, name)
+    return api.get_fusion_tool(comp, name)
 
 
 def add_comp_tool(comp: Any, name: str, pos: tuple[float, float] | list[float] = (2, 3)) -> Any:
@@ -623,7 +626,7 @@ def add_comp_tool(comp: Any, name: str, pos: tuple[float, float] | list[float] =
     --------
     >>> add_comp_tool(comp, "Background")  # doctest: +SKIP
     """
-    return api.add_tool(comp, name, pos)
+    return api.add_fusion_tool(comp, name, pos)
 
 
 def connect_tool(a: Any, b: Any) -> bool:
@@ -725,7 +728,7 @@ def connect_merge_tool(merge_tool: Any, bg_tool: Any | None, fg_tool: Any | None
     )
 
 
-def set_tool_input(tool: Any, name: str, value: Any) -> bool:
+def set_fusion_tool_input(tool: Any, name: str, value: Any) -> bool:
     """Set and verify one Fusion input.
 
     Parameters
@@ -744,10 +747,10 @@ def set_tool_input(tool: Any, name: str, value: Any) -> bool:
 
     Examples
     --------
-    >>> set_tool_input(tool, "Gain", 1.0)  # doctest: +SKIP
+    >>> set_fusion_tool_input(tool, "Gain", 1.0)  # doctest: +SKIP
     True
     """
-    api.set_tool_input(tool, name, value)
+    api.set_fusion_tool_input(tool, name, value)
     return True
 
 
@@ -775,7 +778,7 @@ def set_multiple_tool_input(tool: Any, input_dict: dict[str, Any]) -> None:
     """
     if "Font" in input_dict and "Style" in input_dict:
         _assert_font_available(input_dict["Font"], input_dict["Style"])
-    api.set_tool_inputs(tool, input_dict)
+    api.set_fusion_tool_inputs(tool, input_dict)
 
 
 def set_tool_topleft_color(tool: Any, rgba: list[float] | tuple[float, ...] = (0.18, 0.18, 0.18, 1.0)) -> bool:
@@ -798,11 +801,11 @@ def set_tool_topleft_color(tool: Any, rgba: list[float] | tuple[float, ...] = (0
     >>> set_tool_topleft_color(tool, [0, 0, 0, 1])  # doctest: +SKIP
     True
     """
-    api.set_background_color(tool, rgba)
+    api.set_fusion_background_color(tool, rgba)
     return True
 
 
-def set_tool_position(comp: Any, tool: Any, pos: tuple[float, float] | list[float] = (1, 1)) -> bool:
+def set_fusion_tool_flow_position(comp: Any, tool: Any, pos: tuple[float, float] | list[float] = (1, 1)) -> bool:
     """Set and verify a Fusion tool position.
 
     Parameters
@@ -828,12 +831,12 @@ def set_tool_position(comp: Any, tool: Any, pos: tuple[float, float] | list[floa
 
     Examples
     --------
-    >>> set_tool_position(comp, tool, (1, 2))  # doctest: +SKIP
+    >>> set_fusion_tool_flow_position(comp, tool, (1, 2))  # doctest: +SKIP
     True
     """
     if comp.CurrentFrame is None:
         return True
-    api.set_tool_position(comp, tool, pos)
+    api.set_fusion_tool_flow_position(comp, tool, pos)
     return True
 
 
@@ -939,7 +942,7 @@ def add_line_comp(
     center_value = (
         (center[1], center[2]) if center is not None else (0.5, 0.5)
     )
-    return api.build_line(
+    return api.build_fusion_line(
         comp,
         rgba,
         width,

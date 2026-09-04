@@ -14,7 +14,7 @@ from ty_davinci_resolve import (
     get_timeline,
     list_projects,
     load_project,
-    set_settings,
+    set_project_settings,
 )
 
 
@@ -90,7 +90,7 @@ def test_project_lifecycle_timing_rejects_negative_delay() -> None:
         ProjectLifecycleTiming(load_delay=-0.1)
 
 
-def test_set_settings_stops_at_first_failure() -> None:
+def test_set_project_settings_stops_at_first_failure() -> None:
     calls: list[tuple[str, str]] = []
 
     class Project:
@@ -99,7 +99,7 @@ def test_set_settings_stops_at_first_failure() -> None:
             return name != "bad"
 
     with pytest.raises(ResolveOperationError):
-        set_settings(Project(), {"good": "1", "bad": "2", "later": "3"})
+        set_project_settings(Project(), {"good": "1", "bad": "2", "later": "3"})
     assert calls == [("good", "1"), ("bad", "2")]
 
 

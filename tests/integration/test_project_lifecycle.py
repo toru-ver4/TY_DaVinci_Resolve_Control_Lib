@@ -15,7 +15,7 @@ from ty_davinci_resolve import (
     list_projects,
     load_project,
     save_project,
-    set_settings,
+    set_project_settings,
 )
 
 
@@ -30,7 +30,7 @@ def test_project_create_save_close_load_delete() -> None:
     try:
         project = create_project(session, test_name)
         assert project.GetName() == test_name
-        set_settings(
+        set_project_settings(
             project,
             {
                 "timelineResolutionWidth": "1280",

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Run from: sample_code/ty_lib/TY_DaVinci_Resolve_Control_Lib
+# Command: python -m pytest -m countdown_regression tests/integration/test_countdown_regression.py -q
 
 # import standard libraries
 import sys
@@ -626,7 +628,7 @@ def draw_info_comp(
         comp=comp, name="Background", pos=(x_pos+0, y_pos-1)
     )
     dcl.set_tool_topleft_color(tool=rectangle_fg, rgba=bg_rgba)
-    dcl.set_tool_input(tool=rectangle_fg, name="EffectMask", value=rectangle_mask)
+    dcl.set_fusion_tool_input(tool=rectangle_fg, name="EffectMask", value=rectangle_mask)
     rectangle_merge = dcl.add_comp_tool(
         comp=comp, name="Merge", pos=(x_pos+0, y_pos+0)
     )
@@ -1606,7 +1608,7 @@ def create_countdown_comp_each_sec(comp, ppp, fps=24, count_str=3):
     media_out = dcl.get_comp_tool_by_name(comp=comp, name="MediaOut1")
     x_pos += 3
     y_pos += 0
-    dcl.set_tool_position(comp=comp, tool=media_out, pos=(x_pos, y_pos))
+    dcl.set_fusion_tool_flow_position(comp=comp, tool=media_out, pos=(x_pos, y_pos))
 
     # connect
     dcl.connect_merge_tool(
@@ -1792,7 +1794,7 @@ def create_countdown_video_each_spec(
     ###################
     create_countdown_comp()
 
-    dcl.set_current_timecode(timecode=start_time_code)
+    dcl.set_timeline_playhead_timecode(timecode=start_time_code)
 
     dcl.open_page(page_name=drc.FUSION_PAGE_STR)
 

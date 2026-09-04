@@ -66,7 +66,7 @@ from ty_davinci_resolve import (
     WorkingLuminanceMode,
     TIMELINE_WORKING_LUMINANCE_MAX_NITS,
     TIMELINE_WORKING_LUMINANCE_MIN_NITS,
-    set_settings,
+    set_project_settings,
 )
 
 
@@ -236,7 +236,7 @@ def test_setting_enums_can_be_passed_directly() -> None:
             calls.append((name, value))
             return True
 
-    set_settings(
+    set_project_settings(
         Project(),
         {
             ProjectSetting.COLOR_SPACE_TIMELINE: ColorSpace.P3_D65,
@@ -271,7 +271,7 @@ def test_bt2100_preset_can_be_passed_directly() -> None:
             calls.append((name, value))
             return True
 
-    set_settings(Project(), BT2100_PROJECT_SETTINGS)
+    set_project_settings(Project(), BT2100_PROJECT_SETTINGS)
 
     assert calls == [
         (str(name), value) for name, value in BT2100_PROJECT_SETTINGS.items()

@@ -19,14 +19,14 @@ from ty_davinci_resolve import (
     TimelineSetting,
     add_dctl_tool,
     add_transparent_background,
-    append_fusion_composition,
-    build_line,
+    add_fusion_composition_to_timeline,
+    build_fusion_line,
     connect_default_output,
     connect_merge,
     delete_render_preset,
     get_current_page,
     get_current_timeline,
-    get_timeline_resolution,
+    get_project_timeline_resolution,
     get_timeline_setting,
     import_media_storage_items,
     import_render_preset,
@@ -37,8 +37,8 @@ from ty_davinci_resolve import (
     refresh_lut_list,
     render_current_settings,
     require_fusion_font,
-    set_background_color,
-    set_current_timecode,
+    set_fusion_background_color,
+    set_timeline_playhead_timecode,
     set_timeline_settings,
 )
 
@@ -105,7 +105,7 @@ def test_project_resolution_monitor_format_and_lut_refresh() -> None:
         GetSetting=lambda name: {"timelineResolutionWidth": "1280", "timelineResolutionHeight": "720"}[name],
         RefreshLUTList=lambda: True,
     )
-    assert get_timeline_resolution(project) == (1280, 720)
+    assert get_project_timeline_resolution(project) == (1280, 720)
     assert make_video_monitor_format(1280, 720, 23.976) == "HD 720p 23.976"
     refresh_lut_list(project)
     with pytest.raises(ResolveValidationError):
@@ -153,7 +153,7 @@ def test_timeline_playhead_settings_and_generator() -> None:
     timeline = FakeTimeline()
     project = SimpleNamespace(GetCurrentTimeline=lambda: timeline)
     assert get_current_timeline(project) is timeline
-    set_current_timecode(timeline, "01:00:01:00")
+    set_timeline_playhead_timecode(timeline, "01:00:01:00")
     assert get_timeline_setting(timeline, "timelineFrameRate") == "24"
     set_timeline_settings(
         timeline,
@@ -172,8 +172,8 @@ def test_playhead_verification_can_be_explicitly_disabled() -> None:
         GetCurrentTimecode=lambda: "01:00:04:00",
     )
     with pytest.raises(ResolveOperationError):
-        set_current_timecode(timeline, "01:00:00:00")
-    set_current_timecode(timeline, "01:00:00:00", verify=False)
+        set_timeline_playhead_timecode(timeline, "01:00:00:00")
+    set_timeline_playhead_timecode(timeline, "01:00:00:00", verify=False)
 
 
 class FakeRenderProject:
@@ -230,7 +230,7 @@ def test_fusion_connections_color_font_and_builders(tmp_path: Path) -> None:
     merge = FakeTool("Merge1")
     connect_merge(merge, foreground=source)
     assert merge.connections == [("Foreground", source)]
-    set_background_color(source, (0.1, 0.2, 0.3, 1.0))
+    set_fusion_background_color(source, (0.1, 0.2, 0.3, 1.0))
     assert source.values["TopLeftAlpha"] == 1.0
     fusion = SimpleNamespace(FontManager=SimpleNamespace(GetFontList=lambda: {"Noto Sans": {"Regular": object()}}))
     require_fusion_font(fusion, "Noto Sans", "Regular")
@@ -238,7 +238,7 @@ def test_fusion_connections_color_font_and_builders(tmp_path: Path) -> None:
     comp = FakeComp()
     transparent = add_transparent_background(comp)
     assert transparent.values["TopLeftAlpha"] == 0.0
-    line = build_line(comp, (1.0, 1.0, 1.0, 1.0), 1.0, 0.01)
+    line = build_fusion_line(comp, (1.0, 1.0, 1.0, 1.0), 1.0, 0.01)
     assert line.tool_type == "Merge"
     assert line.connections[0][0] == "Foreground"
 
@@ -250,11 +250,11 @@ def test_fusion_connections_color_font_and_builders(tmp_path: Path) -> None:
     assert dctl_tool.values["DCTLs"] == str(Path("TY_DCTL/example.dctl"))
 
 
-def test_append_fusion_composition_native_and_fixed(tmp_path: Path) -> None:
+def test_add_fusion_composition_to_timeline_native_and_fixed(tmp_path: Path) -> None:
     native_comp = object()
     native_item = SimpleNamespace(GetFusionCompCount=lambda: 1, GetFusionCompByIndex=lambda index: native_comp)
     timeline = SimpleNamespace(InsertFusionCompositionIntoTimeline=lambda: native_item)
-    assert append_fusion_composition(timeline) == (native_item, native_comp)
+    assert add_fusion_composition_to_timeline(timeline) == (native_item, native_comp)
 
     dummy = tmp_path / "dummy.mov"
     dummy.write_bytes(b"dummy")
@@ -268,7 +268,7 @@ def test_append_fusion_composition_native_and_fixed(tmp_path: Path) -> None:
         AppendToTimeline=lambda items: arguments.extend(items) or [fixed_item],
     )
 
-    item, returned_comp = append_fusion_composition(
+    item, returned_comp = add_fusion_composition_to_timeline(
         timeline,
         duration_frames=24,
         record_frame=100,
@@ -280,7 +280,7 @@ def test_append_fusion_composition_native_and_fixed(tmp_path: Path) -> None:
     assert media_in.deleted
 
 
-def test_append_fusion_composition_selects_packaged_media_from_timeline(
+def test_add_fusion_composition_to_timeline_selects_packaged_media_from_timeline(
     tmp_path: Path,
 ) -> None:
     dummy = tmp_path / "dummy_video_1280x720_23.976P.mp4"
@@ -305,7 +305,7 @@ def test_append_fusion_composition_selects_packaged_media_from_timeline(
         "ty_davinci_resolve.fusion.get_packaged_fusion_duration_media",
         return_value=dummy,
     ) as select_media:
-        append_fusion_composition(
+        add_fusion_composition_to_timeline(
             timeline,
             duration_frames=24,
             media_pool=pool,

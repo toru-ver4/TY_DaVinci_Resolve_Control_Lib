@@ -37,7 +37,7 @@ from ty_davinci_resolve import (
     delete_project,
     list_projects,
     load_project,
-    set_settings,
+    set_project_settings,
 )
 
 
@@ -146,7 +146,7 @@ def test_project_setting_constants_on_resolve_21_0_4() -> None:
         }
         assert runtime_codecs.issubset(set(VideoCodec))
 
-        set_settings(project, BT2100_PROJECT_SETTINGS, settle_delay=0.35)
+        set_project_settings(project, BT2100_PROJECT_SETTINGS, settle_delay=0.35)
         for key, value in BT2100_PROJECT_SETTINGS.items():
             assert _setting_matches(project.GetSetting(key), value)
 

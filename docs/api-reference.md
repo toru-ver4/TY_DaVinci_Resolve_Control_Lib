@@ -2,7 +2,7 @@
 
 このページはライブラリの保守・拡張を行う開発者向けです。通常の制作自動化は[利用ガイド](guide.md)、Resolve画面から設定項目を探す場合は[Resolve GUIと本ライブラリ定数の対応](project-settings.md)を参照してください。
 
-この文書では、Resolve公式Scripting APIに**［Resolve API］**、本ライブラリ`ty_davinci_resolve`のPython APIに**［TY API］**を付けて区別します。例えば［Resolve API］`Project.SetSetting()`、［TY API］`set_settings()`です。`"timelineFrameRate"`のようなダブルクォート付きの表記は、Resolve公式APIへ実際に渡す文字列です。
+この文書では、Resolve公式Scripting APIに**［Resolve API］**、本ライブラリ`ty_davinci_resolve`のPython APIに**［TY API］**を付けて区別します。例えば［Resolve API］`Project.SetSetting()`、［TY API］`set_project_settings()`です。`"timelineFrameRate"`のようなダブルクォート付きの表記は、Resolve公式APIへ実際に渡す文字列です。
 
 実装の基準資料は `official_documents/21.0.4_Scripting/README.txt` です。行番号はリポジトリに保存した21.0.4版を基準にしています。
 
@@ -29,11 +29,11 @@
 
 `FusionTool`、`FusionModifier`、`FusionResolveFxTool`は、Fusion 8 Scripting Guideの`Fusion.GetRegSummary()`および`Registry.GetAttrs()`に従い、Resolve Studio 21.0.4.5の実機Registryから取得したRegIDです。Blackmagic提供の通常Tool、代表的なModifier、Resolve FXを分離し、第三者提供の追加Fuse/OFXやKrokodoveの内部Toolなどinstall環境に依存する項目は収録していません。`FusionTool.XY_PATH`は初期APIとの互換性用で、新規コードでは`FusionModifier.XY_PATH`を使用します。一覧の再調査には`tests/integration/probe_fusion_tool_registry.py`を使用します。
 
-`fusion.pyi`と`fusion_tool_types.pyi`は、各enum memberに対応する`add_tool()`・`add_modifier()` overloadとTool/Modifier別入力名を提供します。Resolve 21.0.4実機から再生成する場合は、Resolveを起動した状態で`python tests/integration/generate_fusion_type_stubs.py --output-directory src/ty_davinci_resolve`を実行します。生成処理は非表示の一時Compositionを使用し、作成したTool/Modifierを調査後に削除します。生成できない項目は再試行せず、入力なしのProtocolとして扱います。
+`fusion.pyi`と`fusion_tool_types.pyi`は、各enum memberに対応する`add_fusion_tool()`・`add_fusion_modifier()` overloadとTool/Modifier別入力名を提供します。Resolve 21.0.4実機から再生成する場合は、Resolveを起動した状態で`python tests/integration/generate_fusion_type_stubs.py --output-directory src/ty_davinci_resolve`を実行します。生成処理は非表示の一時Compositionを使用し、作成したTool/Modifierを調査後に削除します。生成できない項目は再試行せず、入力なしのProtocolとして扱います。
 
 `refresh_fusion_color_management()`はFusion pageからEdit pageへ切り替えるResolve 21.0.4向けworkaroundです。0.1秒待機では連続して作成した3つ目のCompositionから16-bit出力差が発生しましたが、0.5秒待機では4条件・384枚が参照画像と完全一致したため、既定値を0.5秒としています。この待機時間は公式仕様ではなく、Windows版Resolve Studio 21.0.4.5の実機結果です。
 
-P2の`build_rectangle()`、`get_fusion_fonts()`、page切替付き`set_tool_position()`もResolve内蔵Fusion APIを使用します。固定長`append_fusion_composition()`はTimeline settingから解像度とfpsを取得し、package同梱の`dummy_video_{width}x{height}_{fps}P.mp4`を自動選択します。`select_fusion_duration_media()`は、任意directoryのmediaを明示選択する用途にも使用できます。
+P2の`build_fusion_rectangle()`、`get_fusion_fonts()`、page切替付き`set_fusion_tool_flow_position()`もResolve内蔵Fusion APIを使用します。固定長`add_fusion_composition_to_timeline()`はTimeline settingから解像度とfpsを取得し、package同梱の`dummy_video_{width}x{height}_{fps}P.mp4`を自動選択します。`select_fusion_duration_media()`は、任意directoryのmediaを明示選択する用途にも使用できます。
 
 ## Project lifecycleの完了待機
 

@@ -13,11 +13,11 @@ from ty_davinci_resolve import (
     ResolveOperationError,
     ResolveSession,
     ResolveValidationError,
-    build_rectangle,
+    build_fusion_rectangle,
     get_fusion_fonts,
     get_packaged_fusion_duration_media,
     select_fusion_duration_media,
-    set_tool_position,
+    set_fusion_tool_flow_position,
 )
 
 
@@ -67,10 +67,10 @@ def make_session(resolve: object) -> ResolveSession:
     )
 
 
-def test_build_rectangle_creates_masked_background() -> None:
+def test_build_fusion_rectangle_creates_masked_background() -> None:
     comp = FakeComp()
 
-    background = build_rectangle(
+    background = build_fusion_rectangle(
         comp,
         (0.1, 0.2, 0.3, 0.4),
         center=(0.25, 0.75),
@@ -111,7 +111,7 @@ def test_get_fusion_fonts_normalizes_and_freezes_mapping() -> None:
         fonts["New"] = ("Regular",)  # type: ignore[index]
 
 
-def test_set_tool_position_requires_explicit_page_activation() -> None:
+def test_set_fusion_tool_flow_position_requires_explicit_page_activation() -> None:
     comp = FakeComp()
     tool = object()
     flow = FakeFlow()
@@ -125,9 +125,9 @@ def test_set_tool_position_requires_explicit_page_activation() -> None:
     session = make_session(SimpleNamespace(OpenPage=open_page))
 
     with pytest.raises(ResolveOperationError):
-        set_tool_position(comp, tool, (1, 2))
+        set_fusion_tool_flow_position(comp, tool, (1, 2))
 
-    set_tool_position(
+    set_fusion_tool_flow_position(
         comp,
         tool,
         (1, 2),
@@ -139,10 +139,10 @@ def test_set_tool_position_requires_explicit_page_activation() -> None:
     assert flow.positions[id(tool)] == (1, 2)
 
 
-def test_set_tool_position_rejects_activation_without_session() -> None:
+def test_set_fusion_tool_flow_position_rejects_activation_without_session() -> None:
     comp = FakeComp()
     with pytest.raises(ResolveValidationError):
-        set_tool_position(
+        set_fusion_tool_flow_position(
             comp,
             object(),
             (1, 2),
@@ -150,7 +150,7 @@ def test_set_tool_position_rejects_activation_without_session() -> None:
         )
 
 
-def test_set_tool_position_waits_for_current_frame(
+def test_set_fusion_tool_flow_position_waits_for_current_frame(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     tool = object()
@@ -171,7 +171,7 @@ def test_set_tool_position_waits_for_current_frame(
     session = make_session(SimpleNamespace(OpenPage=lambda page: True))
     monkeypatch.setattr(fusion_module.time, "sleep", lambda seconds: None)
 
-    set_tool_position(
+    set_fusion_tool_flow_position(
         comp,
         tool,
         (3, 4),

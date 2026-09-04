@@ -12,7 +12,7 @@ PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 PACKAGE_SOURCE = PACKAGE_ROOT / "src" / "ty_davinci_resolve"
 
 
-def test_add_tool_has_an_overload_for_every_tool_constant() -> None:
+def test_add_fusion_tool_has_an_overload_for_every_tool_constant() -> None:
     stub_text = (PACKAGE_SOURCE / "fusion.pyi").read_text(encoding="utf-8")
     ast.parse(stub_text)
 

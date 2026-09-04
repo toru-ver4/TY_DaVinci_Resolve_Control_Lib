@@ -138,13 +138,13 @@ codecは旧識別子を`VideoCodec`へ移植するが、使用可能な組合せ
 |---|---|
 | `close_current_project()`、`delete_project()`、`create_project()`、`save_project()`、`load_project()`、`get_current_project()` | `close_project()`、`delete_project()`、`create_project()`、`save_project()`、`load_project()`、`get_current_project()` |
 | `get_media_pool()`、`create_empty_timeline()` | `get_media_pool()`、`create_empty_timeline()` |
-| `set_project_setting()`、`get_project_setting()`、`setup_project_settings()` | `set_setting()`、`get_setting()`、`set_settings()` |
-| `add_seq_file_to_media_pool()`、`append_clip_to_timeline()` | `import_sequence()`、`append_clip()` |
+| `set_project_setting()`、`get_project_setting()`、`setup_project_settings()` | `set_project_setting()`、`get_project_setting()`、`set_project_settings()` |
+| `add_seq_file_to_media_pool()`、`append_clip_to_timeline()` | `import_image_sequence()`、`append_clip_to_current_timeline()` |
 | `sec_to_frame_idx()`、`timecode_to_frame_index()` | `seconds_to_frames()`、`timecode_to_frames()` |
 | `get_timeline_items_in_track()` | `get_track_items()` |
 | `set_render_format_codec_settings()`、`set_render_setting()` | `set_render_format_codec()`、`set_render_settings()` |
-| `add_fusion_comp()`、`get_comp_tool_by_name()`、`add_comp_tool()` | `add_comp()`、`get_tool()`、`add_tool()` |
-| `set_tool_input()`、`set_multiple_tool_input()`、`set_tool_position()` | `set_tool_input()`、`set_tool_inputs()`、`set_tool_position()` |
+| `add_fusion_comp()`、`get_comp_tool_by_name()`、`add_comp_tool()` | `add_fusion_composition_to_clip()`、`get_fusion_tool()`、`add_fusion_tool()` |
+| `set_tool_input()`、`set_multiple_tool_input()`、`set_tool_position()` | `set_fusion_tool_input()`、`set_fusion_tool_inputs()`、`set_fusion_tool_flow_position()` |
 
 `log_return_value()`内の `wrapper()` はdecorator実装の内部関数であり、独立した公開APIとしては数えない。
 
@@ -152,11 +152,11 @@ codecは旧識別子を`VideoCodec`へ移植するが、使用可能な組合せ
 
 | 旧機能・用途 | 実装名・配置 | 方針 |
 |---|---|---|
-| `append_fusion_composition_to_timeline()` | `append_fusion_composition()` (`fusion.py`) | 長さ指定なしではnative `InsertFusionCompositionIntoTimeline()`を使用し、固定frame長ではtimelineの解像度・fpsからpackage同梱dummy mediaを自動選択する |
+| `append_fusion_composition_to_timeline()` | `add_fusion_composition_to_timeline()` (`fusion.py`) | 長さ指定なしではnative `InsertFusionCompositionIntoTimeline()`を使用し、固定frame長ではtimelineの解像度・fpsからpackage同梱dummy mediaを自動選択する |
 | `run_rendering_and_wait_until_finish()` | `render_current_settings()` (`render.py`) | render設定からjobを追加し、返されたjob IDだけを開始・待機する。完了後にそのjobを削除するかは明示引数にし、失敗時は削除しない |
 | `get_current_page()`、`open_page()` | `get_current_page()`、`open_page()` (`connection.py`) | `Page` enumで検証し、失敗時は例外にする。Fusionの`CurrentFrame`有効化にも利用する |
-| `get_current_timeline()`、`set_current_timecode()` | `get_current_timeline()`、`set_current_timecode()` (`timeline.py`) | project/timelineの存在とtimecode形式を操作前に検証し、既定では`GetCurrentTimecode()`で結果確認する。ResolveがTrueを返してもread-backが更新されない参照workflowでは`verify=False`を明示する |
-| `get_project_resolution()` | `get_timeline_resolution()` (`project.py`) | width/height設定を取得し、正の整数tupleとして返す |
+| `get_current_timeline()`、`set_current_timecode()` | `get_current_timeline()`、`set_timeline_playhead_timecode()` (`timeline.py`) | project/timelineの存在とtimecode形式を操作前に検証し、既定では`GetCurrentTimecode()`で結果確認する。ResolveがTrueを返してもread-backが更新されない参照workflowでは`verify=False`を明示する |
+| `get_project_resolution()` | `get_project_timeline_resolution()` (`project.py`) | width/height設定を取得し、正の整数tupleとして返す |
 | `make_videoMonitorFormat_str()` | `make_video_monitor_format()` (`project.py`) | 1280/1920/2048/2560/3840/4096系の対応表とfpsを明示検証する。Resolveが受け付ける文字列生成だけを担当する |
 | `set_timeline_setting()`、`set_timeline_settings()` | `get_timeline_setting()`、`set_timeline_setting()`、`set_timeline_settings()` (`timeline.py`) | `useCustomSettings`を含む一括設定をfail-fastで行う。29.97/59.94だけを無条件に成功扱いする旧例外処理は引き継がない |
 | `add_file_to_media_pool(..., start_frame, end_frame)` | `import_media_storage_items()` (`media.py`) | `MediaStorage.AddItemListToMediaPool()`の`media/startFrame/endFrame`形式を追加し、通常file importとrange付きimportを区別する |
@@ -165,21 +165,21 @@ codecは旧識別子を`VideoCodec`へ移植するが、使用可能な組合せ
 | `refresh_lut_list()` | `refresh_lut_list()` (`project.py`) | DCTL/LUT追加後の明示的な更新として提供し、現在projectがない場合は操作しない |
 | `connect_tool()`、`connect_mediaout()`、`connect_dctl()` | `connect_default_output()` (`fusion.py`) | `ConnectInput()`で名前指定できないdefault Output/Input接続を扱う。入力名が分かる場合は実装済み`connect_input()`を優先する |
 | `connect_merge_tool()` | `connect_merge()` (`fusion.py`) | Background/Foregroundの少なくとも一方を必須とし、指定された入力だけを接続する |
-| `set_tool_topleft_color()` | `set_background_color()` (`fusion.py`) | RGBAを4要素・有限値として検証し、4入力をread-back確認する |
+| `set_tool_topleft_color()` | `set_fusion_background_color()` (`fusion.py`) | RGBAを4要素・有限値として検証し、4入力をread-back確認する |
 | `add_dctl_comp()` | `add_dctl_tool()` (`fusion.py`) | LUT rootからの相対path、file存在、option mappingを事前検証してからDCTL Toolを作る |
 | `is_font_available()` | `require_fusion_font()` (`fusion.py`) | family/styleをFusion FontManagerで検証し、Tool作成前に不足fontを明示する |
-| `add_transparent_background()` | `add_transparent_background()` (`fusion.py`) | `add_tool()`と`set_background_color()`を組み合わせる小さなbuilderとして追加する |
-| `add_line_comp()` | `build_line()` (`fusion.py`) | RectangleMask、Background、Mergeをまとめて構築する。位置、RGBA、幅、高さ、angle、foreground/background接続を検証する |
+| `add_transparent_background()` | `add_transparent_background()` (`fusion.py`) | `add_fusion_tool()`と`set_fusion_background_color()`を組み合わせる小さなbuilderとして追加する |
+| `add_line_comp()` | `build_fusion_line()` (`fusion.py`) | RectangleMask、Background、Mergeをまとめて構築する。位置、RGBA、幅、高さ、angle、foreground/background接続を検証する |
 | `force_rcm_update_via_page_switch()` | `refresh_fusion_color_management()` (`fusion.py`) | Resolve 21.0.4で再現条件と効果を実機テストし、必要な場合だけversion限定workaroundとして追加する |
 
 #### P2：実装済みの便利関数
 
 | 旧機能・用途 | 実装名・配置 | 方針 |
 |---|---|---|
-| `add_rectangle_comp()` | `build_rectangle()` (`fusion.py`) | RectangleMask付きBackgroundを作り、`build_line()`とmask付きBackgroundの内部builderを共有する |
+| `add_rectangle_comp()` | `build_fusion_rectangle()` (`fusion.py`) | RectangleMask付きBackgroundを作り、`build_fusion_line()`とmask付きBackgroundの内部builderを共有する |
 | `_get_font_list()` | `get_fusion_fonts()` (`fusion.py`) | 生のFontManager戻り値を公開せず、familyからstyle tupleへの読み取り専用mappingへ正規化する |
-| page切替を伴うTool位置設定 | `set_tool_position(..., session=..., activate_fusion_page=True)` (`fusion.py`) | `Composition.CurrentFrame`が`None`の場合だけ、明示許可とsessionが揃っていればFusion pageへ切り替える |
-| dummy videoの自動選択 | `append_fusion_composition()`、`select_fusion_duration_media()` (`fusion.py`) | resolution/fps別assetをpackageへ同梱し、timeline settingに対応するfilenameを厳密に選択する。明示pathでの上書きも可能 |
+| page切替を伴うTool位置設定 | `set_fusion_tool_flow_position(..., session=..., activate_fusion_page=True)` (`fusion.py`) | `Composition.CurrentFrame`が`None`の場合だけ、明示許可とsessionが揃っていればFusion pageへ切り替える |
+| dummy videoの自動選択 | `add_fusion_composition_to_timeline()`、`select_fusion_duration_media()` (`fusion.py`) | resolution/fps別assetをpackageへ同梱し、timeline settingに対応するfilenameを厳密に選択する。明示pathでの上書きも可能 |
 
 #### 新規候補にしない旧関数
 
@@ -361,8 +361,8 @@ python -m pytest -m countdown_regression tests/integration/test_countdown_regres
 
 ### Phase 4: P1公式APIと用途特化機能
 
-- 5.3のP1便利関数を実装済み。固定長`append_fusion_composition()`、`render_current_settings()`、page/playhead/timeline setting、DCTL/transparent background/line builderを含む
-- `build_rectangle()`、font一覧正規化、page切替付きTool位置設定、dummy media選択をP2として実装済み
+- 5.3のP1便利関数を実装済み。固定長`add_fusion_composition_to_timeline()`、`render_current_settings()`、page/playhead/timeline setting、DCTL/transparent background/line builderを含む
+- `build_fusion_rectangle()`、font一覧正規化、page切替付きTool位置設定、dummy media選択をP2として実装済み
 - RCMページ切替workaroundを21.0.4で再評価
 - 原本の `create_countdown_v2.py` は変更せず、`tests/countdown_regression/create_countdown_v2.py` に新パッケージ対応版を作り、384枚の16-bit RGB完全一致テストを追加
 

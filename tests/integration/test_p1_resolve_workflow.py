@@ -13,8 +13,8 @@ from ty_davinci_resolve import (
     ResolveSession,
     add_dctl_tool,
     add_transparent_background,
-    append_fusion_composition,
-    build_line,
+    add_fusion_composition_to_timeline,
+    build_fusion_line,
     close_project,
     create_empty_timeline,
     create_project,
@@ -22,7 +22,7 @@ from ty_davinci_resolve import (
     get_current_page,
     get_current_timeline,
     get_media_pool,
-    get_timeline_resolution,
+    get_project_timeline_resolution,
     get_timeline_setting,
     insert_generator,
     list_projects,
@@ -32,8 +32,8 @@ from ty_davinci_resolve import (
     refresh_fusion_color_management,
     refresh_lut_list,
     require_fusion_font,
-    set_current_timecode,
-    set_settings,
+    set_timeline_playhead_timecode,
+    set_project_settings,
     set_timeline_settings,
 )
 
@@ -50,7 +50,7 @@ def test_p1_helpers_on_resolve_21_0_4() -> None:
 
     try:
         project = create_project(session, project_name)
-        set_settings(
+        set_project_settings(
             project,
             {
                 "timelineResolutionWidth": "1280",
@@ -59,7 +59,7 @@ def test_p1_helpers_on_resolve_21_0_4() -> None:
                 "timelineFrameRate": "23.976",
             },
         )
-        assert get_timeline_resolution(project) == (1280, 720)
+        assert get_project_timeline_resolution(project) == (1280, 720)
         refresh_lut_list(project)
 
         media_pool = get_media_pool(project)
@@ -67,7 +67,7 @@ def test_p1_helpers_on_resolve_21_0_4() -> None:
         assert get_current_timeline(project) is not None
         open_page(session, Page.EDIT)
         assert get_current_page(session) is Page.EDIT
-        set_current_timecode(timeline, "01:00:00:00")
+        set_timeline_playhead_timecode(timeline, "01:00:00:00")
         set_timeline_settings(
             timeline,
             {
@@ -78,7 +78,7 @@ def test_p1_helpers_on_resolve_21_0_4() -> None:
         assert get_timeline_setting(timeline, "timelineResolutionWidth") == "1280"
         assert get_timeline_setting(timeline, "timelineResolutionHeight") == "720"
 
-        fixed_item, fixed_comp = append_fusion_composition(
+        fixed_item, fixed_comp = add_fusion_composition_to_timeline(
             timeline,
             duration_frames=24,
             record_frame=86448,
@@ -89,11 +89,11 @@ def test_p1_helpers_on_resolve_21_0_4() -> None:
 
         assert insert_generator(timeline, "Solid Color") is not None
 
-        native_item, native_comp = append_fusion_composition(timeline)
+        native_item, native_comp = add_fusion_composition_to_timeline(timeline)
         assert native_item.GetFusionCompCount() >= 1
         transparent = add_transparent_background(native_comp, (0, 0))
         assert transparent is not None
-        assert build_line(native_comp, (1.0, 1.0, 1.0, 1.0), 1.0, 0.01, position=(1, 2)) is not None
+        assert build_fusion_line(native_comp, (1.0, 1.0, 1.0, 1.0), 1.0, 0.01, position=(1, 2)) is not None
         require_fusion_font(session.fusion, "Noto Sans", "Regular")
         assert add_dctl_tool(
             native_comp,

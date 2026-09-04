@@ -6,7 +6,7 @@
 
 - **［Resolve GUI］** 「Project Settings」や「Timeline frame rate」は、Resolveの画面に表示される名前です。
 - **［Resolve API］** `Project.SetSetting()`や設定キー`"timelineFrameRate"`は、Resolve公式Scripting APIの名前です。
-- **［TY API］** `ProjectSetting`、`TimelineSetting`、`FrameRate`、`set_settings()`は、本ライブラリ`ty_davinci_resolve`からimportして使うPythonの名前です。Resolveの画面に表示される名称ではありません。
+- **［TY API］** `ProjectSetting`、`TimelineSetting`、`FrameRate`、`set_project_settings()`は、本ライブラリ`ty_davinci_resolve`からimportして使うPythonの名前です。Resolveの画面に表示される名称ではありません。
 
 本文と表では、名前だけで所属を判断しにくい場合にこのタグを付けます。ダブルクォートは実際にPythonへ渡す文字列だけに使用します。
 
@@ -38,12 +38,12 @@ from ty_davinci_resolve import (
     TimelineSetting,
     create_empty_timeline,
     get_media_pool,
-    set_settings,
+    set_project_settings,
     set_timeline_settings,
 )
 
 # 新しく作るtimelineの既定値を24 fpsにする
-set_settings(
+set_project_settings(
     project,
     {ProjectSetting.TIMELINE_FRAME_RATE: FrameRate.FPS_24},
 )
