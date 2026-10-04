@@ -177,7 +177,11 @@ def test_new_official_and_readback_values_are_defined() -> None:
     assert len(TimelineSetting) == 6
     assert len(RenderFormat) == 23
     assert len(RenderSetting) == 31
-    assert len(VideoCodec) == 199
+    assert len(VideoCodec) == 203
+    assert VideoCodec.RGB_FLOAT_HTJ2K_256_LINES == "RGBFloatHTJ2K256L"
+    assert VideoCodec.RGB_FLOAT_HTJ2K_32_LINES == "RGBFloatHTJ2K32L"
+    assert VideoCodec.RGB_HALF_HTJ2K_256_LINES == "RGBHalfHTJ2K256L"
+    assert VideoCodec.RGB_HALF_HTJ2K_32_LINES == "RGBHalfHTJ2K32L"
     assert len(VideoQuality) == 5
     assert FrameRate.FPS_29_97_DF == "29.97 DF"
     assert SuperScale.X4 == 4

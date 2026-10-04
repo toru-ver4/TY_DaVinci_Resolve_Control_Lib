@@ -1,0 +1,33 @@
+{
+  "created_date": "2026-10-04",
+  "timezone": "Asia/Tokyo",
+  "resolve_version": "21.1.0.17",
+  "product": "DaVinci Resolve Studio",
+  "os": "Windows x86_64",
+  "reference_python": "3.13.16",
+  "numpy": "2.5.3",
+  "pypng": "0.20220715.0",
+  "file_count": 384,
+  "size": [
+    1280,
+    720
+  ],
+  "bitdepth": 16,
+  "archive_sha256": "9b547ce3359a4c3c9901a461b6b8a0a617ab17466194268a48b4a9b1fd74f499",
+  "fonts": {
+    "Noto Sans Regular": {
+      "filename": "NotoSans-Regular.ttf",
+      "sha256": "fe8c022f48d8dd29f17b744d16f9346f4357e16f7d4f7be58b000ae7c291b614"
+    },
+    "Noto Sans Bold": {
+      "filename": "NotoSans-Bold.ttf",
+      "sha256": "13a813c49624ae3ba3c5c6e72c5ebffc4b9e1e6ea32f421c04069b037c6ad431"
+    },
+    "Noto Sans Mono Black": {
+      "filename": "NotoSansMono-VariableFont_wdth,wght.ttf",
+      "sha256": "47d856141683450ee297592b27be447eb5141c68516e5e0e748c66b6e0a54afe"
+    }
+  },
+  "master_policy": "User authorized Python 3.13 / Resolve 21.1 output as the master after updating Windows fonts and confirming a mismatch against the original archive.",
+  "legacy_reference": "ref_data_1280x720.zip is preserved for Resolve 21.0.4."
+}

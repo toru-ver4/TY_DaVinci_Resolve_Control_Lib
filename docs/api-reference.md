@@ -4,7 +4,7 @@
 
 この文書では、Resolve公式Scripting APIに**［Resolve API］**、本ライブラリ`ty_davinci_resolve`のPython APIに**［TY API］**を付けて区別します。例えば［Resolve API］`Project.SetSetting()`、［TY API］`set_project_settings()`です。`"timelineFrameRate"`のようなダブルクォート付きの表記は、Resolve公式APIへ実際に渡す文字列です。
 
-実装の基準資料は `official_documents/21.0.4_Scripting/README.txt` です。行番号はリポジトリに保存した21.0.4版を基準にしています。
+実装の基準資料は `official_documents/21.0.4_Scripting/README.txt` です。行番号はリポジトリに保存した21.0.4版を基準にしています。21.1.0の追加検証には[公式README](../official_documents/21.1.0_Scripting/README.md)、[CHANGELOG](../official_documents/21.1.0_Scripting/CHANGELOG.md)、[公式型定義](../official_documents/21.1.0_Scripting/DaVinciResolveScript.pyi)を使用します。
 
 | ［TY API］モジュール | ［TY API］公開Python API | ［Resolve API］公式Scripting API | 公式文書 |
 |---|---|---|---|
@@ -55,7 +55,7 @@ Project scopeでは、`timelineFrameRate`をproject作成直後に設定でき�
 
 本ライブラリでは、timeline用の設定キーを`TimelineSetting`クラスとしてproject用の`ProjectSetting`とは分けて公開します。ProjectとTimelineで変更できる設定が異なるためです。Timeline scopeでは、空timelineの`useCustomSettings`を`1`にした後、Resolve公式APIの`Timeline.SetSetting("timelineFrameRate", value)`でTimeline Settingsの「Timeline frame rate」を変更できます。25 fpsを設定した実機試験では、timelineの`timelineFrameRate`だけが25.0へ変わり、projectの`timelineFrameRate`と`timelinePlaybackFrameRate`は24のままでした。`Timeline.SetSetting("timelinePlaybackFrameRate", value)`はcustom settingsの前後とも拒否されました。
 
-Windows操作でProject／Deliverの全リストを確認し、本ライブラリの`ResolutionValue`へ28寸法、`PlaybackFrameRate`へ19値を収録しました。Deliver UIではvideo format 19件を確認しました。本ライブラリの`FrameRate`は同じUIの19値に、公式Scripting READMEで規定されたDrop Frame値`29.97 DF`／`59.94 DF`を加えた21件です。Drop Frame値の設定は成功しますが、readbackは数値部分の`timelineFrameRate`と`timelineDropFrameTimecode=1`に分離されます。Resolve公式APIの`GetRenderFormats()`はvideo以外を含む23識別子を返し、本ライブラリの`RenderFormat`はこちらを完全収録します。UIに表示された`HEIF`はこの実機の`GetRenderFormats()`には返らずAPI識別子を確認できないため、推測して追加していません。format別`GetRenderCodecs()`の和集合は196識別子で、すべて本ライブラリの`VideoCodec`に収録しました。さらに旧移植値3件を残すためEnum総数は199件です。利用可能な組合せは実行環境依存なので、固定Enumだけで可否を判断してはいけません。
+Windows操作でProject／Deliverの全リストを確認し、本ライブラリの`ResolutionValue`へ28寸法、`PlaybackFrameRate`へ19値を収録しました。Deliver UIではvideo format 19件を確認しました。本ライブラリの`FrameRate`は同じUIの19値に、公式Scripting READMEで規定されたDrop Frame値`29.97 DF`／`59.94 DF`を加えた21件です。Drop Frame値の設定は成功しますが、readbackは数値部分の`timelineFrameRate`と`timelineDropFrameTimecode=1`に分離されます。Resolve公式APIの`GetRenderFormats()`はvideo以外を含む23識別子を返し、本ライブラリの`RenderFormat`はこちらを完全収録します。UIに表示された`HEIF`はこの実機の`GetRenderFormats()`には返らずAPI識別子を確認できないため、推測して追加していません。format別`GetRenderCodecs()`の和集合は196識別子で、すべて本ライブラリの`VideoCodec`に収録しました。さらに旧移植値3件を残した21.0.4時点のEnum総数は199件でした。21.1.0では実機のEXR codec一覧から`RGBFloatHTJ2K256L`、`RGBFloatHTJ2K32L`、`RGBHalfHTJ2K256L`、`RGBHalfHTJ2K32L`を追加し、現在のEnum総数は203件です。利用可能な組合せは実行環境依存なので、固定Enumだけで可否を判断してはいけません。
 
 `VideoQuality`はDeliver UIと公式Scripting README 846–850行で`Least`、`Low`、`Medium`、`High`、`Best`の5件を確認しました。Automaticは整数`0`、正整数はcodec別bitrateであり、追加の固定Enum値ではありません。
 

@@ -13,5 +13,5 @@ def test_restart_reconnects_to_supported_resolve() -> None:
 
     restarted = session.restart(timeout=90, poll_interval=1)
 
-    assert restarted.version[:3] == (21, 0, 4)
+    assert restarted.version[:3] == session.version[:3]
     assert restarted.product_name == "DaVinci Resolve Studio"

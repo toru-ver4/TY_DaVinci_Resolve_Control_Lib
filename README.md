@@ -1,6 +1,6 @@
 # TY_DaVinci_Resolve_Control_Lib
 
-DaVinci Resolve 21.0.4をWindowsから制御するPython 3.12向けライブラリです。
+DaVinci Resolve 21.0.4／21.1.0をWindowsから制御するPython 3.13（64-bit）向けライブラリです。
 
 ```powershell
 python -m pip install -e .

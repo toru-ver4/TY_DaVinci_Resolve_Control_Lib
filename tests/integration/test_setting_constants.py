@@ -100,7 +100,7 @@ def _assert_setting(
 
 
 @pytest.mark.resolve_integration
-def test_project_setting_constants_on_resolve_21_0_4() -> None:
+def test_project_setting_constants_on_supported_resolve() -> None:
     session = ResolveSession.connect()
     manager = session.project_manager
     original = manager.GetCurrentProject()
@@ -144,7 +144,7 @@ def test_project_setting_constants_on_resolve_21_0_4() -> None:
             for format_id in render_formats.values()
             for codec in project.GetRenderCodecs(format_id).values()
         }
-        assert runtime_codecs.issubset(set(VideoCodec))
+        assert runtime_codecs.issubset(set(VideoCodec)), runtime_codecs - set(VideoCodec)
 
         set_project_settings(project, BT2100_PROJECT_SETTINGS, settle_delay=0.35)
         for key, value in BT2100_PROJECT_SETTINGS.items():

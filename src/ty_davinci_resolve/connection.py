@@ -14,7 +14,7 @@ import time
 from types import ModuleType
 from typing import Any
 
-from .constants import Page, SUPPORTED_RESOLVE_VERSION
+from .constants import Page, SUPPORTED_RESOLVE_VERSIONS
 from .errors import (
     ResolveConnectionError,
     ResolveOperationError,
@@ -270,7 +270,9 @@ class ResolveSession:
     def connect(
         cls,
         *,
-        expected_version: tuple[int, int, int] | None = SUPPORTED_RESOLVE_VERSION,
+        expected_version: (
+            tuple[int, int, int] | tuple[tuple[int, int, int], ...] | None
+        ) = SUPPORTED_RESOLVE_VERSIONS,
         module_loader: ResolveScriptLoader | None = None,
     ) -> ResolveSession:
         """Connect to a running DaVinci Resolve instance.
@@ -278,7 +280,8 @@ class ResolveSession:
         Parameters
         ----------
         expected_version
-            Required major, minor, and patch version. Pass `None` to skip the
+            Required major, minor, and patch version, or a tuple of accepted
+            versions. Defaults to 21.0.4 and 21.1.0. Pass `None` to skip the
             version check.
         module_loader
             Optional loader used for tests or non-standard installations.
@@ -332,8 +335,14 @@ class ResolveSession:
                 "Resolve.GetVersionString returned an invalid value: "
                 f"{version_string!r}."
             )
-        if expected_version is not None and version[:3] != expected_version:
-            raise ResolveVersionError(version, expected_version)
+        if expected_version is not None:
+            accepted_versions = (
+                expected_version
+                if isinstance(expected_version[0], tuple)
+                else (expected_version,)
+            )
+            if version[:3] not in accepted_versions:
+                raise ResolveVersionError(version, expected_version)
         if fusion is None:
             raise ResolveConnectionError("Resolve.Fusion returned None.")
 

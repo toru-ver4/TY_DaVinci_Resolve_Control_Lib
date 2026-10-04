@@ -30,7 +30,7 @@ from ty_davinci_resolve import (
 
 
 @pytest.mark.resolve_integration
-def test_p2_helpers_on_resolve_21_0_4() -> None:
+def test_p2_helpers_on_supported_resolve() -> None:
     session = ResolveSession.connect()
     manager = session.project_manager
     original = manager.GetCurrentProject()

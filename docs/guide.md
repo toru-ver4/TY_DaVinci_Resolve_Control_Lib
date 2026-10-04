@@ -1,8 +1,8 @@
 # TY_DaVinci_Resolve_Control_Lib
 
-DaVinci Resolve 21.0.4をPythonから制御するためのライブラリです。
+DaVinci Resolve 21.0.4／21.1.0をPythonから制御するためのライブラリです。
 
-現在は再設計中のpre-alpha版です。Windows、Python 3.12 64-bitのみを動作保証対象とします。
+現在は再設計中のpre-alpha版です。Windows、Python 3.13 64-bitのみを動作保証対象とします。
 
 ## 名前の読み方
 
@@ -20,7 +20,7 @@ Fusionノードの操作には`add_fusion_tool()`などを使用します。旧�
 
 ## インストール
 
-開発時はリポジトリ直下でeditable installします。
+Python 3.13（64-bit）の環境を使用してください。既存のPython 3.12用仮想環境は再利用せず、3.13で作成した環境を有効にしてから、リポジトリ直下でeditable installします。
 
 ```powershell
 python -m pip install -e .
@@ -56,7 +56,7 @@ print(session.product_name)
 print(session.version_string)
 ```
 
-標準では接続先がResolve 21.0.4であることを検査します。未起動、APIのロード失敗、バージョン不一致は例外になります。
+標準では接続先がResolve 21.0.4または21.1.0であることを検査します。`ResolveSession.connect(expected_version=(21, 1, 0))`のように指定すれば、指定した版だけを許可できます。未起動、APIのロード失敗、バージョン不一致は例外になります。
 
 ## 基本操作
 
@@ -369,7 +369,7 @@ delete_render_job(project, job_id)
 python -m pytest tests/unit
 ```
 
-Resolve 21.0.4を使用する短い実機テストは次のコマンドで分離して実行します。
+Resolve 21.0.4または21.1.0を使用する短い実機テストは次のコマンドで分離して実行します。
 
 ```powershell
 python -m pytest -m resolve_integration tests/integration/test_project_lifecycle.py
@@ -385,6 +385,10 @@ python -m pytest -m resolve_restart tests/integration/test_restart.py -s
 ```
 
 Countdown V2の4条件・384枚をrenderし、参照ZIPとdecode後の16-bit RGB全sampleを完全一致比較する場合は次のように実行します。
+
+事前に`sample_code/2025/02_Countdown_V2/DCTL`の`draw_45deg_lines.dctl`、`draw_countdown_border.dctl`、`draw_countdown_ramp.dctl`をResolveのLUTフォルダー内の`TY_DCTL`に配置してください。Windowsに`Noto Sans Regular`、`Noto Sans Bold`、`Noto Sans Mono Black`をインストールし、Fusionから使用できることを確認します。フォントを追加した場合はResolveを再起動します。テストはDCTLのソースとのSHA-256一致を検査し、実際にFusionが参照するフォントのパスとSHA-256をレンダー前に記録します。
+
+Resolve 21.0.4では旧参照ZIP、21.1.0では専用参照ZIPを自動選択します。Windowsのフォント更新後も旧参照と文字の輪郭が一致しなかったため、ユーザーの方針に従い、21.1.0用参照はPython 3.13.16／Resolve Studio 21.1.0.17で生成した384枚へ更新しました。比較は16-bit RGB全sampleの完全一致を維持します。生成環境とフォントのハッシュは[参照データの検証記録](../tests/countdown_reference_data/ref_data_1280x720_resolve_21_1_0.json)に保存しています。
 
 ```powershell
 python -m pytest -m countdown_regression tests/integration/test_countdown_regression.py -s

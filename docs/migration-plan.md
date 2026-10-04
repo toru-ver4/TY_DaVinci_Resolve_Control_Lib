@@ -13,22 +13,22 @@
 
 新パッケージは旧実装との後方互換性を持たせない。旧ファイルは `sample_code` 側に残し、新パッケージでは関数名、引数、戻り値、例外、モジュール分割を必要に応じて変更する。
 
-公式 API の基準資料は `official_documents/21.0.4_Scripting/README.txt` とする。同文書が要求する Python は 3.6 以上の 64-bit 版であるため、初期保証環境には Python 3.12 64-bit を採用する（README.txt 16–20行）。
+公式 API の基準資料は `official_documents/21.0.4_Scripting/README.txt` とする。同文書が要求する Python は 3.6 以上の 64-bit 版であり、本ライブラリの保証環境には Python 3.13 64-bit を採用する（README.txt 16–20行）。
 
 ## 2. 対象範囲と保証環境
 
 | 項目 | 方針 |
 |---|---|
 | OS | Windows のみ保証。macOS は可能な範囲で単体テスト可能な設計にするが、実機保証しない |
-| DaVinci Resolve | 21.0.4 |
-| Python | 3.12 64-bit |
+| DaVinci Resolve | 21.0.4／21.1.0 |
+| Python | 3.13 64-bit |
 | パッケージ形式 | `pyproject.toml` と `src` layout を使用 |
 | 開発用インストール | `python -m pip install -e .` |
 | 配布 | PyPI 公開は前提にせず、ローカルまたは Git URL から `pip install` |
 | Git連携 | Git submodule は使用しない |
 | 実機テスト | 専用プロジェクトの作成・削除、Resolve の終了・再起動を許可 |
 
-初期の `requires-python` は `>=3.12,<3.13` とする。Python 3.13 は単体テストと Resolve 接続を実機確認した後、別の対応作業として追加する。
+`requires-python` は `>=3.13,<3.14` とする。Python 3.13で単体テストとResolve実機テストを検証する。
 
 ## 3. 設計原則
 
@@ -251,7 +251,7 @@ Resolveの対応版を上げる際のGUI/API対応、設定snapshot、実機テ�
 
 ### 8.1 単体テスト
 
-Resolveを起動せず、Python 3.12で毎回実行できるようにする。
+Resolveを起動せず、Python 3.13で毎回実行できるようにする。
 
 - timecode/frame変換の境界値と不正形式
 - 解像度・fps・page・track type・index・パスの入力検証
@@ -332,7 +332,7 @@ PNGの圧縮方法、chunk順序、timestamp等は画としての出力に影響
 python -m pytest -m countdown_regression tests/integration/test_countdown_regression.py
 ```
 
-完全一致には、少なくともResolve 21.0.4、使用asset、DCTL、font、project/render設定が参照データ生成時と一致している必要がある。事前条件の差とライブラリの回帰を区別できるよう、これらをpreflight結果としてテスト出力へ記録する。
+完全一致には、Resolveの対応版に応じた参照ZIP、使用asset、DCTL、font、project/render設定が参照データ生成時と一致している必要がある。21.0.4用参照ZIPは保持し、21.1.0用参照ZIPはWindowsフォント更新後のPython 3.13／Resolve 21.1出力をマスターにするユーザー方針に従って追加する。事前条件の差とライブラリの回帰を区別できるよう、これらをpreflight結果としてテスト出力へ記録する。
 
 ## 9. 実装フェーズ
 
@@ -369,15 +369,15 @@ python -m pytest -m countdown_regression tests/integration/test_countdown_regres
 ### Phase 5: Python 3.13評価
 
 - 単体テスト、package install、`fusionscript.dll`ロード、Resolve接続、代表的な実機テストを3.13 64-bitで実行
-- 合格後に `requires-python` を `>=3.12,<3.14` へ変更
+- `requires-python` を `>=3.13,<3.14` とし、保証環境をPython 3.13に移行
 
 ## 10. 初期リリースの完了条件
 
-- Python 3.12 64-bitでeditable installとGit URL installが可能
+- Python 3.13 64-bitでeditable installとGit URL installが可能
 - import時にResolve未起動でも失敗しない
-- Resolve 21.0.4以外への接続を明確なメッセージで拒否できる
+- Resolve 21.0.4／21.1.0以外への接続を明確なメッセージで拒否できる
 - P0機能の単体テストが合格
-- Windows + Resolve 21.0.4で主要な実機テストが合格
+- Windows + 対応対象のResolveで主要な実機テストが合格
 - Countdown V2が参照ZIPと同じ384枚を生成し、decode後の16-bit RGB値が全画素完全一致
 - 既存プロジェクト、既存render job、GUIで選択中のMedia Pool Folderに暗黙依存しない
 - READMEに最小の接続・プロジェクト作成・media追加・render例を掲載

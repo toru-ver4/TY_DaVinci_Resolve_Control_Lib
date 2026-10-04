@@ -19,7 +19,7 @@ class ResolveVersionError(ResolveConnectionError):
     def __init__(
         self,
         actual: tuple[int, ...],
-        expected: tuple[int, int, int],
+        expected: tuple[int, int, int] | tuple[tuple[int, int, int], ...],
     ) -> None:
         """Initialize a Resolve version error.
 
@@ -28,7 +28,7 @@ class ResolveVersionError(ResolveConnectionError):
         actual
             Version fields reported by Resolve.
         expected
-            Required major, minor, and patch version.
+            Required major, minor, and patch version, or accepted versions.
 
         Returns
         -------
@@ -42,7 +42,11 @@ class ResolveVersionError(ResolveConnectionError):
         self.actual = actual
         self.expected = expected
         actual_text = ".".join(str(value) for value in actual[:3])
-        expected_text = ".".join(str(value) for value in expected)
+        accepted_versions = expected if isinstance(expected[0], tuple) else (expected,)
+        expected_text = " or ".join(
+            ".".join(str(value) for value in version)
+            for version in accepted_versions
+        )
         super().__init__(
             "Unsupported DaVinci Resolve version: "
             f"expected {expected_text}, got {actual_text}."
@@ -86,4 +90,3 @@ class ResolveOperationError(ResolveError):
 
 class ResolveValidationError(ResolveError, ValueError):
     """Raised before calling Resolve when an argument is invalid."""
-

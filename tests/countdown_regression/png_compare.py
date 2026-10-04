@@ -12,6 +12,7 @@ import png
 
 
 REFERENCE_SHA256 = "490a48b91fe8acd693c31253daf263000d9f1aeb76dc6216f60049590296773d"
+REFERENCE_SHA256_RESOLVE_21_1_0 = "9b547ce3359a4c3c9901a461b6b8a0a617ab17466194268a48b4a9b1fd74f499"
 EXPECTED_FILE_COUNT = 384
 EXPECTED_SIZE = (1280, 720)
 EXPECTED_INFO = {
@@ -23,13 +24,17 @@ EXPECTED_INFO = {
 }
 
 
-def validate_reference_archive(path: str | Path) -> tuple[str, ...]:
+def validate_reference_archive(
+    path: str | Path, *, expected_sha256: str = REFERENCE_SHA256
+) -> tuple[str, ...]:
     """Validate the pinned Countdown reference ZIP and return PNG names.
 
     Parameters
     ----------
     path
         Reference ZIP path.
+    expected_sha256
+        Pinned checksum for the selected Resolve reference archive.
 
     Returns
     -------
@@ -43,9 +48,9 @@ def validate_reference_archive(path: str | Path) -> tuple[str, ...]:
     """
     archive = Path(path)
     digest = hashlib.sha256(archive.read_bytes()).hexdigest()
-    if digest != REFERENCE_SHA256:
+    if digest != expected_sha256:
         raise AssertionError(
-            f"Reference ZIP SHA-256 mismatch: expected {REFERENCE_SHA256}, got {digest}."
+            f"Reference ZIP SHA-256 mismatch: expected {expected_sha256}, got {digest}."
         )
     with zipfile.ZipFile(archive) as zip_file:
         names = zip_file.namelist()
@@ -162,7 +167,12 @@ def compare_png_samples(reference_data: bytes, actual_path: str | Path, name: st
         )
 
 
-def compare_output_directory(reference_zip: str | Path, output_dir: str | Path) -> None:
+def compare_output_directory(
+    reference_zip: str | Path,
+    output_dir: str | Path,
+    *,
+    expected_sha256: str = REFERENCE_SHA256,
+) -> None:
     """Compare all generated PNGs with the pinned reference archive.
 
     Parameters
@@ -171,6 +181,8 @@ def compare_output_directory(reference_zip: str | Path, output_dir: str | Path) 
         Pinned reference ZIP path.
     output_dir
         Directory containing rendered PNG files.
+    expected_sha256
+        Pinned checksum for the selected Resolve reference archive.
 
     Returns
     -------
@@ -180,7 +192,7 @@ def compare_output_directory(reference_zip: str | Path, output_dir: str | Path) 
     --------
     >>> compare_output_directory("reference.zip", "output")  # doctest: +SKIP
     """
-    names = validate_reference_archive(reference_zip)
+    names = validate_reference_archive(reference_zip, expected_sha256=expected_sha256)
     output = Path(output_dir)
     actual_names = tuple(sorted(path.name for path in output.glob("*.png")))
     if actual_names != names:

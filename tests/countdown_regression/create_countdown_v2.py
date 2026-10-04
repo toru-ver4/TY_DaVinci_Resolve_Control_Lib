@@ -143,19 +143,31 @@ def validate_assets(width, height, framerate):
 
     session = resolve_api.ResolveSession.connect()
     fonts = session.fusion.FontManager.GetFontList()
-    font_requirements = {"Noto Sans": "Regular", "Noto Sans Mono": "Black"}
+    font_requirements = {
+        "Noto Sans": ("Regular", "Bold"),
+        "Noto Sans Mono": ("Black",),
+    }
     missing_fonts = [
         f"{family} {style}"
-        for family, style in font_requirements.items()
+        for family, styles in font_requirements.items()
+        for style in styles
         if family not in fonts or style not in fonts[family]
     ]
     if missing_fonts:
         raise RuntimeError(f"Required Fusion fonts are unavailable: {missing_fonts}")
+    font_details = {
+        f"{family} {style}": {
+            "path": str(fonts[family][style]),
+            "sha256": _sha256(fonts[family][style]),
+        }
+        for family, styles in font_requirements.items()
+        for style in styles
+    }
     return {
         "resolve_version": session.version_string,
         "product": session.product_name,
         "assets": [str(path) for path in required],
-        "fonts": font_requirements,
+        "fonts": font_details,
     }
 
 # REVISION = 1  # test version

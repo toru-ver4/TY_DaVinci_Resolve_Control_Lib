@@ -189,6 +189,29 @@ class ResolveSessionTests(unittest.TestCase):
         with self.assertRaises(ResolveVersionError):
             ResolveSession.connect(module_loader=lambda: module)
 
+    def test_connect_accepts_resolve_21_1_0(self) -> None:
+        module = FakeScriptModule(FakeResolve(version=(21, 1, 0, 5)))
+
+        session = ResolveSession.connect(module_loader=lambda: module)
+
+        self.assertEqual(session.version[:3], (21, 1, 0))
+
+    def test_explicit_version_check_remains_strict(self) -> None:
+        module = FakeScriptModule(FakeResolve(version=(21, 1, 0, 5)))
+
+        with self.assertRaisesRegex(ResolveVersionError, "expected 21.0.4, got 21.1.0"):
+            ResolveSession.connect(
+                expected_version=(21, 0, 4), module_loader=lambda: module
+            )
+
+    def test_default_version_error_lists_supported_versions(self) -> None:
+        module = FakeScriptModule(FakeResolve(version=(21, 1, 1, 5)))
+
+        with self.assertRaisesRegex(
+            ResolveVersionError, "expected 21.0.4 or 21.1.0, got 21.1.1"
+        ):
+            ResolveSession.connect(module_loader=lambda: module)
+
     def test_connect_fails_when_resolve_is_not_running(self) -> None:
         module = FakeScriptModule(None)
 

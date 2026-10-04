@@ -2,7 +2,21 @@
 
 この文書は、本ライブラリの対応対象を新しいDaVinci Resolveへ更新するときに使う開発者向けチェックリストです。GUI名とAPIキー名が似ているという理由だけで対応付けず、作品制作の自動化に使えることを実機で確認してから公開します。
 
-現在の基準環境はWindows版DaVinci Resolve Studio 21.0.4.5／Python 3.12です。この環境での利用方法は[GUIと定数の対応](project-settings.md)、実装根拠は[API対応表](api-reference.md)を参照してください。
+現在の検証環境はWindows版DaVinci Resolve Studio 21.1.0／Python 3.13（64-bit）です。21.0.4への接続も引き続き許可します。この環境での利用方法は[GUIと定数の対応](project-settings.md)、実装根拠は[API対応表](api-reference.md)を参照してください。GUI対応表の観測記録は21.0.4.5のものです。
+
+## 2026-10-04の検証記録
+
+Windows／Python 3.13.16／Resolve Studio 21.1.0.17で、単体テスト90件と実機テスト8件の計98件が成功しました。再起動テストは他のテストから分離して実行しています。プロジェクト作成・保存・再読込・削除のストレステストも20回すべて成功し、editable install、wheel install、wheel／sdist buildを確認しました。
+
+Windowsフォント更新後も旧Countdownマスターに文字の輪郭差が残ったため、ユーザーの方針に従ってPython 3.13／Resolve 21.1の生成画像を21.1.0用マスターへ更新しました。別途再レンダーした4条件・384枚が、新マスターと16-bit RGB全sampleで完全一致しています。21.0.4用の旧ZIPは保持しています。[新マスターの生成環境・フォント・SHA-256](../tests/countdown_reference_data/ref_data_1280x720_resolve_21_1_0.json)を参照してください。今回、21.0.4の実機での再検証は行っていません。
+
+Python 3.13の環境を有効にし、ライブラリ直下で次の順序で実行できます。
+
+```powershell
+python -m pytest tests -m "not resolve_restart" -q
+python -m pytest tests/integration/test_restart.py -q
+python tests/stress/project_lifecycle_stress.py --iterations 20
+```
 
 ## 最初に残す情報
 

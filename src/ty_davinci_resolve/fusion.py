@@ -16,7 +16,7 @@ from .constants import (
     FusionResolveFxTool,
     FusionTool,
     Page,
-    SUPPORTED_RESOLVE_VERSION,
+    SUPPORTED_RESOLVE_VERSIONS,
 )
 from .errors import ResolveOperationError, ResolveValidationError
 from .media import import_media_files
@@ -972,12 +972,12 @@ def refresh_fusion_color_management(
     *,
     delay: float = 0.5,
 ) -> None:
-    """Apply the Resolve 21.0.4 Fusion-page RCM refresh workaround.
+    """Apply the Fusion-page RCM refresh workaround on supported Resolve versions.
 
     Parameters
     ----------
     session
-        Connected Resolve 21.0.4 session.
+        Connected Resolve 21.0.4 or 21.1.0 session.
     delay
         Positive page-transition delay in seconds.
 
@@ -993,8 +993,8 @@ def refresh_fusion_color_management(
     --------
     >>> refresh_fusion_color_management(session)  # doctest: +SKIP
     """
-    if tuple(session.version[:3]) != SUPPORTED_RESOLVE_VERSION:
-        raise ResolveValidationError("The Fusion RCM workaround is limited to Resolve 21.0.4.")
+    if tuple(session.version[:3]) not in SUPPORTED_RESOLVE_VERSIONS:
+        raise ResolveValidationError("The Fusion RCM workaround is limited to Resolve 21.0.4 and 21.1.0.")
     if isinstance(delay, bool) or not isinstance(delay, (int, float)) or not math.isfinite(delay) or delay <= 0:
         raise ResolveValidationError("delay must be a positive finite number.")
     open_page(session, Page.FUSION)
