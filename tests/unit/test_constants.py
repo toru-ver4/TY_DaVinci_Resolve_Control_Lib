@@ -86,7 +86,8 @@ def test_legacy_project_values_are_migrated() -> None:
     assert VideoDataLevel.FULL == "Full"
     assert ColorScienceMode.DAVINCI_YRGB == "davinciYRGB"
     assert ColorScienceMode.ACES_CCT == "acescct"
-    assert len(ProjectPresetMode) == 10
+    assert ProjectPresetMode.SDR_REC_709 == "SDR Rec.709"
+    assert len(ProjectPresetMode) == 11
     assert ProjectPresetMode.SDR_REC_2020 == "SDR Rec.2020"
     assert ProjectPresetMode.HDR_REC_2020_PQ_P3_D65_LIMITED == (
         "HDR Rec.2020 PQ (P3-D65 limited)"
@@ -193,8 +194,10 @@ def test_new_official_and_readback_values_are_defined() -> None:
     assert WorkingLuminanceMode.HDR_4000 == "HDR 4000"
     assert DynamicRangeTransform.LUMINANCE_MAPPING == "Luminance Mapping"
     assert DynamicRangeTransform.SATURATION_PRESERVING == "Saturation Preserving"
-    assert len(ColorSpace) == 43
-    assert len(OUTPUT_COLOR_SPACES) == 39
+    assert len(ColorSpace) == 45
+    assert len(OUTPUT_COLOR_SPACES) == 41
+    assert ColorSpace.DJI_D_GAMUT_2 == "DJI D-Gamut2"
+    assert ColorSpace.VIVO_WIDE_GAMUT == "Vivo Wide Gamut"
     assert ColorSpace.HSL not in OUTPUT_COLOR_SPACES
     assert ColorSpace.HSV not in OUTPUT_COLOR_SPACES
     assert ColorSpace.LAB_CIE not in OUTPUT_COLOR_SPACES

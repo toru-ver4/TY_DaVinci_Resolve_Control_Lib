@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "resolve_version": "21.0.4.5",
+  "schema_version": 2,
+  "resolve_version": "21.1.0.17",
   "documented_gui": [
     "TIMELINE_RESOLUTION_WIDTH",
     "TIMELINE_RESOLUTION_HEIGHT",
@@ -155,5 +155,282 @@
     "VIDEO_PLAYOUT_MODE",
     "VIDEO_PLAYOUT_SHOW_LTC",
     "VIDEO_PLAYOUT_SHOW_SOURCE_TIMECODE"
+  ],
+  "legacy_classification_resolve_version": "21.0.4.5",
+  "legacy_classification_note": "documented_gui/pending_gui_review retain the 21.0.4.5 publication review; they are not 21.1 verification statuses.",
+  "observations": [
+    {
+      "scope": "Project color",
+      "page": "Project Settings > Color Management",
+      "label": "Color science",
+      "api_keys": [
+        "colorScienceMode"
+      ],
+      "ty_constants": [
+        "ProjectSetting.COLOR_SCIENCE_MODE"
+      ],
+      "status": "verified_bidirectional",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "Empty project; YRGB / RCM / ACEScc / ACEScct",
+      "evidence": [
+        "verification/21.1.0.17/gui-snapshot-differences.json",
+        "verification/21.1.0.17/api-acescc.json",
+        "verification/21.1.0.17/api-acescc-reload.json",
+        "verification/21.1.0.17/api-acescc-reloaded.jpg",
+        "verification/21.1.0.17/gui-acescct-after.json"
+      ],
+      "notes": "Parent changes can reset dependent values. Bidirectional API/GUI/reload evidence is ACEScc; other modes have GUI and API readback evidence."
+    },
+    {
+      "scope": "Project color",
+      "page": "Project Settings > Color Management",
+      "label": "Automatic color management",
+      "api_keys": [
+        "isAutoColorManage"
+      ],
+      "ty_constants": [
+        "ProjectSetting.AUTO_COLOR_MANAGEMENT"
+      ],
+      "status": "verified_gui_to_api",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "RCM",
+      "evidence": [
+        "verification/21.1.0.17/gui-rcm-auto-on.jpg",
+        "verification/21.1.0.17/gui-rcm-auto-off.jpg",
+        "verification/21.1.0.17/gui-auto-off-after.json",
+        "verification/21.1.0.17/gui-snapshot-differences.json",
+        "verification/21.1.0.17/api-automatic-on.json",
+        "verification/21.1.0.17/api-automatic-on-reload.json",
+        "verification/21.1.0.17/settings-persistence-conventions.json"
+      ],
+      "notes": "GUI on/off changes match snapshots. API-only enable from Custom read back 1 but reverted to 0 after reload; no persistence guarantee. Fresh Custom projects reproduced the same persistence limitation with legacy SetSetting and canonical SetSettings."
+    },
+    {
+      "scope": "Project color",
+      "page": "Project Settings > Color Management",
+      "label": "Color processing mode",
+      "api_keys": [
+        "rcmPresetMode"
+      ],
+      "ty_constants": [
+        "ProjectSetting.RCM_PRESET_MODE"
+      ],
+      "status": "verified_gui_to_api",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "RCM / Automatic off / ten presets plus Custom",
+      "evidence": [
+        "verification/21.1.0.17/gui-preset-differences.json",
+        "verification/21.1.0.17/gui-custom-after.json",
+        "verification/21.1.0.17/preset-api-probe.json",
+        "verification/21.1.0.17/preset-sdr709-reload.json",
+        "verification/21.1.0.17/gui-preset-sdr709-reload.json",
+        "verification/21.1.0.17/gui-preset-hdr-pq-p3-reload.json",
+        "verification/21.1.0.17/settings-persistence-conventions.json"
+      ],
+      "notes": "All labels accept API write/readback, but name-only writes do not apply the GUI preset settings. SDR Rec.709 reverted to Custom on reload; GUI-applied SDR709 and PQ P3 persisted. Fresh Custom projects reproduced the same persistence limitation with legacy SetSetting and canonical SetSettings."
+    },
+    {
+      "scope": "Project color",
+      "page": "Project Settings > Color Management",
+      "label": "Use separate color space and gamma",
+      "api_keys": [
+        "separateColorSpaceAndGamma"
+      ],
+      "ty_constants": [
+        "ProjectSetting.SEPARATE_COLOR_SPACE_AND_GAMMA"
+      ],
+      "status": "verified_bidirectional",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "RCM / Custom",
+      "evidence": [
+        "verification/21.1.0.17/api-separate-on.json",
+        "verification/21.1.0.17/api-colors-reload.json",
+        "verification/21.1.0.17/api-colors-reloaded.jpg",
+        "verification/21.1.0.17/gui-custom-separate.jpg"
+      ],
+      "notes": "Enabling converts combined color spaces to gamut values; empty gamma can be normalized on reload."
+    },
+    {
+      "scope": "Project color",
+      "page": "Project Settings > Color Management",
+      "label": "Input color space",
+      "api_keys": [
+        "colorSpaceInput"
+      ],
+      "ty_constants": [
+        "ProjectSetting.COLOR_SPACE_INPUT"
+      ],
+      "status": "verified_bidirectional",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "RCM / Custom / Separate on",
+      "evidence": [
+        "verification/21.1.0.17/api-input-p3-separate.json",
+        "verification/21.1.0.17/api-colors-reload.json",
+        "verification/21.1.0.17/api-colors-reloaded.jpg",
+        "verification/21.1.0.17/gui-gamut-options.json",
+        "verification/21.1.0.17/api-new-gamuts-reload.json",
+        "verification/21.1.0.17/api-new-gamuts-reloaded.jpg"
+      ],
+      "notes": "GUI/reload checks cover representative P3/Rec.2020 and DJI/Vivo settings. All enum values have API write/readback checks, not individual GUI/persistence checks."
+    },
+    {
+      "scope": "Project color",
+      "page": "Project Settings > Color Management",
+      "label": "Timeline color space",
+      "api_keys": [
+        "colorSpaceTimeline"
+      ],
+      "ty_constants": [
+        "ProjectSetting.COLOR_SPACE_TIMELINE"
+      ],
+      "status": "verified_bidirectional",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "RCM / Custom / Separate on",
+      "evidence": [
+        "verification/21.1.0.17/api-timeline-rec2020.json",
+        "verification/21.1.0.17/api-colors-reload.json",
+        "verification/21.1.0.17/api-colors-reloaded.jpg",
+        "verification/21.1.0.17/gui-gamut-options.json",
+        "verification/21.1.0.17/api-new-gamuts-reload.json",
+        "verification/21.1.0.17/api-new-gamuts-reloaded.jpg"
+      ],
+      "notes": "GUI/reload checks cover representative P3/Rec.2020 and DJI/Vivo settings. All enum values have API write/readback checks, not individual GUI/persistence checks."
+    },
+    {
+      "scope": "Project color",
+      "page": "Project Settings > Color Management",
+      "label": "Output color space",
+      "api_keys": [
+        "colorSpaceOutput"
+      ],
+      "ty_constants": [
+        "ProjectSetting.COLOR_SPACE_OUTPUT"
+      ],
+      "status": "verified_bidirectional",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "RCM / Custom / Separate on",
+      "evidence": [
+        "verification/21.1.0.17/api-output-p3.json",
+        "verification/21.1.0.17/api-colors-reload.json",
+        "verification/21.1.0.17/api-colors-reloaded.jpg",
+        "verification/21.1.0.17/gui-gamut-options.json",
+        "verification/21.1.0.17/api-new-gamuts-reload.json",
+        "verification/21.1.0.17/api-new-gamuts-reloaded.jpg",
+        "verification/21.1.0.17/output-same-as-timeline.json",
+        "verification/21.1.0.17/output-same-as-timeline-reloaded.jpg"
+      ],
+      "notes": "GUI/reload checks cover representative P3/Rec.2020 and DJI/Vivo settings. All enum values have API write/readback checks, not individual GUI/persistence checks. The special string Same as Timeline also passed write/readback/reload/GUI checks for Output; Input rejects it."
+    },
+    {
+      "scope": "Project color",
+      "page": "Project Settings > Color Management",
+      "label": "Limit output gamut to",
+      "api_keys": [],
+      "ty_constants": [],
+      "status": "unmapped",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "RCM / Custom",
+      "evidence": [
+        "verification/21.1.0.17/gui-limit-p3.jpg",
+        "verification/21.1.0.17/gui-limit-p3-after.json",
+        "verification/21.1.0.17/gui-snapshot-differences.json"
+      ],
+      "notes": "Output color space to P3-D65 produced no full-snapshot difference. Do not assign colorSpaceOutputGamutMapping."
+    },
+    {
+      "scope": "Project",
+      "page": "Master Settings > Timeline Format",
+      "label": "Timeline frame rate",
+      "api_keys": [
+        "timelineFrameRate"
+      ],
+      "ty_constants": [
+        "ProjectSetting.TIMELINE_FRAME_RATE"
+      ],
+      "status": "verified_bidirectional",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "Empty project before media/timelines",
+      "evidence": [
+        "verification/21.1.0.17/api-project-fps25.json",
+        "verification/21.1.0.17/api-project-fps25-reload.json",
+        "verification/21.1.0.17/api-project-fps25-reloaded.jpg",
+        "verification/21.1.0.17/frame-rate-constraints.json"
+      ],
+      "notes": "Python 25 fps and reload/GUI confirmed. Playback is independent; integration covers other frame rates. In the custom-timeline probe, changing the project default remained possible after media import; this does not change the custom timeline fps."
+    },
+    {
+      "scope": "Project",
+      "page": "Master Settings > Timeline Format",
+      "label": "Playback frame rate",
+      "api_keys": [
+        "timelinePlaybackFrameRate"
+      ],
+      "ty_constants": [
+        "ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE"
+      ],
+      "status": "query_only",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "Project settings",
+      "evidence": [
+        "verification/21.1.0.17/project-playback-rejection.json",
+        "verification/21.1.0.17/gui-project-playback30-after.json",
+        "verification/21.1.0.17/gui-project-playback30-reload.json",
+        "verification/21.1.0.17/gui-project-playback30.jpg"
+      ],
+      "notes": "API change to 30 rejected; GUI change to 30 read back and persisted."
+    },
+    {
+      "scope": "Timeline",
+      "page": "Timeline Settings > Format",
+      "label": "Timeline frame rate",
+      "api_keys": [
+        "timelineFrameRate"
+      ],
+      "ty_constants": [
+        "TimelineSetting.TIMELINE_FRAME_RATE"
+      ],
+      "status": "verified_bidirectional",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "Empty timeline; useCustomSettings=1",
+      "evidence": [
+        "verification/21.1.0.17/timeline-fps30.json",
+        "verification/21.1.0.17/api-timeline-fps30-reloaded.jpg",
+        "verification/21.1.0.17/gui-timeline-fps25-after.json",
+        "verification/21.1.0.17/gui-timeline-fps25.jpg",
+        "verification/21.1.0.17/frame-rate-constraints.json"
+      ],
+      "notes": "Python 30 and GUI 25 confirmed with reload. Integer 24/25/30/50/60 accepted; fractional 23.976/29.97/59.94 and changes after appending a clip rejected in the separate canonical probe."
+    },
+    {
+      "scope": "Timeline",
+      "page": "Timeline Settings > Format",
+      "label": "Playback frame rate",
+      "api_keys": [
+        "timelinePlaybackFrameRate"
+      ],
+      "ty_constants": [
+        "TimelineSetting.TIMELINE_PLAYBACK_FRAME_RATE"
+      ],
+      "status": "query_only",
+      "resolve_version": "21.1.0.17",
+      "environment": "Windows 11 Pro / Studio / Python 3.13.16",
+      "condition": "Empty custom timeline",
+      "evidence": [
+        "verification/21.1.0.17/timeline-fps30.json",
+        "verification/21.1.0.17/api-timeline-fps30-reloaded.jpg"
+      ],
+      "notes": "No independent GUI control; API change rejected. Not a second timeline playback control."
+    }
   ]
 }

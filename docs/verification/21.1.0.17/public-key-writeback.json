@@ -1,0 +1,1374 @@
+{
+  "resolve": "21.1.0.17",
+  "same_value_results": [
+    {
+      "constant": "TIMELINE_RESOLUTION_WIDTH",
+      "key": "timelineResolutionWidth",
+      "value": "1920",
+      "accepted": true,
+      "readback": "1920",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_RESOLUTION_HEIGHT",
+      "key": "timelineResolutionHeight",
+      "value": "1080",
+      "accepted": true,
+      "readback": "1080",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_PLAYBACK_FRAME_RATE",
+      "key": "timelinePlaybackFrameRate",
+      "value": "24",
+      "accepted": false,
+      "readback": "24",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_FRAME_RATE",
+      "key": "timelineFrameRate",
+      "value": 24.0,
+      "accepted": true,
+      "readback": 24.0,
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_SAMPLE_RATE",
+      "key": "timelineSampleRate",
+      "value": "48000",
+      "accepted": true,
+      "readback": "48000",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_FORMAT",
+      "key": "videoMonitorFormat",
+      "value": "HD 1080p 24",
+      "accepted": true,
+      "readback": "HD 1080p 24",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_USE_444_SDI",
+      "key": "videoMonitorUse444SDI",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_SDI_CONFIGURATION",
+      "key": "videoMonitorSDIConfiguration",
+      "value": "dual_link",
+      "accepted": true,
+      "readback": "dual_link",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_USE_HDR_OVER_HDMI",
+      "key": "videoMonitorUseHDROverHDMI",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DATA_LEVELS",
+      "key": "videoDataLevels",
+      "value": "Video",
+      "accepted": true,
+      "readback": "Video",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SCIENCE_MODE",
+      "key": "colorScienceMode",
+      "value": "davinciYRGB",
+      "accepted": true,
+      "readback": "davinciYRGB",
+      "matches": true
+    },
+    {
+      "constant": "RCM_PRESET_MODE",
+      "key": "rcmPresetMode",
+      "value": "Custom",
+      "accepted": true,
+      "readback": "Custom",
+      "matches": true
+    },
+    {
+      "constant": "AUTO_COLOR_MANAGEMENT",
+      "key": "isAutoColorManage",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "SEPARATE_COLOR_SPACE_AND_GAMMA",
+      "key": "separateColorSpaceAndGamma",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_INPUT",
+      "key": "colorSpaceInput",
+      "value": "Rec.709 Gamma 2.4",
+      "accepted": true,
+      "readback": "Rec.709 Gamma 2.4",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_INPUT_GAMMA",
+      "key": "colorSpaceInputGamma",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_TIMELINE",
+      "key": "colorSpaceTimeline",
+      "value": "Rec.709 (Scene)",
+      "accepted": true,
+      "readback": "Rec.709 (Scene)",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_TIMELINE_GAMMA",
+      "key": "colorSpaceTimelineGamma",
+      "value": "",
+      "accepted": false,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_OUTPUT",
+      "key": "colorSpaceOutput",
+      "value": "Rec.709 (Scene)",
+      "accepted": true,
+      "readback": "Rec.709 (Scene)",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_OUTPUT_GAMMA",
+      "key": "colorSpaceOutputGamma",
+      "value": "",
+      "accepted": false,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_ACES_IDT",
+      "key": "colorAcesIDT",
+      "value": "No Input Transform",
+      "accepted": true,
+      "readback": "No Input Transform",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_ACES_ODT",
+      "key": "colorAcesODT",
+      "value": "No Output Transform",
+      "accepted": true,
+      "readback": "No Output Transform",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_ACES_GAMUT_COMPRESS_TYPE",
+      "key": "colorAcesGamutCompressType",
+      "value": "None",
+      "accepted": true,
+      "readback": "None",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_WORKING_LUMINANCE",
+      "key": "timelineWorkingLuminance",
+      "value": "1000",
+      "accepted": true,
+      "readback": "1000",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_WORKING_LUMINANCE_MODE",
+      "key": "timelineWorkingLuminanceMode",
+      "value": "HDR 1000",
+      "accepted": true,
+      "readback": "HDR 1000",
+      "matches": true
+    },
+    {
+      "constant": "INPUT_DRT",
+      "key": "inputDRT",
+      "value": "None",
+      "accepted": true,
+      "readback": "None",
+      "matches": true
+    },
+    {
+      "constant": "OUTPUT_DRT",
+      "key": "outputDRT",
+      "value": "None",
+      "accepted": true,
+      "readback": "None",
+      "matches": true
+    },
+    {
+      "constant": "OUTPUT_GAMUT_MAPPING",
+      "key": "colorSpaceOutputGamutMapping",
+      "value": "None",
+      "accepted": true,
+      "readback": "None",
+      "matches": true
+    },
+    {
+      "constant": "USE_INVERSE_DRT",
+      "key": "useInverseDRT",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "USE_COLOR_SPACE_AWARE_GRADING_TOOLS",
+      "key": "useColorSpaceAwareGradingTools",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "IMAGE_RESIZING_GAMMA",
+      "key": "imageResizingGamma",
+      "value": "Timeline",
+      "accepted": true,
+      "readback": "Timeline",
+      "matches": true
+    },
+    {
+      "constant": "DISABLE_FUSION_TONE_MAPPING",
+      "key": "disableFusionToneMapping",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "GRAPHICS_WHITE_LEVEL",
+      "key": "graphicsWhiteLevel",
+      "value": "100",
+      "accepted": true,
+      "readback": "100",
+      "matches": true
+    },
+    {
+      "constant": "HDR_MASTERING_LUMINANCE_MAX",
+      "key": "hdrMasteringLuminanceMax",
+      "value": "1000",
+      "accepted": true,
+      "readback": "1000",
+      "matches": true
+    },
+    {
+      "constant": "HDR_MASTERING_ON",
+      "key": "hdrMasteringOn",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "SUPER_SCALE",
+      "key": "superScale",
+      "value": 1,
+      "accepted": true,
+      "readback": 1,
+      "matches": true
+    },
+    {
+      "constant": "AUDIO_CAPTURE_NUM_CHANNELS",
+      "key": "audioCaptureNumChannels",
+      "value": "2",
+      "accepted": true,
+      "readback": "2",
+      "matches": true
+    },
+    {
+      "constant": "AUDIO_OUTPUT_HAS_TIMECODE",
+      "key": "audioOutputHasTimecode",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "AUDIO_PLAYOUT_NUM_CHANNELS",
+      "key": "audioPlayoutNumChannels",
+      "value": "2",
+      "accepted": true,
+      "readback": "2",
+      "matches": true
+    },
+    {
+      "constant": "CLOUD_PROJECT_MEDIA_LOCATION",
+      "key": "cloudProjectMediaLocation",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_ACES_NODE_LUT_PROCESSING_SPACE",
+      "key": "colorAcesNodeLUTProcessingSpace",
+      "value": "acesccAp1",
+      "accepted": true,
+      "readback": "acesccAp1",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_GALLERY_STILLS_LOCATION",
+      "key": "colorGalleryStillsLocation",
+      "value": "D:\\DaVinci_Resolve\\Videos\\.gallery",
+      "accepted": true,
+      "readback": "D:\\DaVinci_Resolve\\Videos\\.gallery",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_GALLERY_STILLS_NAMING_CUSTOM_PATTERN",
+      "key": "colorGalleryStillsNamingCustomPattern",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_GALLERY_STILLS_NAMING_ENABLED",
+      "key": "colorGalleryStillsNamingEnabled",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_GALLERY_STILLS_NAMING_PATTERN",
+      "key": "colorGalleryStillsNamingPattern",
+      "value": "clipName",
+      "accepted": true,
+      "readback": "clipName",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_GALLERY_STILLS_NAMING_WITH_STILL_NUMBER",
+      "key": "colorGalleryStillsNamingWithStillNumber",
+      "value": "off",
+      "accepted": true,
+      "readback": "off",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_KEYFRAME_DYNAMICS_END_PROFILE",
+      "key": "colorKeyframeDynamicsEndProfile",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_KEYFRAME_DYNAMICS_START_PROFILE",
+      "key": "colorKeyframeDynamicsStartProfile",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_LUMINANCE_MIXER_DEFAULT_ZERO",
+      "key": "colorLuminanceMixerDefaultZero",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_OUTPUT_GAMUT_SATURATION_KNEE",
+      "key": "colorSpaceOutputGamutSaturationKnee",
+      "value": "0.9",
+      "accepted": true,
+      "readback": "0.9",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_OUTPUT_GAMUT_SATURATION_MAX",
+      "key": "colorSpaceOutputGamutSaturationMax",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_OUTPUT_TONE_LUMINANCE_MAX",
+      "key": "colorSpaceOutputToneLuminanceMax",
+      "value": "100",
+      "accepted": true,
+      "readback": "100",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_SPACE_OUTPUT_TONE_MAPPING",
+      "key": "colorSpaceOutputToneMapping",
+      "value": "None",
+      "accepted": true,
+      "readback": "None",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_USE_BGR_PIXEL_ORDER_FOR_DPX",
+      "key": "colorUseBGRPixelOrderForDPX",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_USE_CONTRAST_S_CURVE",
+      "key": "colorUseContrastSCurve",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_USE_LEGACY_LOG_GRADES",
+      "key": "colorUseLegacyLogGrades",
+      "value": "2",
+      "accepted": true,
+      "readback": "2",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_USE_LOCAL_VERSIONS_AS_DEFAULT",
+      "key": "colorUseLocalVersionsAsDefault",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_USE_STEREO_CONVERGENCE_FOR_EFFECTS",
+      "key": "colorUseStereoConvergenceForEffects",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_1_NAME",
+      "key": "colorVersion1Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_2_NAME",
+      "key": "colorVersion2Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_3_NAME",
+      "key": "colorVersion3Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_4_NAME",
+      "key": "colorVersion4Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_5_NAME",
+      "key": "colorVersion5Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_6_NAME",
+      "key": "colorVersion6Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_7_NAME",
+      "key": "colorVersion7Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_8_NAME",
+      "key": "colorVersion8Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_9_NAME",
+      "key": "colorVersion9Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "COLOR_VERSION_10_NAME",
+      "key": "colorVersion10Name",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "HDR10_PLUS_CONTROLS_ON",
+      "key": "hdr10PlusControlsOn",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "HDR_DOLBY_ANALYSIS_TUNING",
+      "key": "hdrDolbyAnalysisTuning",
+      "value": "Balanced",
+      "accepted": true,
+      "readback": "Balanced",
+      "matches": true
+    },
+    {
+      "constant": "HDR_DOLBY_CONTROLS_ON",
+      "key": "hdrDolbyControlsOn",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "HDR_DOLBY_MASTER_DISPLAY",
+      "key": "hdrDolbyMasterDisplay",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "HDR_DOLBY_VERSION",
+      "key": "hdrDolbyVersion",
+      "value": "4.0",
+      "accepted": true,
+      "readback": "4.0",
+      "matches": true
+    },
+    {
+      "constant": "IMAGE_DEINTERLACE_QUALITY",
+      "key": "imageDeinterlaceQuality",
+      "value": "normal",
+      "accepted": true,
+      "readback": "normal",
+      "matches": true
+    },
+    {
+      "constant": "IMAGE_ENABLE_FIELD_PROCESSING",
+      "key": "imageEnableFieldProcessing",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "IMAGE_MOTION_ESTIMATION_MODE",
+      "key": "imageMotionEstimationMode",
+      "value": "standardFaster",
+      "accepted": true,
+      "readback": "standardFaster",
+      "matches": true
+    },
+    {
+      "constant": "IMAGE_MOTION_ESTIMATION_RANGE",
+      "key": "imageMotionEstimationRange",
+      "value": "medium",
+      "accepted": true,
+      "readback": "medium",
+      "matches": true
+    },
+    {
+      "constant": "IMAGE_RESIZE_MODE",
+      "key": "imageResizeMode",
+      "value": "sharper",
+      "accepted": true,
+      "readback": "sharper",
+      "matches": true
+    },
+    {
+      "constant": "IMAGE_RETIME_INTERPOLATION",
+      "key": "imageRetimeInterpolation",
+      "value": "nearest",
+      "accepted": true,
+      "readback": "nearest",
+      "matches": true
+    },
+    {
+      "constant": "INPUT_DRT_SAT_ROLLOFF_LIMIT",
+      "key": "inputDRTSatRolloffLimit",
+      "value": "10000",
+      "accepted": true,
+      "readback": "10000",
+      "matches": true
+    },
+    {
+      "constant": "INPUT_DRT_SAT_ROLLOFF_START",
+      "key": "inputDRTSatRolloffStart",
+      "value": "100",
+      "accepted": true,
+      "readback": "100",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_AUDIO_METER_ALIGN_LEVEL",
+      "key": "limitAudioMeterAlignLevel",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_AUDIO_METER_DISPLAY_MODE",
+      "key": "limitAudioMeterDisplayMode",
+      "value": "post_fader",
+      "accepted": true,
+      "readback": "post_fader",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_AUDIO_METER_HIGH_LEVEL",
+      "key": "limitAudioMeterHighLevel",
+      "value": "-5",
+      "accepted": true,
+      "readback": "-5",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_AUDIO_METER_LUFS",
+      "key": "limitAudioMeterLUFS",
+      "value": "-23",
+      "accepted": true,
+      "readback": "-23",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_AUDIO_METER_LOUDNESS_SCALE",
+      "key": "limitAudioMeterLoudnessScale",
+      "value": "ebu_9_scale",
+      "accepted": true,
+      "readback": "ebu_9_scale",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_AUDIO_METER_LOW_LEVEL",
+      "key": "limitAudioMeterLowLevel",
+      "value": "-10",
+      "accepted": true,
+      "readback": "-10",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_BROADCAST_SAFE_LEVELS",
+      "key": "limitBroadcastSafeLevels",
+      "value": "20_120",
+      "accepted": true,
+      "readback": "20_120",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_BROADCAST_SAFE_ON",
+      "key": "limitBroadcastSafeOn",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_SUBTITLE_CPL",
+      "key": "limitSubtitleCPL",
+      "value": "60",
+      "accepted": true,
+      "readback": "60",
+      "matches": true
+    },
+    {
+      "constant": "LIMIT_SUBTITLE_CAPTION_DURATION_SEC",
+      "key": "limitSubtitleCaptionDurationSec",
+      "value": "3",
+      "accepted": true,
+      "readback": "3",
+      "matches": true
+    },
+    {
+      "constant": "NODE_STACK_LAYERS",
+      "key": "nodeStackLayers",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "OUTPUT_DRT_SAT_ROLLOFF_LIMIT",
+      "key": "outputDRTSatRolloffLimit",
+      "value": "10000",
+      "accepted": true,
+      "readback": "10000",
+      "matches": true
+    },
+    {
+      "constant": "OUTPUT_DRT_SAT_ROLLOFF_START",
+      "key": "outputDRTSatRolloffStart",
+      "value": "100",
+      "accepted": true,
+      "readback": "100",
+      "matches": true
+    },
+    {
+      "constant": "PERF_AUTO_RENDER_CACHE_AFTER_TIME",
+      "key": "perfAutoRenderCacheAfterTime",
+      "value": "5",
+      "accepted": true,
+      "readback": "5",
+      "matches": true
+    },
+    {
+      "constant": "PERF_AUTO_RENDER_CACHE_COMPOSITE",
+      "key": "perfAutoRenderCacheComposite",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "PERF_AUTO_RENDER_CACHE_ENABLE",
+      "key": "perfAutoRenderCacheEnable",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "PERF_AUTO_RENDER_CACHE_FU_EFFECT",
+      "key": "perfAutoRenderCacheFuEffect",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "PERF_AUTO_RENDER_CACHE_TRANSITION",
+      "key": "perfAutoRenderCacheTransition",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "PERF_CACHE_CLIPS_LOCATION",
+      "key": "perfCacheClipsLocation",
+      "value": "",
+      "accepted": true,
+      "readback": "",
+      "matches": true
+    },
+    {
+      "constant": "PERF_OPTIMISED_MEDIA_ON",
+      "key": "perfOptimisedMediaOn",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "PERF_OPTIMIZED_RESOLUTION_RATIO",
+      "key": "perfOptimizedResolutionRatio",
+      "value": "auto",
+      "accepted": true,
+      "readback": "auto",
+      "matches": true
+    },
+    {
+      "constant": "PERF_PROXY_MEDIA_MODE",
+      "key": "perfProxyMediaMode",
+      "value": "2",
+      "accepted": true,
+      "readback": "2",
+      "matches": true
+    },
+    {
+      "constant": "PERF_PROXY_RESOLUTION_RATIO",
+      "key": "perfProxyResolutionRatio",
+      "value": "original",
+      "accepted": true,
+      "readback": "original",
+      "matches": true
+    },
+    {
+      "constant": "PERF_RENDER_CACHE_MODE",
+      "key": "perfRenderCacheMode",
+      "value": "none",
+      "accepted": true,
+      "readback": "none",
+      "matches": true
+    },
+    {
+      "constant": "PROJECT_MEDIA_LOCATION",
+      "key": "projectMediaLocation",
+      "value": "C:\\Users\\toruv\\DaVinci Resolve Media",
+      "accepted": true,
+      "readback": "C:\\Users\\toruv\\DaVinci Resolve Media",
+      "matches": true
+    },
+    {
+      "constant": "SPEAKER_DETECTION",
+      "key": "speakerDetection",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "SUPER_SCALE_NOISE_REDUCTION",
+      "key": "superScaleNoiseReduction",
+      "value": "Medium",
+      "accepted": true,
+      "readback": "Medium",
+      "matches": true
+    },
+    {
+      "constant": "SUPER_SCALE_SHARPNESS",
+      "key": "superScaleSharpness",
+      "value": "Medium",
+      "accepted": true,
+      "readback": "Medium",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_DROP_FRAME_TIMECODE",
+      "key": "timelineDropFrameTimecode",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_FRAME_RATE_MISMATCH_BEHAVIOR",
+      "key": "timelineFrameRateMismatchBehavior",
+      "value": "resolve",
+      "accepted": true,
+      "readback": "resolve",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_INPUT_RES_MISMATCH_BEHAVIOR",
+      "key": "timelineInputResMismatchBehavior",
+      "value": "scaleToFit",
+      "accepted": true,
+      "readback": "scaleToFit",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_INPUT_RES_MISMATCH_CUSTOM_PRESET",
+      "key": "timelineInputResMismatchCustomPreset",
+      "value": "None",
+      "accepted": true,
+      "readback": "None",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_INPUT_RES_MISMATCH_USE_CUSTOM_PRESET",
+      "key": "timelineInputResMismatchUseCustomPreset",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_INTERLACE_PROCESSING",
+      "key": "timelineInterlaceProcessing",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_OUTPUT_PIXEL_ASPECT_RATIO",
+      "key": "timelineOutputPixelAspectRatio",
+      "value": "square",
+      "accepted": true,
+      "readback": "square",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_OUTPUT_RES_MATCH_TIMELINE_RES",
+      "key": "timelineOutputResMatchTimelineRes",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_OUTPUT_RES_MISMATCH_BEHAVIOR",
+      "key": "timelineOutputResMismatchBehavior",
+      "value": "scaleToFit",
+      "accepted": true,
+      "readback": "scaleToFit",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_OUTPUT_RES_MISMATCH_CUSTOM_PRESET",
+      "key": "timelineOutputResMismatchCustomPreset",
+      "value": "None",
+      "accepted": true,
+      "readback": "None",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_OUTPUT_RES_MISMATCH_USE_CUSTOM_PRESET",
+      "key": "timelineOutputResMismatchUseCustomPreset",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_OUTPUT_RESOLUTION_HEIGHT",
+      "key": "timelineOutputResolutionHeight",
+      "value": "1080",
+      "accepted": true,
+      "readback": "1080",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_OUTPUT_RESOLUTION_WIDTH",
+      "key": "timelineOutputResolutionWidth",
+      "value": "1920",
+      "accepted": true,
+      "readback": "1920",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_PIXEL_ASPECT_RATIO",
+      "key": "timelinePixelAspectRatio",
+      "value": "square",
+      "accepted": true,
+      "readback": "square",
+      "matches": true
+    },
+    {
+      "constant": "TIMELINE_SAVE_THUMBS_IN_PROJECT",
+      "key": "timelineSaveThumbsInProject",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "TRANSCRIPTION_LANGUAGE",
+      "key": "transcriptionLanguage",
+      "value": "auto",
+      "accepted": true,
+      "readback": "auto",
+      "matches": true
+    },
+    {
+      "constant": "USE_CA_TRANSFORM",
+      "key": "useCATransform",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_CAPTURE_INGEST_HANDLES",
+      "key": "videoCaptureIngestHandles",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_CAPTURE_MODE",
+      "key": "videoCaptureMode",
+      "value": "video_audio",
+      "accepted": true,
+      "readback": "video_audio",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DATA_LEVELS_RETAIN_SUBBLACK_AND_SUPER_WHITE_DATA",
+      "key": "videoDataLevelsRetainSubblockAndSuperWhiteData",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DECK_ADD_32_PULLDOWN",
+      "key": "videoDeckAdd32Pulldown",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DECK_BIT_DEPTH",
+      "key": "videoDeckBitDepth",
+      "value": "10",
+      "accepted": true,
+      "readback": "10",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DECK_NON_AUTO_EDIT_FRAMES",
+      "key": "videoDeckNonAutoEditFrames",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DECK_OUTPUT_SYNC_SOURCE",
+      "key": "videoDeckOutputSyncSource",
+      "value": "auto",
+      "accepted": true,
+      "readback": "auto",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DECK_PREROLL_SEC",
+      "key": "videoDeckPrerollSec",
+      "value": "5",
+      "accepted": true,
+      "readback": "5",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DECK_SDI_CONFIGURATION",
+      "key": "videoDeckSDIConfiguration",
+      "value": "none",
+      "accepted": true,
+      "readback": "none",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DECK_USE_444_SDI",
+      "key": "videoDeckUse444SDI",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DECK_USE_AUDIO_EDIT",
+      "key": "videoDeckUseAudoEdit",
+      "value": "1",
+      "accepted": true,
+      "readback": "1",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_DECK_USE_STEREO_SDI",
+      "key": "videoDeckUseStereoSDI",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_BIT_DEPTH",
+      "key": "videoMonitorBitDepth",
+      "value": "10",
+      "accepted": true,
+      "readback": "10",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_MATRIX_OVERRIDE_FOR_422_SDI",
+      "key": "videoMonitorMatrixOverrideFor422SDI",
+      "value": "Rec.601",
+      "accepted": true,
+      "readback": "Rec.601",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_SCALING",
+      "key": "videoMonitorScaling",
+      "value": "bilinear",
+      "accepted": true,
+      "readback": "bilinear",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_USE_LEVEL_A",
+      "key": "videoMonitorUseLevelA",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_USE_MATRIX_OVERRIDE_FOR_422_SDI",
+      "key": "videoMonitorUseMatrixOverrideFor422SDI",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_MONITOR_USE_STEREO_SDI",
+      "key": "videoMonitorUseStereoSDI",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_PLAYOUT_AUDIO_FRAMES_OFFSET",
+      "key": "videoPlayoutAudioFramesOffset",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_PLAYOUT_BATCH_HEAD_DURATION",
+      "key": "videoPlayoutBatchHeadDuration",
+      "value": "8",
+      "accepted": true,
+      "readback": "8",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_PLAYOUT_BATCH_TAIL_DURATION",
+      "key": "videoPlayoutBatchTailDuration",
+      "value": "8",
+      "accepted": true,
+      "readback": "8",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_PLAYOUT_LTC_FRAMES_OFFSET",
+      "key": "videoPlayoutLTCFramesOffset",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_PLAYOUT_MODE",
+      "key": "videoPlayoutMode",
+      "value": "video_audio",
+      "accepted": true,
+      "readback": "video_audio",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_PLAYOUT_SHOW_LTC",
+      "key": "videoPlayoutShowLTC",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    },
+    {
+      "constant": "VIDEO_PLAYOUT_SHOW_SOURCE_TIMECODE",
+      "key": "videoPlayoutShowSourceTimecode",
+      "value": "0",
+      "accepted": true,
+      "readback": "0",
+      "matches": true
+    }
+  ],
+  "reloaded": {
+    "audioCaptureNumChannels": "2",
+    "audioOutputHasTimecode": "0",
+    "audioPlayoutNumChannels": "2",
+    "cloudProjectMediaLocation": "",
+    "colorAcesGamutCompressType": "None",
+    "colorAcesIDT": "No Input Transform",
+    "colorAcesNodeLUTProcessingSpace": "acesccAp1",
+    "colorAcesODT": "No Output Transform",
+    "colorGalleryStillsLocation": "D:\\DaVinci_Resolve\\Videos\\.gallery",
+    "colorGalleryStillsNamingCustomPattern": "",
+    "colorGalleryStillsNamingEnabled": "0",
+    "colorGalleryStillsNamingPattern": "clipName",
+    "colorGalleryStillsNamingWithStillNumber": "off",
+    "colorKeyframeDynamicsEndProfile": "1",
+    "colorKeyframeDynamicsStartProfile": "1",
+    "colorLuminanceMixerDefaultZero": "0",
+    "colorScienceMode": "davinciYRGB",
+    "colorSpaceInput": "Rec.709 Gamma 2.4",
+    "colorSpaceInputGamma": "",
+    "colorSpaceOutput": "Rec.709 (Scene)",
+    "colorSpaceOutputGamma": "",
+    "colorSpaceOutputGamutMapping": "None",
+    "colorSpaceOutputGamutSaturationKnee": "0.9",
+    "colorSpaceOutputGamutSaturationMax": "1",
+    "colorSpaceOutputToneLuminanceMax": "100",
+    "colorSpaceOutputToneMapping": "None",
+    "colorSpaceTimeline": "Rec.709 (Scene)",
+    "colorSpaceTimelineGamma": "",
+    "colorUseBGRPixelOrderForDPX": "0",
+    "colorUseContrastSCurve": "1",
+    "colorUseLegacyLogGrades": "2",
+    "colorUseLocalVersionsAsDefault": "1",
+    "colorUseStereoConvergenceForEffects": "0",
+    "colorVersion10Name": "",
+    "colorVersion1Name": "",
+    "colorVersion2Name": "",
+    "colorVersion3Name": "",
+    "colorVersion4Name": "",
+    "colorVersion5Name": "",
+    "colorVersion6Name": "",
+    "colorVersion7Name": "",
+    "colorVersion8Name": "",
+    "colorVersion9Name": "",
+    "disableFusionToneMapping": "0",
+    "graphicsWhiteLevel": "100",
+    "hdr10PlusControlsOn": "0",
+    "hdrDolbyAnalysisTuning": "Balanced",
+    "hdrDolbyControlsOn": "0",
+    "hdrDolbyMasterDisplay": "",
+    "hdrDolbyVersion": "4.0",
+    "hdrMasteringLuminanceMax": "1000",
+    "hdrMasteringOn": "0",
+    "imageDeinterlaceQuality": "normal",
+    "imageEnableFieldProcessing": "0",
+    "imageMotionEstimationMode": "standardFaster",
+    "imageMotionEstimationRange": "medium",
+    "imageResizeMode": "sharper",
+    "imageResizingGamma": "Timeline",
+    "imageRetimeInterpolation": "nearest",
+    "inputDRT": "None",
+    "inputDRTSatRolloffLimit": "10000",
+    "inputDRTSatRolloffStart": "100",
+    "isAutoColorManage": "0",
+    "limitAudioMeterAlignLevel": "0",
+    "limitAudioMeterDisplayMode": "post_fader",
+    "limitAudioMeterHighLevel": "-5",
+    "limitAudioMeterLUFS": "-23",
+    "limitAudioMeterLoudnessScale": "ebu_9_scale",
+    "limitAudioMeterLowLevel": "-10",
+    "limitBroadcastSafeLevels": "20_120",
+    "limitBroadcastSafeOn": "0",
+    "limitSubtitleCPL": "60",
+    "limitSubtitleCaptionDurationSec": "3",
+    "nodeStackLayers": "1",
+    "outputDRT": "None",
+    "outputDRTSatRolloffLimit": "10000",
+    "outputDRTSatRolloffStart": "100",
+    "perfAutoRenderCacheAfterTime": "5",
+    "perfAutoRenderCacheComposite": "0",
+    "perfAutoRenderCacheEnable": "1",
+    "perfAutoRenderCacheFuEffect": "1",
+    "perfAutoRenderCacheTransition": "0",
+    "perfCacheClipsLocation": "D:\\DaVinci_Resolve\\Videos\\CacheClip",
+    "perfOptimisedCodec": "apch",
+    "perfOptimisedMediaOn": "1",
+    "perfOptimizedResolutionRatio": "auto",
+    "perfProxyMediaMode": "2",
+    "perfProxyResolutionRatio": "original",
+    "perfRenderCacheCodec": "apch",
+    "perfRenderCacheMode": "none",
+    "projectMediaLocation": "C:\\Users\\toruv\\DaVinci Resolve Media",
+    "rcmPresetMode": "Custom",
+    "separateColorSpaceAndGamma": "0",
+    "speakerDetection": "0",
+    "superScaleNoiseReduction": "Medium",
+    "superScaleNoiseReductionStrength": "0.5",
+    "superScaleSharpness": "Medium",
+    "superScaleSharpnessStrength": "0.5",
+    "timelineDropFrameTimecode": "0",
+    "timelineFrameRate": 24.0,
+    "timelineFrameRateMismatchBehavior": "resolve",
+    "timelineInputResMismatchBehavior": "scaleToFit",
+    "timelineInputResMismatchCustomPreset": "None",
+    "timelineInputResMismatchUseCustomPreset": "0",
+    "timelineInterlaceProcessing": "0",
+    "timelineOutputPixelAspectRatio": "square",
+    "timelineOutputResMatchTimelineRes": "1",
+    "timelineOutputResMismatchBehavior": "scaleToFit",
+    "timelineOutputResMismatchCustomPreset": "None",
+    "timelineOutputResMismatchUseCustomPreset": "0",
+    "timelineOutputResolutionHeight": "1080",
+    "timelineOutputResolutionWidth": "1920",
+    "timelinePixelAspectRatio": "square",
+    "timelinePlaybackFrameRate": "24",
+    "timelineResolutionHeight": "1080",
+    "timelineResolutionWidth": "1920",
+    "timelineSampleRate": "48000",
+    "timelineSaveThumbsInProject": "0",
+    "timelineWorkingLuminance": "1000",
+    "timelineWorkingLuminanceMode": "HDR 1000",
+    "transcriptionLanguage": "auto",
+    "useCATransform": "1",
+    "useColorSpaceAwareGradingTools": "0",
+    "useInverseDRT": "0",
+    "videoCaptureCodec": "",
+    "videoCaptureFormat": "",
+    "videoCaptureIngestHandles": "0",
+    "videoCaptureMode": "video_audio",
+    "videoDataLevels": "Video",
+    "videoDataLevelsRetainSubblockAndSuperWhiteData": "0",
+    "videoDeckAdd32Pulldown": "0",
+    "videoDeckBitDepth": "10",
+    "videoDeckFormat": "HD 1080PsF 24",
+    "videoDeckNonAutoEditFrames": "0",
+    "videoDeckOutputSyncSource": "auto",
+    "videoDeckPrerollSec": "5",
+    "videoDeckSDIConfiguration": "none",
+    "videoDeckUse444SDI": "0",
+    "videoDeckUseAudoEdit": "1",
+    "videoDeckUseStereoSDI": "0",
+    "videoMonitorBitDepth": "10",
+    "videoMonitorFormat": "HD 1080p 24",
+    "videoMonitorMatrixOverrideFor422SDI": "Rec.601",
+    "videoMonitorSDIConfiguration": "dual_link",
+    "videoMonitorScaling": "bilinear",
+    "videoMonitorUse444SDI": "0",
+    "videoMonitorUseHDROverHDMI": "0",
+    "videoMonitorUseLevelA": "0",
+    "videoMonitorUseMatrixOverrideFor422SDI": "0",
+    "videoMonitorUseStereoSDI": "0",
+    "videoPlayoutAudioFramesOffset": "0",
+    "videoPlayoutBatchHeadDuration": "8",
+    "videoPlayoutBatchTailDuration": "8",
+    "videoPlayoutLTCFramesOffset": "0",
+    "videoPlayoutMode": "video_audio",
+    "videoPlayoutShowLTC": "0",
+    "videoPlayoutShowSourceTimecode": "0",
+    "superScale": 1
+  },
+  "notes": "Same-value acceptance does not prove alternate-value writeability or GUI mapping."
+}

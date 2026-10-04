@@ -121,7 +121,7 @@ def test_media_storage_import_supports_paths_and_ranges(tmp_path: Path) -> None:
     result = import_media_storage_items(storage, [media, MediaStorageItem(media, 1, 5)])
 
     assert len(result) == 2
-    assert captured == [str(media), {"media": str(media), "startFrame": 1, "endFrame": 5}]
+    assert captured == [{"media": str(media)}, {"media": str(media), "startFrame": 1, "endFrame": 5}]
 
 
 class FakeTimeline:
@@ -184,8 +184,8 @@ class FakeRenderProject:
     def AddRenderJob(self) -> str:
         return "job-1"
 
-    def StartRendering(self, job_id: str) -> bool:
-        return job_id == "job-1"
+    def StartRendering(self, job_ids: list[str]) -> bool:
+        return job_ids == ["job-1"]
 
     def GetRenderJobStatus(self, job_id: str) -> dict[str, object]:
         return next(self.statuses)

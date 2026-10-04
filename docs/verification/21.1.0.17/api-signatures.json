@@ -1,0 +1,2302 @@
+{
+  "Resolve": {
+    "added": {
+      "GetCurrentProject": "def GetCurrentProject(self) -> Project",
+      "GetCurrentTimeline": "def GetCurrentTimeline(self) -> Timeline",
+      "GetMediaPool": "def GetMediaPool(self) -> MediaPool",
+      "GetGallery": "def GetGallery(self) -> Gallery",
+      "SetHighPriority": "def SetHighPriority(self, highPriority: bool) -> bool",
+      "IsStudio": "def IsStudio(self) -> bool",
+      "GetKeyboardPresetList": "def GetKeyboardPresetList(self) -> list[str]",
+      "LoadKeyboardPreset": "def LoadKeyboardPreset(self, presetName: str) -> bool",
+      "DeleteKeyboardPreset": "def DeleteKeyboardPreset(self, presetName: str) -> bool",
+      "GetCurrentKeyboardPreset": "def GetCurrentKeyboardPreset(self) -> str",
+      "ImportKeyboardPreset": "def ImportKeyboardPreset(self, filePath: str, presetName: str | None=None) -> bool",
+      "ExportKeyboardPreset": "def ExportKeyboardPreset(self, presetName: str, exportPath: str) -> bool",
+      "ValidateDCTL": "def ValidateDCTL(self, dctlSource: str) -> str | None",
+      "EncryptDCTL": "def EncryptDCTL(self, inputPath: str, encryptDCTLOptions: EncryptDCTLOptions | None=None) -> bool"
+    },
+    "absent_from_stub": {},
+    "common_signatures": {
+      "Fusion": {
+        "21.0.4": [
+          "Fusion()                                        --> Fusion"
+        ],
+        "21.1": "def Fusion(self) -> Fusion"
+      },
+      "GetMediaStorage": {
+        "21.0.4": [
+          "GetMediaStorage()                               --> MediaStorage"
+        ],
+        "21.1": "def GetMediaStorage(self) -> MediaStorage"
+      },
+      "GetProjectManager": {
+        "21.0.4": [
+          "GetProjectManager()                             --> ProjectManager"
+        ],
+        "21.1": "def GetProjectManager(self) -> ProjectManager"
+      },
+      "OpenPage": {
+        "21.0.4": [
+          "OpenPage(pageName)                              --> Bool"
+        ],
+        "21.1": "def OpenPage(self, pageName: str) -> bool"
+      },
+      "GetCurrentPage": {
+        "21.0.4": [
+          "GetCurrentPage()                                --> String"
+        ],
+        "21.1": "def GetCurrentPage(self) -> str"
+      },
+      "GetProductName": {
+        "21.0.4": [
+          "GetProductName()                                --> string"
+        ],
+        "21.1": "def GetProductName(self) -> str"
+      },
+      "GetVersion": {
+        "21.0.4": [
+          "GetVersion()                                    --> [version fields]"
+        ],
+        "21.1": "def GetVersion(self) -> list[int | str]"
+      },
+      "GetVersionString": {
+        "21.0.4": [
+          "GetVersionString()                              --> string"
+        ],
+        "21.1": "def GetVersionString(self) -> str"
+      },
+      "GetLayoutPresetList": {
+        "21.0.4": [
+          "GetLayoutPresetList()                           --> [presetNames...]"
+        ],
+        "21.1": "def GetLayoutPresetList(self) -> list[str]"
+      },
+      "LoadLayoutPreset": {
+        "21.0.4": [
+          "LoadLayoutPreset(presetName)                    --> Bool"
+        ],
+        "21.1": "def LoadLayoutPreset(self, presetName: str) -> bool"
+      },
+      "UpdateLayoutPreset": {
+        "21.0.4": [
+          "UpdateLayoutPreset(presetName)                  --> Bool"
+        ],
+        "21.1": "def UpdateLayoutPreset(self, presetName: str) -> bool"
+      },
+      "ExportLayoutPreset": {
+        "21.0.4": [
+          "ExportLayoutPreset(presetName, presetFilePath)  --> Bool"
+        ],
+        "21.1": "def ExportLayoutPreset(self, presetName: str, presetFilePath: str) -> bool"
+      },
+      "DeleteLayoutPreset": {
+        "21.0.4": [
+          "DeleteLayoutPreset(presetName)                  --> Bool"
+        ],
+        "21.1": "def DeleteLayoutPreset(self, presetName: str) -> bool"
+      },
+      "SaveLayoutPreset": {
+        "21.0.4": [
+          "SaveLayoutPreset(presetName)                    --> Bool"
+        ],
+        "21.1": "def SaveLayoutPreset(self, presetName: str) -> bool"
+      },
+      "ImportLayoutPreset": {
+        "21.0.4": [
+          "ImportLayoutPreset(presetFilePath, presetName)  --> Bool"
+        ],
+        "21.1": "def ImportLayoutPreset(self, presetFilePath: str, presetName: str | None=None) -> bool"
+      },
+      "Quit": {
+        "21.0.4": [
+          "Quit()                                          --> None"
+        ],
+        "21.1": "def Quit(self) -> bool"
+      },
+      "ImportRenderPreset": {
+        "21.0.4": [
+          "ImportRenderPreset(presetPath)                  --> Bool"
+        ],
+        "21.1": "def ImportRenderPreset(self, presetPath: str) -> bool"
+      },
+      "ExportRenderPreset": {
+        "21.0.4": [
+          "ExportRenderPreset(presetName, exportPath)      --> Bool"
+        ],
+        "21.1": "def ExportRenderPreset(self, presetName: str, exportPath: str) -> bool"
+      },
+      "GetBurnInPresetList": {
+        "21.0.4": [
+          "GetBurnInPresetList()                           --> [presetName...]"
+        ],
+        "21.1": "def GetBurnInPresetList(self) -> list[str]"
+      },
+      "DeleteBurnInPreset": {
+        "21.0.4": [
+          "DeleteBurnInPreset(presetName)                  --> Bool"
+        ],
+        "21.1": "def DeleteBurnInPreset(self, presetName: str) -> bool"
+      },
+      "ImportBurnInPreset": {
+        "21.0.4": [
+          "ImportBurnInPreset(presetPath)                  --> Bool"
+        ],
+        "21.1": "def ImportBurnInPreset(self, presetPath: str) -> bool"
+      },
+      "ExportBurnInPreset": {
+        "21.0.4": [
+          "ExportBurnInPreset(presetName, exportPath)      --> Bool"
+        ],
+        "21.1": "def ExportBurnInPreset(self, presetName: str, exportPath: str) -> bool"
+      },
+      "GetUserPreferencesPresetList": {
+        "21.0.4": [
+          "GetUserPreferencesPresetList()                  --> [presetNames...]"
+        ],
+        "21.1": "def GetUserPreferencesPresetList(self) -> list[str]"
+      },
+      "LoadUserPreferencesPreset": {
+        "21.0.4": [
+          "LoadUserPreferencesPreset(presetName)           --> Bool"
+        ],
+        "21.1": "def LoadUserPreferencesPreset(self, presetName: str) -> bool"
+      },
+      "SaveUserPreferencesPreset": {
+        "21.0.4": [
+          "SaveUserPreferencesPreset(presetName)           --> Bool"
+        ],
+        "21.1": "def SaveUserPreferencesPreset(self, presetName: str) -> bool"
+      },
+      "DeleteUserPreferencesPreset": {
+        "21.0.4": [
+          "DeleteUserPreferencesPreset(presetName)         --> Bool"
+        ],
+        "21.1": "def DeleteUserPreferencesPreset(self, presetName: str) -> bool"
+      },
+      "ImportUserPreferencesPreset": {
+        "21.0.4": [
+          "ImportUserPreferencesPreset(presetFilePath, presetName) --> Bool"
+        ],
+        "21.1": "def ImportUserPreferencesPreset(self, filePath: str, presetName: str | None=None) -> bool"
+      },
+      "ExportUserPreferencesPreset": {
+        "21.0.4": [
+          "ExportUserPreferencesPreset(presetName, exportPath) --> Bool"
+        ],
+        "21.1": "def ExportUserPreferencesPreset(self, presetName: str, exportPath: str) -> bool"
+      },
+      "GetKeyframeMode": {
+        "21.0.4": [
+          "GetKeyframeMode()                               --> keyframeMode"
+        ],
+        "21.1": "def GetKeyframeMode(self) -> int"
+      },
+      "SetKeyframeMode": {
+        "21.0.4": [
+          "SetKeyframeMode(keyframeMode)                   --> Bool"
+        ],
+        "21.1": "def SetKeyframeMode(self, keyframeMode: KeyframeMode) -> bool"
+      },
+      "GetFairlightPresets": {
+        "21.0.4": [
+          "GetFairlightPresets()                           --> [presetNames...]."
+        ],
+        "21.1": "def GetFairlightPresets(self) -> list[str]"
+      },
+      "DisableBackgroundTasksForCurrentResolveSession": {
+        "21.0.4": [
+          "DisableBackgroundTasksForCurrentResolveSession()--> None"
+        ],
+        "21.1": "def DisableBackgroundTasksForCurrentResolveSession(self)"
+      }
+    }
+  },
+  "ProjectManager": {
+    "added": {
+      "GetProjectLastModifiedTime": "def GetProjectLastModifiedTime(self, projectName: str) -> int"
+    },
+    "absent_from_stub": {},
+    "common_signatures": {
+      "ArchiveProject": {
+        "21.0.4": [
+          "ArchiveProject(projectName, filePath, isArchiveSrcMedia=True, isArchiveRenderCache=True, isArchiveProxyMedia=False)       --> Bool"
+        ],
+        "21.1": "def ArchiveProject(self, projectName: str, filePath: str, isArchiveSrcMedia=True, isArchiveRenderCache=True, isArchiveProxyMedia=False) -> bool"
+      },
+      "CreateProject": {
+        "21.0.4": [
+          "CreateProject(projectName, mediaLocationPath)   --> Project"
+        ],
+        "21.1": "def CreateProject(self, projectName: str, mediaLocationPath: str | None=None) -> Project | None"
+      },
+      "DeleteProject": {
+        "21.0.4": [
+          "DeleteProject(projectName)                      --> Bool"
+        ],
+        "21.1": "def DeleteProject(self, projectName: str) -> bool"
+      },
+      "LoadProject": {
+        "21.0.4": [
+          "LoadProject(projectName)                        --> Project"
+        ],
+        "21.1": "def LoadProject(self, projectName: str) -> Project | None"
+      },
+      "GetCurrentProject": {
+        "21.0.4": [
+          "GetCurrentProject()                             --> Project"
+        ],
+        "21.1": "def GetCurrentProject(self) -> Project"
+      },
+      "SaveProject": {
+        "21.0.4": [
+          "SaveProject()                                   --> Bool"
+        ],
+        "21.1": "def SaveProject(self) -> bool"
+      },
+      "CloseProject": {
+        "21.0.4": [
+          "CloseProject(project)                           --> Bool"
+        ],
+        "21.1": "def CloseProject(self, project: Project) -> bool"
+      },
+      "CreateFolder": {
+        "21.0.4": [
+          "CreateFolder(folderName)                        --> Bool"
+        ],
+        "21.1": "def CreateFolder(self, folderName: str) -> bool"
+      },
+      "DeleteFolder": {
+        "21.0.4": [
+          "DeleteFolder(folderName)                        --> Bool"
+        ],
+        "21.1": "def DeleteFolder(self, folderName: str) -> bool"
+      },
+      "GetProjectListInCurrentFolder": {
+        "21.0.4": [
+          "GetProjectListInCurrentFolder()                 --> [project names...]"
+        ],
+        "21.1": "def GetProjectListInCurrentFolder(self) -> list[str]"
+      },
+      "GetProjectAttributesInCurrentFolder": {
+        "21.0.4": [
+          "GetProjectAttributesInCurrentFolder()           --> {project name: {attributes}, ...}"
+        ],
+        "21.1": "def GetProjectAttributesInCurrentFolder(self) -> dict[str, ProjectAttributes]"
+      },
+      "GetFolderListInCurrentFolder": {
+        "21.0.4": [
+          "GetFolderListInCurrentFolder()                  --> [folder names...]"
+        ],
+        "21.1": "def GetFolderListInCurrentFolder(self) -> list[str]"
+      },
+      "GotoRootFolder": {
+        "21.0.4": [
+          "GotoRootFolder()                                --> Bool"
+        ],
+        "21.1": "def GotoRootFolder(self) -> bool"
+      },
+      "GotoParentFolder": {
+        "21.0.4": [
+          "GotoParentFolder()                              --> Bool"
+        ],
+        "21.1": "def GotoParentFolder(self) -> bool"
+      },
+      "GetCurrentFolder": {
+        "21.0.4": [
+          "GetCurrentFolder()                              --> string"
+        ],
+        "21.1": "def GetCurrentFolder(self) -> str"
+      },
+      "OpenFolder": {
+        "21.0.4": [
+          "OpenFolder(folderName)                          --> Bool"
+        ],
+        "21.1": "def OpenFolder(self, folderName: str) -> bool"
+      },
+      "ImportProject": {
+        "21.0.4": [
+          "ImportProject(filePath, projectName=None)       --> Bool"
+        ],
+        "21.1": "def ImportProject(self, filePath: str, projectName: str | None=None) -> bool"
+      },
+      "ExportProject": {
+        "21.0.4": [
+          "ExportProject(projectName, filePath, withStillsAndLUTs=True) --> Bool"
+        ],
+        "21.1": "def ExportProject(self, projectName: str, filePath: str, withStillsAndLUTs=True) -> bool"
+      },
+      "RestoreProject": {
+        "21.0.4": [
+          "RestoreProject(filePath, projectName=None)      --> Bool"
+        ],
+        "21.1": "def RestoreProject(self, filePath: str, projectName: str | None=None) -> bool"
+      },
+      "GetCurrentDatabase": {
+        "21.0.4": [
+          "GetCurrentDatabase()                            --> {dbInfo}"
+        ],
+        "21.1": "def GetCurrentDatabase(self) -> DatabaseInfo"
+      },
+      "GetDatabaseList": {
+        "21.0.4": [
+          "GetDatabaseList()                               --> [{dbInfo}]"
+        ],
+        "21.1": "def GetDatabaseList(self) -> list[DatabaseInfo]"
+      },
+      "SetCurrentDatabase": {
+        "21.0.4": [
+          "SetCurrentDatabase({dbInfo})                    --> Bool"
+        ],
+        "21.1": "def SetCurrentDatabase(self, dbInfo: DatabaseInfo) -> bool"
+      },
+      "CreateCloudProject": {
+        "21.0.4": [
+          "CreateCloudProject({cloudSettings})             --> Project"
+        ],
+        "21.1": "def CreateCloudProject(self, cloudSettings: CloudSettings) -> Project | None"
+      },
+      "LoadCloudProject": {
+        "21.0.4": [
+          "LoadCloudProject({cloudSettings})               --> Project"
+        ],
+        "21.1": "def LoadCloudProject(self, cloudSettings: CloudSettings) -> Project | None"
+      },
+      "ImportCloudProject": {
+        "21.0.4": [
+          "ImportCloudProject(filePath, {cloudSettings})   --> Bool"
+        ],
+        "21.1": "def ImportCloudProject(self, filePath: str, cloudSettings: CloudSettings) -> bool"
+      },
+      "RestoreCloudProject": {
+        "21.0.4": [
+          "RestoreCloudProject(folderPath, {cloudSettings}) --> Bool"
+        ],
+        "21.1": "def RestoreCloudProject(self, folderPath: str, cloudSettings: CloudSettings) -> bool"
+      }
+    }
+  },
+  "Project": {
+    "added": {
+      "GetProjectSettingsPresetList": "def GetProjectSettingsPresetList(self) -> list[ProjectSettingsPresetInfo]",
+      "SetProjectSettingsPreset": "def SetProjectSettingsPreset(self, presetName: str) -> bool",
+      "DeleteProjectSettingsPreset": "def DeleteProjectSettingsPreset(self, presetName: str) -> bool",
+      "SaveCurrentProjectSettingsAsNewPreset": "def SaveCurrentProjectSettingsAsNewPreset(self, presetName: str) -> bool",
+      "UpdateProjectSettingsPreset": "def UpdateProjectSettingsPreset(self, presetName: str) -> bool",
+      "ExportProjectSettingsPreset": "def ExportProjectSettingsPreset(self, presetName: str, exportPath: str) -> bool",
+      "ImportProjectSettingsPreset": "def ImportProjectSettingsPreset(self, presetFilePath: str, presetName: str | None=None) -> bool",
+      "UpdateRenderPreset": "def UpdateRenderPreset(self, presetName: str) -> bool",
+      "SetQuickExportEnabledForRenderPreset": "def SetQuickExportEnabledForRenderPreset(self, presetName: str, isEnabled: bool) -> bool",
+      "GetSettings": "def GetSettings(self) -> ProjectSettings",
+      "SetSettings": "def SetSettings(self, settings: ProjectSettings) -> bool",
+      "GetAudioRenderFormats": "def GetAudioRenderFormats(self) -> dict",
+      "GetAudioRenderCodecs": "def GetAudioRenderCodecs(self, audioRenderFormatFileExtension: str) -> dict"
+    },
+    "absent_from_stub": {
+      "GetPresetList": [
+        "GetPresetList()                                 --> [presets...]"
+      ],
+      "SetPreset": [
+        "SetPreset(presetName)                           --> Bool"
+      ],
+      "GetSetting": [
+        "GetSetting(settingName)                         --> string"
+      ],
+      "SetSetting": [
+        "SetSetting(settingName, settingValue)           --> Bool"
+      ]
+    },
+    "common_signatures": {
+      "GetMediaPool": {
+        "21.0.4": [
+          "GetMediaPool()                                  --> MediaPool"
+        ],
+        "21.1": "def GetMediaPool(self) -> MediaPool"
+      },
+      "GetTimelineCount": {
+        "21.0.4": [
+          "GetTimelineCount()                              --> int"
+        ],
+        "21.1": "def GetTimelineCount(self) -> int"
+      },
+      "GetTimelineByIndex": {
+        "21.0.4": [
+          "GetTimelineByIndex(idx)                         --> Timeline"
+        ],
+        "21.1": "def GetTimelineByIndex(self, idx: int) -> Timeline | None"
+      },
+      "GetCurrentTimeline": {
+        "21.0.4": [
+          "GetCurrentTimeline()                            --> Timeline"
+        ],
+        "21.1": "def GetCurrentTimeline(self) -> Timeline"
+      },
+      "SetCurrentTimeline": {
+        "21.0.4": [
+          "SetCurrentTimeline(timeline)                    --> Bool"
+        ],
+        "21.1": "def SetCurrentTimeline(self, timeline: Timeline) -> bool"
+      },
+      "GetGallery": {
+        "21.0.4": [
+          "GetGallery()                                    --> Gallery"
+        ],
+        "21.1": "def GetGallery(self) -> Gallery"
+      },
+      "GetName": {
+        "21.0.4": [
+          "GetName()                                       --> string"
+        ],
+        "21.1": "def GetName(self) -> str"
+      },
+      "SetName": {
+        "21.0.4": [
+          "SetName(projectName)                            --> Bool"
+        ],
+        "21.1": "def SetName(self, projectName: str) -> bool"
+      },
+      "AddRenderJob": {
+        "21.0.4": [
+          "AddRenderJob()                                  --> string"
+        ],
+        "21.1": "def AddRenderJob(self) -> str"
+      },
+      "DeleteRenderJob": {
+        "21.0.4": [
+          "DeleteRenderJob(jobId)                          --> Bool"
+        ],
+        "21.1": "def DeleteRenderJob(self, jobId: str) -> bool"
+      },
+      "DeleteAllRenderJobs": {
+        "21.0.4": [
+          "DeleteAllRenderJobs()                           --> Bool"
+        ],
+        "21.1": "def DeleteAllRenderJobs(self) -> bool"
+      },
+      "GetRenderJobList": {
+        "21.0.4": [
+          "GetRenderJobList()                              --> [render jobs...]"
+        ],
+        "21.1": "def GetRenderJobList(self) -> list[RenderJobInfo]"
+      },
+      "GetRenderPresetList": {
+        "21.0.4": [
+          "GetRenderPresetList()                           --> [presets...]"
+        ],
+        "21.1": "def GetRenderPresetList(self) -> list[str]"
+      },
+      "StartRendering": {
+        "21.0.4": [
+          "StartRendering(jobId1, jobId2, ...)             --> Bool",
+          "StartRendering([jobIds...], isInteractiveMode=False)    --> Bool",
+          "StartRendering(isInteractiveMode=False)                 --> Bool"
+        ],
+        "21.1": "def StartRendering(self, jobIds: list[str], isInteractiveMode=False) -> bool"
+      },
+      "StopRendering": {
+        "21.0.4": [
+          "StopRendering()                                 --> None"
+        ],
+        "21.1": "def StopRendering(self)"
+      },
+      "IsRenderingInProgress": {
+        "21.0.4": [
+          "IsRenderingInProgress()                         --> Bool"
+        ],
+        "21.1": "def IsRenderingInProgress(self) -> bool"
+      },
+      "LoadRenderPreset": {
+        "21.0.4": [
+          "LoadRenderPreset(presetName)                    --> Bool"
+        ],
+        "21.1": "def LoadRenderPreset(self, presetName: str) -> bool"
+      },
+      "SaveAsNewRenderPreset": {
+        "21.0.4": [
+          "SaveAsNewRenderPreset(presetName)               --> Bool"
+        ],
+        "21.1": "def SaveAsNewRenderPreset(self, presetName: str) -> bool"
+      },
+      "DeleteRenderPreset": {
+        "21.0.4": [
+          "DeleteRenderPreset(presetName)                  --> Bool"
+        ],
+        "21.1": "def DeleteRenderPreset(self, presetName: str) -> bool"
+      },
+      "SetRenderSettings": {
+        "21.0.4": [
+          "SetRenderSettings({settings})                   --> Bool"
+        ],
+        "21.1": "def SetRenderSettings(self, settings: RenderSettings) -> bool"
+      },
+      "GetRenderJobStatus": {
+        "21.0.4": [
+          "GetRenderJobStatus(jobId)                       --> {status info}"
+        ],
+        "21.1": "def GetRenderJobStatus(self, jobId: str) -> RenderJobStatus"
+      },
+      "GetQuickExportRenderPresets": {
+        "21.0.4": [
+          "GetQuickExportRenderPresets()                   --> [preset_name..]"
+        ],
+        "21.1": "def GetQuickExportRenderPresets(self) -> list[str]"
+      },
+      "RenderWithQuickExport": {
+        "21.0.4": [
+          "RenderWithQuickExport(preset_name, {param_dict})--> {status info}"
+        ],
+        "21.1": "def RenderWithQuickExport(self, quickExportPresetName: str, presetInfo: QuickExportRenderSettings) -> QuickExportRenderStatus"
+      },
+      "GetRenderFormats": {
+        "21.0.4": [
+          "GetRenderFormats()                              --> {render formats..}"
+        ],
+        "21.1": "def GetRenderFormats(self) -> dict"
+      },
+      "GetRenderCodecs": {
+        "21.0.4": [
+          "GetRenderCodecs(renderFormat)                   --> {render codecs...}"
+        ],
+        "21.1": "def GetRenderCodecs(self, renderFormatFileExtension: str) -> dict"
+      },
+      "GetCurrentRenderFormatAndCodec": {
+        "21.0.4": [
+          "GetCurrentRenderFormatAndCodec()                --> {format, codec}"
+        ],
+        "21.1": "def GetCurrentRenderFormatAndCodec(self) -> dict[str, str]"
+      },
+      "SetCurrentRenderFormatAndCodec": {
+        "21.0.4": [
+          "SetCurrentRenderFormatAndCodec(format, codec)   --> Bool"
+        ],
+        "21.1": "def SetCurrentRenderFormatAndCodec(self, format: str, codec: str) -> bool"
+      },
+      "GetCurrentRenderMode": {
+        "21.0.4": [
+          "GetCurrentRenderMode()                          --> int"
+        ],
+        "21.1": "def GetCurrentRenderMode(self) -> int"
+      },
+      "SetCurrentRenderMode": {
+        "21.0.4": [
+          "SetCurrentRenderMode(renderMode)                --> Bool"
+        ],
+        "21.1": "def SetCurrentRenderMode(self, renderMode: int) -> bool"
+      },
+      "GetRenderResolutions": {
+        "21.0.4": [
+          "GetRenderResolutions(format, codec)             --> [{Resolution}]"
+        ],
+        "21.1": "def GetRenderResolutions(self, format: str | None=None, codec: str | None=None) -> list[ResolutionInfo]"
+      },
+      "RefreshLUTList": {
+        "21.0.4": [
+          "RefreshLUTList()                                --> Bool"
+        ],
+        "21.1": "def RefreshLUTList(self) -> bool"
+      },
+      "GetUniqueId": {
+        "21.0.4": [
+          "GetUniqueId()                                   --> string"
+        ],
+        "21.1": "def GetUniqueId(self) -> str"
+      },
+      "InsertAudioToCurrentTrackAtPlayhead": {
+        "21.0.4": [
+          "InsertAudioToCurrentTrackAtPlayhead(mediaPath,  --> Bool"
+        ],
+        "21.1": "def InsertAudioToCurrentTrackAtPlayhead(self, mediaPath: str, startOffsetInSamples: int, durationInSamples: int) -> bool"
+      },
+      "LoadBurnInPreset": {
+        "21.0.4": [
+          "LoadBurnInPreset(presetName)                    --> Bool"
+        ],
+        "21.1": "def LoadBurnInPreset(self, presetName: str) -> bool"
+      },
+      "ExportCurrentFrameAsStill": {
+        "21.0.4": [
+          "ExportCurrentFrameAsStill(filePath)             --> Bool"
+        ],
+        "21.1": "def ExportCurrentFrameAsStill(self, filePath: str) -> bool"
+      },
+      "GetColorGroupsList": {
+        "21.0.4": [
+          "GetColorGroupsList()                            --> [ColorGroups...]"
+        ],
+        "21.1": "def GetColorGroupsList(self) -> list[ColorGroup]"
+      },
+      "AddColorGroup": {
+        "21.0.4": [
+          "AddColorGroup(groupName)                        --> ColorGroup"
+        ],
+        "21.1": "def AddColorGroup(self, groupName: str) -> ColorGroup"
+      },
+      "DeleteColorGroup": {
+        "21.0.4": [
+          "DeleteColorGroup(colorGroup)                    --> Bool"
+        ],
+        "21.1": "def DeleteColorGroup(self, colorGroup: ColorGroup) -> bool"
+      },
+      "ApplyFairlightPresetToCurrentTimeline": {
+        "21.0.4": [
+          "ApplyFairlightPresetToCurrentTimeline(name)     --> Bool"
+        ],
+        "21.1": "def ApplyFairlightPresetToCurrentTimeline(self, presetName: str) -> bool"
+      },
+      "ResetIntellisearchAnalysis": {
+        "21.0.4": [
+          "ResetIntellisearchAnalysis()                    --> Bool"
+        ],
+        "21.1": "def ResetIntellisearchAnalysis(self) -> bool"
+      },
+      "GenerateSpeech": {
+        "21.0.4": [
+          "GenerateSpeech({speechGenerationSettings}, timecode) --> MediaPoolItem"
+        ],
+        "21.1": "def GenerateSpeech(self, speechSettings: SpeechSettings) -> MediaPoolItem"
+      }
+    }
+  },
+  "MediaStorage": {
+    "added": {
+      "StartCloneMedia": "def StartCloneMedia(self, sourceDir: str, targetDirs: str | list[str]) -> bool",
+      "SetCloneToolSettings": "def SetCloneToolSettings(self, cloneToolSettings: CloneToolSettings | None=None) -> bool",
+      "StopCloneMedia": "def StopCloneMedia(self) -> bool",
+      "GetCloneStatus": "def GetCloneStatus(self) -> CloneStatus"
+    },
+    "absent_from_stub": {},
+    "common_signatures": {
+      "GetMountedVolumeList": {
+        "21.0.4": [
+          "GetMountedVolumeList()                          --> [paths...]"
+        ],
+        "21.1": "def GetMountedVolumeList(self) -> list[str]"
+      },
+      "GetSubFolderList": {
+        "21.0.4": [
+          "GetSubFolderList(folderPath)                    --> [paths...]"
+        ],
+        "21.1": "def GetSubFolderList(self, folderPath: str) -> list[str]"
+      },
+      "GetFileList": {
+        "21.0.4": [
+          "GetFileList(folderPath)                         --> [paths...]"
+        ],
+        "21.1": "def GetFileList(self, folderPath: str) -> list[str]"
+      },
+      "RevealInStorage": {
+        "21.0.4": [
+          "RevealInStorage(path)                           --> Bool"
+        ],
+        "21.1": "def RevealInStorage(self, path: str) -> bool"
+      },
+      "AddItemListToMediaPool": {
+        "21.0.4": [
+          "AddItemListToMediaPool(item1, item2, ...)       --> [clips...]",
+          "AddItemListToMediaPool([items...])              --> [clips...]",
+          "AddItemListToMediaPool([{itemInfo}, ...])       --> [clips...]"
+        ],
+        "21.1": "def AddItemListToMediaPool(self, itemInfos: list[MediaStorageItemInfo]) -> list[MediaPoolItem]"
+      },
+      "AddClipMattesToMediaPool": {
+        "21.0.4": [
+          "AddClipMattesToMediaPool(MediaPoolItem, [paths], stereoEye) --> Bool"
+        ],
+        "21.1": "def AddClipMattesToMediaPool(self, mediaPoolItem: MediaPoolItem, paths: list[str], stereoEye: str | None=None) -> bool"
+      },
+      "AddTimelineMattesToMediaPool": {
+        "21.0.4": [
+          "AddTimelineMattesToMediaPool([paths])           --> [MediaPoolItems]"
+        ],
+        "21.1": "def AddTimelineMattesToMediaPool(self, paths: list[str]) -> list[MediaPoolItem]"
+      }
+    }
+  },
+  "MediaPool": {
+    "added": {
+      "CreateMulticamClip": "def CreateMulticamClip(self, clips: list[MediaPoolItem], multicamOptions: MulticamOptions) -> list[MediaPoolItem]"
+    },
+    "absent_from_stub": {},
+    "common_signatures": {
+      "GetRootFolder": {
+        "21.0.4": [
+          "GetRootFolder()                                 --> Folder"
+        ],
+        "21.1": "def GetRootFolder(self) -> Folder"
+      },
+      "AddSubFolder": {
+        "21.0.4": [
+          "AddSubFolder(folder, name)                      --> Folder"
+        ],
+        "21.1": "def AddSubFolder(self, folder: Folder, name: str) -> Folder"
+      },
+      "RefreshFolders": {
+        "21.0.4": [
+          "RefreshFolders()                                --> Bool"
+        ],
+        "21.1": "def RefreshFolders(self) -> bool"
+      },
+      "CreateEmptyTimeline": {
+        "21.0.4": [
+          "CreateEmptyTimeline(name)                       --> Timeline"
+        ],
+        "21.1": "def CreateEmptyTimeline(self, name: str) -> Timeline"
+      },
+      "AppendToTimeline": {
+        "21.0.4": [
+          "AppendToTimeline(clip1, clip2, ...)             --> [TimelineItem]",
+          "AppendToTimeline([clips])                       --> [TimelineItem]",
+          "AppendToTimeline([{clipInfo}, ...])             --> [TimelineItem]"
+        ],
+        "21.1": "def AppendToTimeline(self, clipInfos: list[AppendClipInfo]) -> list[TimelineItem]"
+      },
+      "CreateTimelineFromClips": {
+        "21.0.4": [
+          "CreateTimelineFromClips(name, clip1, clip2,...) --> Timeline",
+          "CreateTimelineFromClips(name, [clips])          --> Timeline",
+          "CreateTimelineFromClips(name, [{clipInfo}])     --> Timeline"
+        ],
+        "21.1": "def CreateTimelineFromClips(self, name: str, clipInfos: list[CreateTimelineClipInfo]) -> Timeline"
+      },
+      "ImportTimelineFromFile": {
+        "21.0.4": [
+          "ImportTimelineFromFile(filePath, {importOptions}) --> Timeline"
+        ],
+        "21.1": "def ImportTimelineFromFile(self, filePath: str, importOptions: ImportOptions | None=None) -> Timeline"
+      },
+      "DeleteTimelines": {
+        "21.0.4": [
+          "DeleteTimelines([timeline])                     --> Bool"
+        ],
+        "21.1": "def DeleteTimelines(self, timelines: list[Timeline]) -> bool"
+      },
+      "GetCurrentFolder": {
+        "21.0.4": [
+          "GetCurrentFolder()                              --> Folder"
+        ],
+        "21.1": "def GetCurrentFolder(self) -> Folder"
+      },
+      "SetCurrentFolder": {
+        "21.0.4": [
+          "SetCurrentFolder(Folder)                        --> Bool"
+        ],
+        "21.1": "def SetCurrentFolder(self, folder: Folder) -> bool"
+      },
+      "DeleteClips": {
+        "21.0.4": [
+          "DeleteClips([clips])                            --> Bool"
+        ],
+        "21.1": "def DeleteClips(self, clips: list[MediaPoolItem]) -> bool"
+      },
+      "ImportFolderFromFile": {
+        "21.0.4": [
+          "ImportFolderFromFile(filePath, sourceClipsPath=\"\") --> Bool"
+        ],
+        "21.1": "def ImportFolderFromFile(self, filePath: str, sourceClipsPath: str | None=None) -> bool"
+      },
+      "DeleteFolders": {
+        "21.0.4": [
+          "DeleteFolders([subfolders])                     --> Bool"
+        ],
+        "21.1": "def DeleteFolders(self, subfolders: list[Folder]) -> bool"
+      },
+      "MoveClips": {
+        "21.0.4": [
+          "MoveClips([clips], targetFolder)                --> Bool"
+        ],
+        "21.1": "def MoveClips(self, clips: list[MediaPoolItem], targetFolder: Folder) -> bool"
+      },
+      "MoveFolders": {
+        "21.0.4": [
+          "MoveFolders([folders], targetFolder)            --> Bool"
+        ],
+        "21.1": "def MoveFolders(self, folders: list[Folder], targetFolder: Folder) -> bool"
+      },
+      "GetClipMatteList": {
+        "21.0.4": [
+          "GetClipMatteList(MediaPoolItem)                 --> [paths]"
+        ],
+        "21.1": "def GetClipMatteList(self, mediaPoolItem: MediaPoolItem) -> list[str]"
+      },
+      "GetTimelineMatteList": {
+        "21.0.4": [
+          "GetTimelineMatteList(Folder)                    --> [MediaPoolItems]"
+        ],
+        "21.1": "def GetTimelineMatteList(self, folder: Folder) -> list[MediaPoolItem]"
+      },
+      "DeleteClipMattes": {
+        "21.0.4": [
+          "DeleteClipMattes(MediaPoolItem, [paths])        --> Bool"
+        ],
+        "21.1": "def DeleteClipMattes(self, mediaPoolItem: MediaPoolItem, paths: list[str]) -> bool"
+      },
+      "RelinkClips": {
+        "21.0.4": [
+          "RelinkClips([MediaPoolItem], folderPath)        --> Bool"
+        ],
+        "21.1": "def RelinkClips(self, clips: list[MediaPoolItem], folderPath: str) -> bool"
+      },
+      "UnlinkClips": {
+        "21.0.4": [
+          "UnlinkClips([MediaPoolItem])                    --> Bool"
+        ],
+        "21.1": "def UnlinkClips(self, clips: list[MediaPoolItem]) -> bool"
+      },
+      "ImportMedia": {
+        "21.0.4": [
+          "ImportMedia([items...])                         --> [MediaPoolItems]",
+          "ImportMedia([{clipInfo}])                       --> [MediaPoolItems]"
+        ],
+        "21.1": "def ImportMedia(self, clipInfos: list[ImportClipInfo]) -> list[MediaPoolItem]"
+      },
+      "ExportMetadata": {
+        "21.0.4": [
+          "ExportMetadata(fileName, [clips])               --> Bool"
+        ],
+        "21.1": "def ExportMetadata(self, fileName: str, clips: list[MediaPoolItem] | None=None) -> bool"
+      },
+      "GetUniqueId": {
+        "21.0.4": [
+          "GetUniqueId()                                   --> string"
+        ],
+        "21.1": "def GetUniqueId(self) -> str"
+      },
+      "CreateStereoClip": {
+        "21.0.4": [
+          "CreateStereoClip(LeftMediaPoolItem, RightMediaPoolItem)            --> MediaPoolItem"
+        ],
+        "21.1": "def CreateStereoClip(self, leftMediaPoolItem: MediaPoolItem, rightMediaPoolItem: MediaPoolItem) -> MediaPoolItem"
+      },
+      "AutoSyncAudio": {
+        "21.0.4": [
+          "AutoSyncAudio([MediaPoolItems], {audioSyncSettings}) --> Bool"
+        ],
+        "21.1": "def AutoSyncAudio(self, mediaPoolItems: list[MediaPoolItem], audioSyncSettings: AudioSyncSettings) -> bool"
+      },
+      "GetSelectedClips": {
+        "21.0.4": [
+          "GetSelectedClips()                              --> [MediaPoolItems]"
+        ],
+        "21.1": "def GetSelectedClips(self) -> list[MediaPoolItem]"
+      },
+      "SetSelectedClip": {
+        "21.0.4": [
+          "SetSelectedClip(MediaPoolItem)                  --> Bool"
+        ],
+        "21.1": "def SetSelectedClip(self, mediaPoolItem: MediaPoolItem) -> bool"
+      }
+    }
+  },
+  "Folder": {
+    "added": {},
+    "absent_from_stub": {},
+    "common_signatures": {
+      "GetClipList": {
+        "21.0.4": [
+          "GetClipList()                                   --> [clips...]"
+        ],
+        "21.1": "def GetClipList(self) -> list[MediaPoolItem]"
+      },
+      "GetName": {
+        "21.0.4": [
+          "GetName()                                       --> string"
+        ],
+        "21.1": "def GetName(self) -> str"
+      },
+      "GetSubFolderList": {
+        "21.0.4": [
+          "GetSubFolderList()                              --> [folders...]"
+        ],
+        "21.1": "def GetSubFolderList(self) -> list[Folder]"
+      },
+      "GetIsFolderStale": {
+        "21.0.4": [
+          "GetIsFolderStale()                              --> bool"
+        ],
+        "21.1": "def GetIsFolderStale(self) -> bool"
+      },
+      "GetUniqueId": {
+        "21.0.4": [
+          "GetUniqueId()                                   --> string"
+        ],
+        "21.1": "def GetUniqueId(self) -> str"
+      },
+      "Export": {
+        "21.0.4": [
+          "Export(filePath)                                --> bool"
+        ],
+        "21.1": "def Export(self, filePath: str) -> bool"
+      },
+      "TranscribeAudio": {
+        "21.0.4": [
+          "TranscribeAudio(useSpeakerDetection=None)       --> Bool"
+        ],
+        "21.1": "def TranscribeAudio(self, useSpeakerDetection: bool | None=None, transcribeAsNestedClip=False) -> bool"
+      },
+      "ClearTranscription": {
+        "21.0.4": [
+          "ClearTranscription()                            --> Bool"
+        ],
+        "21.1": "def ClearTranscription(self) -> bool"
+      },
+      "PerformAudioClassification": {
+        "21.0.4": [
+          "PerformAudioClassification()                    --> Bool"
+        ],
+        "21.1": "def PerformAudioClassification(self) -> bool"
+      },
+      "ClearAudioClassification": {
+        "21.0.4": [
+          "ClearAudioClassification()                      --> Bool"
+        ],
+        "21.1": "def ClearAudioClassification(self) -> bool"
+      },
+      "RemoveMotionBlur": {
+        "21.0.4": [
+          "RemoveMotionBlur({deblurOption})                --> [[MediaPoolItem, MediaPoolItem]...]"
+        ],
+        "21.1": "def RemoveMotionBlur(self, deblurOption: DeblurOptions | None=None) -> list[list[MediaPoolItem]]"
+      },
+      "AnalyzeForIntellisearch": {
+        "21.0.4": [
+          "AnalyzeForIntellisearch(identifyFaces, isBetterMode) --> Bool"
+        ],
+        "21.1": "def AnalyzeForIntellisearch(self, identifyFaces: bool, isBetterMode: bool) -> bool"
+      },
+      "AnalyzeForSlate": {
+        "21.0.4": [
+          "AnalyzeForSlate(markerColor)                    --> Bool"
+        ],
+        "21.1": "def AnalyzeForSlate(self, markerColor: SlateMarkerColor) -> bool"
+      }
+    }
+  },
+  "MediaPoolItem": {
+    "added": {
+      "SetAudioMapping": "def SetAudioMapping(self, audioMapping: str) -> bool",
+      "GetTranscription": "def GetTranscription(self, useNestedClipTranscription=False) -> Transcription"
+    },
+    "absent_from_stub": {},
+    "common_signatures": {
+      "GetName": {
+        "21.0.4": [
+          "GetName()                                       --> string"
+        ],
+        "21.1": "def GetName(self) -> str"
+      },
+      "SetName": {
+        "21.0.4": [
+          "SetName(name)                                   --> bool"
+        ],
+        "21.1": "def SetName(self, name: str) -> bool"
+      },
+      "GetMetadata": {
+        "21.0.4": [
+          "GetMetadata(metadataType=None)                  --> string|dict"
+        ],
+        "21.1": "def GetMetadata(self, metadataType: str | None=None) -> str | dict"
+      },
+      "SetMetadata": {
+        "21.0.4": [
+          "SetMetadata(metadataType, metadataValue)        --> Bool",
+          "SetMetadata({metadata})                         --> Bool"
+        ],
+        "21.1": "def SetMetadata(self, metadata: dict) -> bool"
+      },
+      "GetTimeline": {
+        "21.0.4": [
+          "GetTimeline()                                   --> TimelineItem"
+        ],
+        "21.1": "def GetTimeline(self) -> Timeline"
+      },
+      "GetThirdPartyMetadata": {
+        "21.0.4": [
+          "GetThirdPartyMetadata(metadataType=None)        --> string|dict"
+        ],
+        "21.1": "def GetThirdPartyMetadata(self, metadataType: str | None=None) -> str | dict"
+      },
+      "SetThirdPartyMetadata": {
+        "21.0.4": [
+          "SetThirdPartyMetadata(metadataType, metadataValue) --> Bool",
+          "SetThirdPartyMetadata({metadata})               --> Bool"
+        ],
+        "21.1": "def SetThirdPartyMetadata(self, metadata: dict) -> bool"
+      },
+      "GetMediaId": {
+        "21.0.4": [
+          "GetMediaId()                                    --> string"
+        ],
+        "21.1": "def GetMediaId(self) -> str"
+      },
+      "AddMarker": {
+        "21.0.4": [
+          "AddMarker(frameId, color, name, note, duration, --> Bool"
+        ],
+        "21.1": "def AddMarker(self, frameId: int, color: MarkerColor, name: str, note: str, duration: int, customData: str | None=None) -> bool"
+      },
+      "GetMarkers": {
+        "21.0.4": [
+          "GetMarkers()                                    --> {markers...}"
+        ],
+        "21.1": "def GetMarkers(self) -> dict[int, MarkerInfo]"
+      },
+      "GetMarkerByCustomData": {
+        "21.0.4": [
+          "GetMarkerByCustomData(customData)               --> {markers...}"
+        ],
+        "21.1": "def GetMarkerByCustomData(self, customData: str) -> MarkerInfo"
+      },
+      "UpdateMarkerCustomData": {
+        "21.0.4": [
+          "UpdateMarkerCustomData(frameId, customData)     --> Bool"
+        ],
+        "21.1": "def UpdateMarkerCustomData(self, frameId: int, customData: str) -> bool"
+      },
+      "GetMarkerCustomData": {
+        "21.0.4": [
+          "GetMarkerCustomData(frameId)                    --> string"
+        ],
+        "21.1": "def GetMarkerCustomData(self, frameId: int) -> str"
+      },
+      "DeleteMarkersByColor": {
+        "21.0.4": [
+          "DeleteMarkersByColor(color)                     --> Bool"
+        ],
+        "21.1": "def DeleteMarkersByColor(self, color: MarkerColor | Literal['All']) -> bool"
+      },
+      "DeleteMarkerAtFrame": {
+        "21.0.4": [
+          "DeleteMarkerAtFrame(frameNum)                   --> Bool"
+        ],
+        "21.1": "def DeleteMarkerAtFrame(self, frameNum: int) -> bool"
+      },
+      "DeleteMarkerByCustomData": {
+        "21.0.4": [
+          "DeleteMarkerByCustomData(customData)            --> Bool"
+        ],
+        "21.1": "def DeleteMarkerByCustomData(self, customData: str) -> bool"
+      },
+      "AddFlag": {
+        "21.0.4": [
+          "AddFlag(color)                                  --> Bool"
+        ],
+        "21.1": "def AddFlag(self, color: FlagColor) -> bool"
+      },
+      "GetFlagList": {
+        "21.0.4": [
+          "GetFlagList()                                   --> [colors...]"
+        ],
+        "21.1": "def GetFlagList(self) -> list[str]"
+      },
+      "ClearFlags": {
+        "21.0.4": [
+          "ClearFlags(color)                               --> Bool"
+        ],
+        "21.1": "def ClearFlags(self, color: FlagColor | Literal['All']) -> bool"
+      },
+      "GetClipColor": {
+        "21.0.4": [
+          "GetClipColor()                                  --> string"
+        ],
+        "21.1": "def GetClipColor(self) -> ClipColor | Literal['']"
+      },
+      "SetClipColor": {
+        "21.0.4": [
+          "SetClipColor(colorName)                         --> Bool"
+        ],
+        "21.1": "def SetClipColor(self, colorName: ClipColor) -> bool"
+      },
+      "ClearClipColor": {
+        "21.0.4": [
+          "ClearClipColor()                                --> Bool"
+        ],
+        "21.1": "def ClearClipColor(self) -> bool"
+      },
+      "GetClipProperty": {
+        "21.0.4": [
+          "GetClipProperty(propertyName=None)              --> string|dict"
+        ],
+        "21.1": "def GetClipProperty(self, propertyName: str | None=None) -> str | ClipProperties"
+      },
+      "SetClipProperty": {
+        "21.0.4": [
+          "SetClipProperty(propertyName, propertyValue)    --> Bool"
+        ],
+        "21.1": "def SetClipProperty(self, propertyName: str, propertyValue: str) -> bool"
+      },
+      "LinkProxyMedia": {
+        "21.0.4": [
+          "LinkProxyMedia(proxyMediaFilePath)              --> Bool"
+        ],
+        "21.1": "def LinkProxyMedia(self, proxyMediaFilePath: str) -> bool"
+      },
+      "LinkFullResolutionMedia": {
+        "21.0.4": [
+          "LinkFullResolutionMedia(fullResMediaPath)       --> Bool"
+        ],
+        "21.1": "def LinkFullResolutionMedia(self, fullResMediaPath: str) -> bool"
+      },
+      "UnlinkProxyMedia": {
+        "21.0.4": [
+          "UnlinkProxyMedia()                              --> Bool"
+        ],
+        "21.1": "def UnlinkProxyMedia(self) -> bool"
+      },
+      "ReplaceClip": {
+        "21.0.4": [
+          "ReplaceClip(filePath)                           --> Bool"
+        ],
+        "21.1": "def ReplaceClip(self, filePath: str) -> bool"
+      },
+      "ReplaceClipPreserveSubClip": {
+        "21.0.4": [
+          "ReplaceClipPreserveSubClip(filePath)            --> Bool"
+        ],
+        "21.1": "def ReplaceClipPreserveSubClip(self, filePath: str) -> bool"
+      },
+      "GetUniqueId": {
+        "21.0.4": [
+          "GetUniqueId()                                   --> string"
+        ],
+        "21.1": "def GetUniqueId(self) -> str"
+      },
+      "TranscribeAudio": {
+        "21.0.4": [
+          "TranscribeAudio(useSpeakerDetection=None)       --> Bool"
+        ],
+        "21.1": "def TranscribeAudio(self, useSpeakerDetection: bool | None=None, transcribeAsNestedClip=False) -> bool"
+      },
+      "ClearTranscription": {
+        "21.0.4": [
+          "ClearTranscription()                            --> Bool"
+        ],
+        "21.1": "def ClearTranscription(self, clearNestedClipTranscription=False) -> bool"
+      },
+      "PerformAudioClassification": {
+        "21.0.4": [
+          "PerformAudioClassification()                    --> Bool"
+        ],
+        "21.1": "def PerformAudioClassification(self) -> bool"
+      },
+      "ClearAudioClassification": {
+        "21.0.4": [
+          "ClearAudioClassification()                      --> Bool"
+        ],
+        "21.1": "def ClearAudioClassification(self) -> bool"
+      },
+      "GetAudioMapping": {
+        "21.0.4": [
+          "GetAudioMapping()                               --> json formatted string"
+        ],
+        "21.1": "def GetAudioMapping(self) -> str"
+      },
+      "GetMarkInOut": {
+        "21.0.4": [
+          "GetMarkInOut()                                  --> {mark}"
+        ],
+        "21.1": "def GetMarkInOut(self) -> MarkInOut"
+      },
+      "SetMarkInOut": {
+        "21.0.4": [
+          "SetMarkInOut(in, out, type=\"all\")               --> Bool"
+        ],
+        "21.1": "def SetMarkInOut(self, markIn: int, markOut: int, markType: MarkType | None=None) -> bool"
+      },
+      "ClearMarkInOut": {
+        "21.0.4": [
+          "ClearMarkInOut(type=\"all\")                      --> Bool"
+        ],
+        "21.1": "def ClearMarkInOut(self, markType: MarkType | None=None) -> bool"
+      },
+      "MonitorGrowingFile": {
+        "21.0.4": [
+          "MonitorGrowingFile()                            --> Bool"
+        ],
+        "21.1": "def MonitorGrowingFile(self) -> bool"
+      },
+      "RemoveMotionBlur": {
+        "21.0.4": [
+          "RemoveMotionBlur({deblurOption})                --> MediaPoolItem"
+        ],
+        "21.1": "def RemoveMotionBlur(self, deblurOption: DeblurOptions) -> MediaPoolItem"
+      },
+      "AnalyzeForIntellisearch": {
+        "21.0.4": [
+          "AnalyzeForIntellisearch(identifyFaces, isBetterMode) --> Bool"
+        ],
+        "21.1": "def AnalyzeForIntellisearch(self, identifyFaces: bool, isBetterMode: bool) -> bool"
+      },
+      "AnalyzeForSlate": {
+        "21.0.4": [
+          "AnalyzeForSlate(markerColor)                    --> Bool"
+        ],
+        "21.1": "def AnalyzeForSlate(self, markerColor: SlateMarkerColor) -> bool"
+      }
+    }
+  },
+  "Timeline": {
+    "added": {
+      "NormalizeAudioLevel": "def NormalizeAudioLevel(self, timelineItems: list[TimelineItem], normalizeAudioOptions: NormalizeAudioOptions | None=None) -> bool",
+      "AutoAlignClips": "def AutoAlignClips(self, timelineItems: list[TimelineItem], autoAlignOptions: AutoAlignOptions | None=None) -> bool",
+      "GetNormalizeAudioModes": "def GetNormalizeAudioModes(self) -> list[str]",
+      "GetSettings": "def GetSettings(self) -> TimelineSettings | ProjectSettings",
+      "SetSettings": "def SetSettings(self, settings: TimelineSettings) -> bool",
+      "SetOutputBlanking": "def SetOutputBlanking(self, outputBlanking: OutputBlanking) -> bool",
+      "GetOutputBlanking": "def GetOutputBlanking(self) -> OutputBlanking"
+    },
+    "absent_from_stub": {
+      "GetSetting": [
+        "GetSetting(settingName)                         --> string"
+      ],
+      "SetSetting": [
+        "SetSetting(settingName, settingValue)           --> Bool"
+      ]
+    },
+    "common_signatures": {
+      "GetName": {
+        "21.0.4": [
+          "GetName()                                       --> string"
+        ],
+        "21.1": "def GetName(self) -> str"
+      },
+      "SetName": {
+        "21.0.4": [
+          "SetName(timelineName)                           --> Bool"
+        ],
+        "21.1": "def SetName(self, timelineName: str) -> bool"
+      },
+      "GetStartFrame": {
+        "21.0.4": [
+          "GetStartFrame()                                 --> int"
+        ],
+        "21.1": "def GetStartFrame(self) -> int"
+      },
+      "GetEndFrame": {
+        "21.0.4": [
+          "GetEndFrame()                                   --> int"
+        ],
+        "21.1": "def GetEndFrame(self) -> int"
+      },
+      "SetStartTimecode": {
+        "21.0.4": [
+          "SetStartTimecode(timecode)                      --> Bool"
+        ],
+        "21.1": "def SetStartTimecode(self, timecode: str) -> bool"
+      },
+      "GetStartTimecode": {
+        "21.0.4": [
+          "GetStartTimecode()                              --> string"
+        ],
+        "21.1": "def GetStartTimecode(self) -> str"
+      },
+      "GetTrackCount": {
+        "21.0.4": [
+          "GetTrackCount(trackType)                        --> int"
+        ],
+        "21.1": "def GetTrackCount(self, trackType: TrackType) -> int"
+      },
+      "AddTrack": {
+        "21.0.4": [
+          "AddTrack(trackType, subTrackType)               --> Bool",
+          "AddTrack(trackType, newTrackOptions)            --> Bool"
+        ],
+        "21.1": "def AddTrack(self, trackType: TrackType, subTrackType: str | None=None) -> bool"
+      },
+      "DeleteTrack": {
+        "21.0.4": [
+          "DeleteTrack(trackType, trackIndex)              --> Bool"
+        ],
+        "21.1": "def DeleteTrack(self, trackType: TrackType, trackIndex: int) -> bool"
+      },
+      "GetTrackSubType": {
+        "21.0.4": [
+          "GetTrackSubType(trackType, trackIndex)          --> string"
+        ],
+        "21.1": "def GetTrackSubType(self, trackType: TrackType, trackIndex: int) -> str"
+      },
+      "SetTrackEnable": {
+        "21.0.4": [
+          "SetTrackEnable(trackType, trackIndex, Bool)     --> Bool"
+        ],
+        "21.1": "def SetTrackEnable(self, trackType: TrackType, trackIndex: int, enabled: bool) -> bool"
+      },
+      "GetIsTrackEnabled": {
+        "21.0.4": [
+          "GetIsTrackEnabled(trackType, trackIndex)        --> Bool"
+        ],
+        "21.1": "def GetIsTrackEnabled(self, trackType: TrackType, trackIndex: int) -> bool"
+      },
+      "SetTrackLock": {
+        "21.0.4": [
+          "SetTrackLock(trackType, trackIndex, Bool)       --> Bool"
+        ],
+        "21.1": "def SetTrackLock(self, trackType: TrackType, trackIndex: int, locked: bool) -> bool"
+      },
+      "GetIsTrackLocked": {
+        "21.0.4": [
+          "GetIsTrackLocked(trackType, trackIndex)         --> Bool"
+        ],
+        "21.1": "def GetIsTrackLocked(self, trackType: TrackType, trackIndex: int) -> bool"
+      },
+      "DeleteClips": {
+        "21.0.4": [
+          "DeleteClips([timelineItems], Bool)              --> Bool"
+        ],
+        "21.1": "def DeleteClips(self, timelineItems: list[TimelineItem], rippleDelete=False) -> bool"
+      },
+      "SetClipsLinked": {
+        "21.0.4": [
+          "SetClipsLinked([timelineItems], Bool)           --> Bool"
+        ],
+        "21.1": "def SetClipsLinked(self, timelineItems: list[TimelineItem], linked: bool) -> bool"
+      },
+      "GetItemListInTrack": {
+        "21.0.4": [
+          "GetItemListInTrack(trackType, index)            --> [items...]"
+        ],
+        "21.1": "def GetItemListInTrack(self, trackType: TrackType, index: int) -> list[TimelineItem]"
+      },
+      "GetSelectedClips": {
+        "21.0.4": [
+          "GetSelectedClips()                              --> [items...]"
+        ],
+        "21.1": "def GetSelectedClips(self) -> list[TimelineItem]"
+      },
+      "AddMarker": {
+        "21.0.4": [
+          "AddMarker(frameId, color, name, note, duration, --> Bool"
+        ],
+        "21.1": "def AddMarker(self, frameId: int, color: MarkerColor, name: str, note: str, duration: int, customData: str | None=None) -> bool"
+      },
+      "GetMarkers": {
+        "21.0.4": [
+          "GetMarkers()                                    --> {markers...}"
+        ],
+        "21.1": "def GetMarkers(self) -> dict[int, MarkerInfo]"
+      },
+      "GetMarkerByCustomData": {
+        "21.0.4": [
+          "GetMarkerByCustomData(customData)               --> {markers...}"
+        ],
+        "21.1": "def GetMarkerByCustomData(self, customData: str) -> MarkerInfo"
+      },
+      "UpdateMarkerCustomData": {
+        "21.0.4": [
+          "UpdateMarkerCustomData(frameId, customData)     --> Bool"
+        ],
+        "21.1": "def UpdateMarkerCustomData(self, frameId: int, customData: str) -> bool"
+      },
+      "GetMarkerCustomData": {
+        "21.0.4": [
+          "GetMarkerCustomData(frameId)                    --> string"
+        ],
+        "21.1": "def GetMarkerCustomData(self, frameId: int) -> str"
+      },
+      "DeleteMarkersByColor": {
+        "21.0.4": [
+          "DeleteMarkersByColor(color)                     --> Bool"
+        ],
+        "21.1": "def DeleteMarkersByColor(self, color: MarkerColor | Literal['All']) -> bool"
+      },
+      "DeleteMarkerAtFrame": {
+        "21.0.4": [
+          "DeleteMarkerAtFrame(frameNum)                   --> Bool"
+        ],
+        "21.1": "def DeleteMarkerAtFrame(self, frameNum: int) -> bool"
+      },
+      "DeleteMarkerByCustomData": {
+        "21.0.4": [
+          "DeleteMarkerByCustomData(customData)            --> Bool"
+        ],
+        "21.1": "def DeleteMarkerByCustomData(self, customData: str) -> bool"
+      },
+      "GetCurrentTimecode": {
+        "21.0.4": [
+          "GetCurrentTimecode()                            --> string"
+        ],
+        "21.1": "def GetCurrentTimecode(self) -> str"
+      },
+      "SetCurrentTimecode": {
+        "21.0.4": [
+          "SetCurrentTimecode(timecode)                    --> Bool"
+        ],
+        "21.1": "def SetCurrentTimecode(self, timecode: str) -> bool"
+      },
+      "GetCurrentVideoItem": {
+        "21.0.4": [
+          "GetCurrentVideoItem()                           --> item"
+        ],
+        "21.1": "def GetCurrentVideoItem(self) -> TimelineItem | None"
+      },
+      "GetCurrentClipThumbnailImage": {
+        "21.0.4": [
+          "GetCurrentClipThumbnailImage()                  --> {thumbnailData}"
+        ],
+        "21.1": "def GetCurrentClipThumbnailImage(self) -> ThumbnailData"
+      },
+      "GetTrackName": {
+        "21.0.4": [
+          "GetTrackName(trackType, trackIndex)             --> string"
+        ],
+        "21.1": "def GetTrackName(self, trackType: TrackType, trackIndex: int) -> str"
+      },
+      "SetTrackName": {
+        "21.0.4": [
+          "SetTrackName(trackType, trackIndex, name)       --> Bool"
+        ],
+        "21.1": "def SetTrackName(self, trackType: TrackType, trackIndex: int, name: str) -> bool"
+      },
+      "DuplicateTimeline": {
+        "21.0.4": [
+          "DuplicateTimeline(timelineName)                 --> timeline"
+        ],
+        "21.1": "def DuplicateTimeline(self, timelineName: str) -> Timeline"
+      },
+      "CreateCompoundClip": {
+        "21.0.4": [
+          "CreateCompoundClip([timelineItems], {clipInfo}) --> timelineItem"
+        ],
+        "21.1": "def CreateCompoundClip(self, timelineItems: list[TimelineItem], clipInfo: CompoundClipOptions | None=None) -> TimelineItem"
+      },
+      "CreateFusionClip": {
+        "21.0.4": [
+          "CreateFusionClip([timelineItems])               --> timelineItem"
+        ],
+        "21.1": "def CreateFusionClip(self, timelineItems: list[TimelineItem]) -> TimelineItem"
+      },
+      "ImportIntoTimeline": {
+        "21.0.4": [
+          "ImportIntoTimeline(filePath, {importOptions})   --> Bool"
+        ],
+        "21.1": "def ImportIntoTimeline(self, filePath: str, importOptions: AAFImportOptions | None=None) -> bool"
+      },
+      "Export": {
+        "21.0.4": [
+          "Export(fileName, exportType, exportSubtype)     --> Bool"
+        ],
+        "21.1": "def Export(self, fileName: str, exportType: TimelineExportType, exportSubtype: TimelineExportSubtype) -> bool"
+      },
+      "InsertGeneratorIntoTimeline": {
+        "21.0.4": [
+          "InsertGeneratorIntoTimeline(generatorName)      --> TimelineItem"
+        ],
+        "21.1": "def InsertGeneratorIntoTimeline(self, generatorName: str) -> TimelineItem"
+      },
+      "InsertFusionGeneratorIntoTimeline": {
+        "21.0.4": [
+          "InsertFusionGeneratorIntoTimeline(generatorName) --> TimelineItem"
+        ],
+        "21.1": "def InsertFusionGeneratorIntoTimeline(self, generatorName: str) -> TimelineItem"
+      },
+      "InsertFusionCompositionIntoTimeline": {
+        "21.0.4": [
+          "InsertFusionCompositionIntoTimeline()           --> TimelineItem"
+        ],
+        "21.1": "def InsertFusionCompositionIntoTimeline(self) -> TimelineItem"
+      },
+      "InsertOFXGeneratorIntoTimeline": {
+        "21.0.4": [
+          "InsertOFXGeneratorIntoTimeline(generatorName)   --> TimelineItem"
+        ],
+        "21.1": "def InsertOFXGeneratorIntoTimeline(self, generatorName: str) -> TimelineItem"
+      },
+      "InsertTitleIntoTimeline": {
+        "21.0.4": [
+          "InsertTitleIntoTimeline(titleName)              --> TimelineItem"
+        ],
+        "21.1": "def InsertTitleIntoTimeline(self, titleName: str) -> TimelineItem"
+      },
+      "InsertFusionTitleIntoTimeline": {
+        "21.0.4": [
+          "InsertFusionTitleIntoTimeline(titleName)        --> TimelineItem"
+        ],
+        "21.1": "def InsertFusionTitleIntoTimeline(self, titleName: str) -> TimelineItem"
+      },
+      "GrabStill": {
+        "21.0.4": [
+          "GrabStill()                                     --> galleryStill"
+        ],
+        "21.1": "def GrabStill(self) -> GalleryStill"
+      },
+      "GrabAllStills": {
+        "21.0.4": [
+          "GrabAllStills(stillFrameSource)                 --> [galleryStill]"
+        ],
+        "21.1": "def GrabAllStills(self, stillFrameSource: int) -> list[GalleryStill]"
+      },
+      "GetUniqueId": {
+        "21.0.4": [
+          "GetUniqueId()                                   --> string"
+        ],
+        "21.1": "def GetUniqueId(self) -> str"
+      },
+      "CreateSubtitlesFromAudio": {
+        "21.0.4": [
+          "CreateSubtitlesFromAudio({autoCaptionSettings}) --> Bool"
+        ],
+        "21.1": "def CreateSubtitlesFromAudio(self, autoCaptionSettings: AutoCaptionSettings | None=None) -> bool"
+      },
+      "DetectSceneCuts": {
+        "21.0.4": [
+          "DetectSceneCuts()                               --> Bool"
+        ],
+        "21.1": "def DetectSceneCuts(self) -> bool"
+      },
+      "ConvertTimelineToStereo": {
+        "21.0.4": [
+          "ConvertTimelineToStereo()                       --> Bool"
+        ],
+        "21.1": "def ConvertTimelineToStereo(self) -> bool"
+      },
+      "GetNodeGraph": {
+        "21.0.4": [
+          "GetNodeGraph()                                  --> Graph"
+        ],
+        "21.1": "def GetNodeGraph(self) -> Graph"
+      },
+      "AnalyzeDolbyVision": {
+        "21.0.4": [
+          "AnalyzeDolbyVision([timelineItems]=[],          --> Bool"
+        ],
+        "21.1": "def AnalyzeDolbyVision(self, timelineItems: list[TimelineItem], analysisType: DolbyVisionAnalysisType) -> bool"
+      },
+      "GetMediaPoolItem": {
+        "21.0.4": [
+          "GetMediaPoolItem()                              --> MediaPoolItem"
+        ],
+        "21.1": "def GetMediaPoolItem(self) -> MediaPoolItem | None"
+      },
+      "GetMarkInOut": {
+        "21.0.4": [
+          "GetMarkInOut()                                  --> {mark}"
+        ],
+        "21.1": "def GetMarkInOut(self) -> MarkInOut"
+      },
+      "SetMarkInOut": {
+        "21.0.4": [
+          "SetMarkInOut(in, out, type=\"all\")               --> Bool"
+        ],
+        "21.1": "def SetMarkInOut(self, markIn: int, markOut: int, markType: MarkType | None=None) -> bool"
+      },
+      "ClearMarkInOut": {
+        "21.0.4": [
+          "ClearMarkInOut(type=\"all\")                      --> Bool"
+        ],
+        "21.1": "def ClearMarkInOut(self, markType: MarkType | None=None) -> bool"
+      },
+      "GetVoiceIsolationState": {
+        "21.0.4": [
+          "GetVoiceIsolationState(trackIndex)              --> {VoiceIsolationState}"
+        ],
+        "21.1": "def GetVoiceIsolationState(self, trackIndex: int) -> VoiceIsolationState"
+      },
+      "SetVoiceIsolationState": {
+        "21.0.4": [
+          "SetVoiceIsolationState(trackIndex, {VoiceIsolationState}) --> Bool"
+        ],
+        "21.1": "def SetVoiceIsolationState(self, trackIndex: int, voiceIsolationState: VoiceIsolationState) -> bool"
+      }
+    }
+  },
+  "TimelineItem": {
+    "added": {
+      "GetType": "def GetType(self) -> str",
+      "AddTransition": "def AddTransition(self, transitionOptions: TransitionOptions) -> TimelineItem | None",
+      "SetProperties": "def SetProperties(self, properties: TimelineItemProperties) -> bool",
+      "GetProperties": "def GetProperties(self) -> TimelineItemProperties",
+      "SetSpeed": "def SetSpeed(self, speedOptions: SpeedOptions) -> bool",
+      "GetSpeed": "def GetSpeed(self) -> SpeedOptions",
+      "SetSourceAudioChannelMapping": "def SetSourceAudioChannelMapping(self, audioMapping: str) -> bool",
+      "SetOutputBlanking": "def SetOutputBlanking(self, outputBlanking: OutputBlanking) -> bool",
+      "GetOutputBlanking": "def GetOutputBlanking(self) -> OutputBlanking",
+      "SetUseTimelineForOutputBlanking": "def SetUseTimelineForOutputBlanking(self, useTimelineOutputBlanking: bool) -> bool",
+      "GetUseTimelineForOutputBlanking": "def GetUseTimelineForOutputBlanking(self) -> bool",
+      "PerformMulticamSmartSwitch": "def PerformMulticamSmartSwitch(self, smartSwitchSettings: SmartSwitchSettings) -> bool",
+      "FlattenMulticam": "def FlattenMulticam(self, gradeOption: FlattenMulticamGrade) -> bool",
+      "GetFades": "def GetFades(self) -> FadeInfo",
+      "SetFades": "def SetFades(self, fades: FadeInfo) -> bool"
+    },
+    "absent_from_stub": {
+      "SetProperty": [
+        "SetProperty(propertyKey, propertyValue)         --> Bool"
+      ],
+      "GetProperty": [
+        "GetProperty(propertyKey)                        --> int/[key:value]"
+      ]
+    },
+    "common_signatures": {
+      "GetName": {
+        "21.0.4": [
+          "GetName()                                       --> string"
+        ],
+        "21.1": "def GetName(self) -> str"
+      },
+      "SetName": {
+        "21.0.4": [
+          "SetName(name)                                   --> bool"
+        ],
+        "21.1": "def SetName(self, name: str) -> bool"
+      },
+      "GetDuration": {
+        "21.0.4": [
+          "GetDuration(subframe_precision)                 --> int/float"
+        ],
+        "21.1": "def GetDuration(self, subframePrecision=False) -> float"
+      },
+      "GetEnd": {
+        "21.0.4": [
+          "GetEnd(subframe_precision)                      --> int/float"
+        ],
+        "21.1": "def GetEnd(self, subframePrecision=False) -> float"
+      },
+      "GetSourceEndFrame": {
+        "21.0.4": [
+          "GetSourceEndFrame()                             --> int"
+        ],
+        "21.1": "def GetSourceEndFrame(self) -> int"
+      },
+      "GetSourceEndTime": {
+        "21.0.4": [
+          "GetSourceEndTime()                              --> float"
+        ],
+        "21.1": "def GetSourceEndTime(self) -> float"
+      },
+      "GetFusionCompCount": {
+        "21.0.4": [
+          "GetFusionCompCount()                            --> int"
+        ],
+        "21.1": "def GetFusionCompCount(self) -> int"
+      },
+      "GetFusionCompByIndex": {
+        "21.0.4": [
+          "GetFusionCompByIndex(compIndex)                 --> fusionComp"
+        ],
+        "21.1": "def GetFusionCompByIndex(self, compIndex: int) -> FusionComp | None"
+      },
+      "GetFusionCompNameList": {
+        "21.0.4": [
+          "GetFusionCompNameList()                         --> [names...]"
+        ],
+        "21.1": "def GetFusionCompNameList(self) -> list[str]"
+      },
+      "GetFusionCompByName": {
+        "21.0.4": [
+          "GetFusionCompByName(compName)                   --> fusionComp"
+        ],
+        "21.1": "def GetFusionCompByName(self, compName: str) -> FusionComp | None"
+      },
+      "GetLeftOffset": {
+        "21.0.4": [
+          "GetLeftOffset(subframe_precision)               --> int/float"
+        ],
+        "21.1": "def GetLeftOffset(self, subframePrecision=False) -> float"
+      },
+      "GetRightOffset": {
+        "21.0.4": [
+          "GetRightOffset(subframe_precision)              --> int/float"
+        ],
+        "21.1": "def GetRightOffset(self, subframePrecision=False) -> float"
+      },
+      "GetStart": {
+        "21.0.4": [
+          "GetStart(subframe_precision)                    --> int/float"
+        ],
+        "21.1": "def GetStart(self, subframePrecision=False) -> float"
+      },
+      "GetSourceStartFrame": {
+        "21.0.4": [
+          "GetSourceStartFrame()                           --> int"
+        ],
+        "21.1": "def GetSourceStartFrame(self) -> int"
+      },
+      "GetSourceStartTime": {
+        "21.0.4": [
+          "GetSourceStartTime()                            --> float"
+        ],
+        "21.1": "def GetSourceStartTime(self) -> float"
+      },
+      "AddMarker": {
+        "21.0.4": [
+          "AddMarker(frameId, color, name, note, duration, --> Bool"
+        ],
+        "21.1": "def AddMarker(self, frameId: int, color: MarkerColor, name: str, note: str, duration: int, customData: str | None=None) -> bool"
+      },
+      "GetMarkers": {
+        "21.0.4": [
+          "GetMarkers()                                    --> {markers...}"
+        ],
+        "21.1": "def GetMarkers(self) -> dict[int, MarkerInfo]"
+      },
+      "GetMarkerByCustomData": {
+        "21.0.4": [
+          "GetMarkerByCustomData(customData)               --> {markers...}"
+        ],
+        "21.1": "def GetMarkerByCustomData(self, customData: str) -> MarkerInfo"
+      },
+      "UpdateMarkerCustomData": {
+        "21.0.4": [
+          "UpdateMarkerCustomData(frameId, customData)     --> Bool"
+        ],
+        "21.1": "def UpdateMarkerCustomData(self, frameId: int, customData: str) -> bool"
+      },
+      "GetMarkerCustomData": {
+        "21.0.4": [
+          "GetMarkerCustomData(frameId)                    --> string"
+        ],
+        "21.1": "def GetMarkerCustomData(self, frameId: int) -> str"
+      },
+      "DeleteMarkersByColor": {
+        "21.0.4": [
+          "DeleteMarkersByColor(color)                     --> Bool"
+        ],
+        "21.1": "def DeleteMarkersByColor(self, color: MarkerColor | Literal['All']) -> bool"
+      },
+      "DeleteMarkerAtFrame": {
+        "21.0.4": [
+          "DeleteMarkerAtFrame(frameNum)                   --> Bool"
+        ],
+        "21.1": "def DeleteMarkerAtFrame(self, frameNum: int) -> bool"
+      },
+      "DeleteMarkerByCustomData": {
+        "21.0.4": [
+          "DeleteMarkerByCustomData(customData)            --> Bool"
+        ],
+        "21.1": "def DeleteMarkerByCustomData(self, customData: str) -> bool"
+      },
+      "AddFlag": {
+        "21.0.4": [
+          "AddFlag(color)                                  --> Bool"
+        ],
+        "21.1": "def AddFlag(self, color: FlagColor) -> bool"
+      },
+      "GetFlagList": {
+        "21.0.4": [
+          "GetFlagList()                                   --> [colors...]"
+        ],
+        "21.1": "def GetFlagList(self) -> list[str]"
+      },
+      "ClearFlags": {
+        "21.0.4": [
+          "ClearFlags(color)                               --> Bool"
+        ],
+        "21.1": "def ClearFlags(self, color: FlagColor | Literal['All']) -> bool"
+      },
+      "GetClipColor": {
+        "21.0.4": [
+          "GetClipColor()                                  --> string"
+        ],
+        "21.1": "def GetClipColor(self) -> ClipColor | Literal['']"
+      },
+      "SetClipColor": {
+        "21.0.4": [
+          "SetClipColor(colorName)                         --> Bool"
+        ],
+        "21.1": "def SetClipColor(self, colorName: ClipColor) -> bool"
+      },
+      "ClearClipColor": {
+        "21.0.4": [
+          "ClearClipColor()                                --> Bool"
+        ],
+        "21.1": "def ClearClipColor(self) -> bool"
+      },
+      "AddFusionComp": {
+        "21.0.4": [
+          "AddFusionComp()                                 --> fusionComp"
+        ],
+        "21.1": "def AddFusionComp(self) -> FusionComp"
+      },
+      "ImportFusionComp": {
+        "21.0.4": [
+          "ImportFusionComp(path)                          --> fusionComp"
+        ],
+        "21.1": "def ImportFusionComp(self, path: str) -> FusionComp"
+      },
+      "ExportFusionComp": {
+        "21.0.4": [
+          "ExportFusionComp(path, compIndex)               --> Bool"
+        ],
+        "21.1": "def ExportFusionComp(self, path: str, compIndex: int) -> bool"
+      },
+      "DeleteFusionCompByName": {
+        "21.0.4": [
+          "DeleteFusionCompByName(compName)                --> Bool"
+        ],
+        "21.1": "def DeleteFusionCompByName(self, compName: str) -> bool"
+      },
+      "LoadFusionCompByName": {
+        "21.0.4": [
+          "LoadFusionCompByName(compName)                  --> fusionComp"
+        ],
+        "21.1": "def LoadFusionCompByName(self, compName: str) -> FusionComp"
+      },
+      "RenameFusionCompByName": {
+        "21.0.4": [
+          "RenameFusionCompByName(oldName, newName)        --> Bool"
+        ],
+        "21.1": "def RenameFusionCompByName(self, oldName: str, newName: str) -> bool"
+      },
+      "AddVersion": {
+        "21.0.4": [
+          "AddVersion(versionName, versionType)            --> Bool"
+        ],
+        "21.1": "def AddVersion(self, versionName: str, versionType: int) -> bool"
+      },
+      "GetCurrentVersion": {
+        "21.0.4": [
+          "GetCurrentVersion()                             --> {versionName...}"
+        ],
+        "21.1": "def GetCurrentVersion(self) -> VersionInfo"
+      },
+      "DeleteVersionByName": {
+        "21.0.4": [
+          "DeleteVersionByName(versionName, versionType)   --> Bool"
+        ],
+        "21.1": "def DeleteVersionByName(self, versionName: str, versionType: int) -> bool"
+      },
+      "LoadVersionByName": {
+        "21.0.4": [
+          "LoadVersionByName(versionName, versionType)     --> Bool"
+        ],
+        "21.1": "def LoadVersionByName(self, versionName: str, versionType: int) -> bool"
+      },
+      "RenameVersionByName": {
+        "21.0.4": [
+          "RenameVersionByName(oldName, newName, versionType)--> Bool"
+        ],
+        "21.1": "def RenameVersionByName(self, oldName: str, newName: str, versionType: int) -> bool"
+      },
+      "GetVersionNameList": {
+        "21.0.4": [
+          "GetVersionNameList(versionType)                 --> [names...]"
+        ],
+        "21.1": "def GetVersionNameList(self, versionType: int) -> list[str]"
+      },
+      "GetMediaPoolItem": {
+        "21.0.4": [
+          "GetMediaPoolItem()                              --> MediaPoolItem"
+        ],
+        "21.1": "def GetMediaPoolItem(self) -> MediaPoolItem | None"
+      },
+      "GetStereoConvergenceValues": {
+        "21.0.4": [
+          "GetStereoConvergenceValues()                    --> {keyframes...}"
+        ],
+        "21.1": "def GetStereoConvergenceValues(self) -> dict[int, float]"
+      },
+      "GetStereoLeftFloatingWindowParams": {
+        "21.0.4": [
+          "GetStereoLeftFloatingWindowParams()             --> {keyframes...}"
+        ],
+        "21.1": "def GetStereoLeftFloatingWindowParams(self) -> dict[int, FloatingWindowParams]"
+      },
+      "GetStereoRightFloatingWindowParams": {
+        "21.0.4": [
+          "GetStereoRightFloatingWindowParams()            --> {keyframes...}"
+        ],
+        "21.1": "def GetStereoRightFloatingWindowParams(self) -> dict[int, FloatingWindowParams]"
+      },
+      "SetCDL": {
+        "21.0.4": [
+          "SetCDL([CDL map])                               --> Bool"
+        ],
+        "21.1": "def SetCDL(self, CDL: CDL) -> bool"
+      },
+      "AddTake": {
+        "21.0.4": [
+          "AddTake(mediaPoolItem, startFrame, endFrame)    --> Bool"
+        ],
+        "21.1": "def AddTake(self, mediaPoolItem: MediaPoolItem, startFrame: int | None=None, endFrame: int | None=None) -> bool"
+      },
+      "GetSelectedTakeIndex": {
+        "21.0.4": [
+          "GetSelectedTakeIndex()                          --> int"
+        ],
+        "21.1": "def GetSelectedTakeIndex(self) -> int"
+      },
+      "GetTakesCount": {
+        "21.0.4": [
+          "GetTakesCount()                                 --> int"
+        ],
+        "21.1": "def GetTakesCount(self) -> int"
+      },
+      "GetTakeByIndex": {
+        "21.0.4": [
+          "GetTakeByIndex(idx)                             --> {takeInfo...}"
+        ],
+        "21.1": "def GetTakeByIndex(self, idx: int) -> TakeInfo | None"
+      },
+      "DeleteTakeByIndex": {
+        "21.0.4": [
+          "DeleteTakeByIndex(idx)                          --> Bool"
+        ],
+        "21.1": "def DeleteTakeByIndex(self, idx: int) -> bool"
+      },
+      "SelectTakeByIndex": {
+        "21.0.4": [
+          "SelectTakeByIndex(idx)                          --> Bool"
+        ],
+        "21.1": "def SelectTakeByIndex(self, idx: int) -> bool"
+      },
+      "FinalizeTake": {
+        "21.0.4": [
+          "FinalizeTake()                                  --> Bool"
+        ],
+        "21.1": "def FinalizeTake(self) -> bool"
+      },
+      "CopyGrades": {
+        "21.0.4": [
+          "CopyGrades([tgtTimelineItems])                  --> Bool"
+        ],
+        "21.1": "def CopyGrades(self, tgtTimelineItems: list[TimelineItem]) -> bool"
+      },
+      "SetClipEnabled": {
+        "21.0.4": [
+          "SetClipEnabled(Bool)                            --> Bool"
+        ],
+        "21.1": "def SetClipEnabled(self, enabled: bool) -> bool"
+      },
+      "GetClipEnabled": {
+        "21.0.4": [
+          "GetClipEnabled()                                --> Bool"
+        ],
+        "21.1": "def GetClipEnabled(self) -> bool"
+      },
+      "UpdateSidecar": {
+        "21.0.4": [
+          "UpdateSidecar()                                 --> Bool"
+        ],
+        "21.1": "def UpdateSidecar(self) -> bool"
+      },
+      "GetUniqueId": {
+        "21.0.4": [
+          "GetUniqueId()                                   --> string"
+        ],
+        "21.1": "def GetUniqueId(self) -> str"
+      },
+      "LoadBurnInPreset": {
+        "21.0.4": [
+          "LoadBurnInPreset(presetName)                    --> Bool"
+        ],
+        "21.1": "def LoadBurnInPreset(self, presetName: str) -> bool"
+      },
+      "CreateMagicMask": {
+        "21.0.4": [
+          "CreateMagicMask(mode)                           --> Bool"
+        ],
+        "21.1": "def CreateMagicMask(self, mode: str) -> bool"
+      },
+      "RegenerateMagicMask": {
+        "21.0.4": [
+          "RegenerateMagicMask()                           --> Bool"
+        ],
+        "21.1": "def RegenerateMagicMask(self) -> bool"
+      },
+      "Stabilize": {
+        "21.0.4": [
+          "Stabilize()                                     --> Bool"
+        ],
+        "21.1": "def Stabilize(self) -> bool"
+      },
+      "SmartReframe": {
+        "21.0.4": [
+          "SmartReframe()                                  --> Bool"
+        ],
+        "21.1": "def SmartReframe(self) -> bool"
+      },
+      "GetNodeGraph": {
+        "21.0.4": [
+          "GetNodeGraph(layerIdx)                          --> Graph"
+        ],
+        "21.1": "def GetNodeGraph(self, layerIdx: int | None=None) -> Graph"
+      },
+      "GetColorGroup": {
+        "21.0.4": [
+          "GetColorGroup()                                 --> ColorGroup"
+        ],
+        "21.1": "def GetColorGroup(self) -> ColorGroup | None"
+      },
+      "AssignToColorGroup": {
+        "21.0.4": [
+          "AssignToColorGroup(ColorGroup)                  --> Bool"
+        ],
+        "21.1": "def AssignToColorGroup(self, colorGroup: ColorGroup) -> bool"
+      },
+      "RemoveFromColorGroup": {
+        "21.0.4": [
+          "RemoveFromColorGroup()                          --> Bool"
+        ],
+        "21.1": "def RemoveFromColorGroup(self) -> bool"
+      },
+      "ExportLUT": {
+        "21.0.4": [
+          "ExportLUT(exportType, path)                     --> Bool"
+        ],
+        "21.1": "def ExportLUT(self, exportType: ExportLutType, path: str) -> bool"
+      },
+      "GetLinkedItems": {
+        "21.0.4": [
+          "GetLinkedItems()                                --> [TimelineItems]"
+        ],
+        "21.1": "def GetLinkedItems(self) -> list[TimelineItem]"
+      },
+      "GetTrackTypeAndIndex": {
+        "21.0.4": [
+          "GetTrackTypeAndIndex()                          --> [trackType, trackIndex]"
+        ],
+        "21.1": "def GetTrackTypeAndIndex(self) -> list[str | int]"
+      },
+      "GetSourceAudioChannelMapping": {
+        "21.0.4": [
+          "GetSourceAudioChannelMapping()                  --> json formatted string"
+        ],
+        "21.1": "def GetSourceAudioChannelMapping(self) -> str"
+      },
+      "GetIsColorOutputCacheEnabled": {
+        "21.0.4": [
+          "GetIsColorOutputCacheEnabled()                  --> cache_value"
+        ],
+        "21.1": "def GetIsColorOutputCacheEnabled(self) -> bool"
+      },
+      "GetIsFusionOutputCacheEnabled": {
+        "21.0.4": [
+          "GetIsFusionOutputCacheEnabled()                 --> cache_value"
+        ],
+        "21.1": "def GetIsFusionOutputCacheEnabled(self) -> str"
+      },
+      "SetColorOutputCache": {
+        "21.0.4": [
+          "SetColorOutputCache(cache_value)                --> Bool"
+        ],
+        "21.1": "def SetColorOutputCache(self, enabled: bool) -> bool"
+      },
+      "SetFusionOutputCache": {
+        "21.0.4": [
+          "SetFusionOutputCache(cache_value)               --> Bool"
+        ],
+        "21.1": "def SetFusionOutputCache(self, cacheValue: str) -> bool"
+      },
+      "GetVoiceIsolationState": {
+        "21.0.4": [
+          "GetVoiceIsolationState()                        --> {VoiceIsolationState}"
+        ],
+        "21.1": "def GetVoiceIsolationState(self) -> VoiceIsolationState"
+      },
+      "SetVoiceIsolationState": {
+        "21.0.4": [
+          "SetVoiceIsolationState({VoiceIsolationState})   --> Bool"
+        ],
+        "21.1": "def SetVoiceIsolationState(self, state: VoiceIsolationState) -> bool"
+      },
+      "ResetAllNodeColors": {
+        "21.0.4": [
+          "ResetAllNodeColors()                            --> Bool"
+        ],
+        "21.1": "def ResetAllNodeColors(self) -> bool"
+      }
+    }
+  },
+  "Gallery": {
+    "added": {},
+    "absent_from_stub": {},
+    "common_signatures": {
+      "GetAlbumName": {
+        "21.0.4": [
+          "GetAlbumName(galleryStillAlbum)                 --> string"
+        ],
+        "21.1": "def GetAlbumName(self, galleryStillAlbum: GalleryStillAlbum) -> str"
+      },
+      "SetAlbumName": {
+        "21.0.4": [
+          "SetAlbumName(galleryStillAlbum, albumName)      --> Bool"
+        ],
+        "21.1": "def SetAlbumName(self, galleryStillAlbum: GalleryStillAlbum, albumName: str) -> bool"
+      },
+      "GetCurrentStillAlbum": {
+        "21.0.4": [
+          "GetCurrentStillAlbum()                          --> galleryStillAlbum"
+        ],
+        "21.1": "def GetCurrentStillAlbum(self) -> GalleryStillAlbum"
+      },
+      "SetCurrentStillAlbum": {
+        "21.0.4": [
+          "SetCurrentStillAlbum(galleryStillAlbum)         --> Bool"
+        ],
+        "21.1": "def SetCurrentStillAlbum(self, galleryStillAlbum: GalleryStillAlbum) -> bool"
+      },
+      "GetGalleryStillAlbums": {
+        "21.0.4": [
+          "GetGalleryStillAlbums()                         --> [galleryStillAlbum]"
+        ],
+        "21.1": "def GetGalleryStillAlbums(self) -> list[GalleryStillAlbum]"
+      },
+      "GetGalleryPowerGradeAlbums": {
+        "21.0.4": [
+          "GetGalleryPowerGradeAlbums()                    --> [galleryStillAlbum]"
+        ],
+        "21.1": "def GetGalleryPowerGradeAlbums(self) -> list[GalleryStillAlbum]"
+      },
+      "CreateGalleryStillAlbum": {
+        "21.0.4": [
+          "CreateGalleryStillAlbum()                       --> galleryStillAlbum"
+        ],
+        "21.1": "def CreateGalleryStillAlbum(self) -> GalleryStillAlbum"
+      },
+      "CreateGalleryPowerGradeAlbum": {
+        "21.0.4": [
+          "CreateGalleryPowerGradeAlbum()                  --> galleryStillAlbum"
+        ],
+        "21.1": "def CreateGalleryPowerGradeAlbum(self) -> GalleryStillAlbum"
+      }
+    }
+  },
+  "GalleryStillAlbum": {
+    "added": {},
+    "absent_from_stub": {},
+    "common_signatures": {
+      "GetStills": {
+        "21.0.4": [
+          "GetStills()                                     --> [galleryStill]"
+        ],
+        "21.1": "def GetStills(self) -> list[GalleryStill]"
+      },
+      "GetLabel": {
+        "21.0.4": [
+          "GetLabel(galleryStill)                          --> string"
+        ],
+        "21.1": "def GetLabel(self, galleryStill: GalleryStill) -> str"
+      },
+      "SetLabel": {
+        "21.0.4": [
+          "SetLabel(galleryStill, label)                   --> Bool"
+        ],
+        "21.1": "def SetLabel(self, galleryStill: GalleryStill, label: str) -> bool"
+      },
+      "ImportStills": {
+        "21.0.4": [
+          "ImportStills([filePaths])                       --> Bool"
+        ],
+        "21.1": "def ImportStills(self, filePaths: list[str]) -> bool"
+      },
+      "ExportStills": {
+        "21.0.4": [
+          "ExportStills([galleryStill], folderPath, filePrefix, format) --> Bool"
+        ],
+        "21.1": "def ExportStills(self, galleryStill: list[GalleryStill], folderPath: str, filePrefix: str, format: str) -> bool"
+      },
+      "DeleteStills": {
+        "21.0.4": [
+          "DeleteStills([galleryStill])                    --> Bool"
+        ],
+        "21.1": "def DeleteStills(self, galleryStill: list[GalleryStill]) -> bool"
+      }
+    }
+  },
+  "Graph": {
+    "added": {},
+    "absent_from_stub": {},
+    "common_signatures": {
+      "GetNumNodes": {
+        "21.0.4": [
+          "GetNumNodes()                                   --> int"
+        ],
+        "21.1": "def GetNumNodes(self) -> int"
+      },
+      "SetLUT": {
+        "21.0.4": [
+          "SetLUT(nodeIndex, lutPath)                      --> Bool"
+        ],
+        "21.1": "def SetLUT(self, nodeIndex: int, lutPath: str) -> bool"
+      },
+      "GetLUT": {
+        "21.0.4": [
+          "GetLUT(nodeIndex)                               --> String"
+        ],
+        "21.1": "def GetLUT(self, nodeIndex: int) -> str"
+      },
+      "SetNodeCacheMode": {
+        "21.0.4": [
+          "SetNodeCacheMode(nodeIndex, cache_value)        --> Bool"
+        ],
+        "21.1": "def SetNodeCacheMode(self, nodeIndex: int, cacheValue: CacheMode) -> bool"
+      },
+      "GetNodeCacheMode": {
+        "21.0.4": [
+          "GetNodeCacheMode(nodeIndex)                     --> cache_value"
+        ],
+        "21.1": "def GetNodeCacheMode(self, nodeIndex: int) -> int"
+      },
+      "GetNodeLabel": {
+        "21.0.4": [
+          "GetNodeLabel(nodeIndex)                         --> string"
+        ],
+        "21.1": "def GetNodeLabel(self, nodeIndex: int) -> str"
+      },
+      "GetToolsInNode": {
+        "21.0.4": [
+          "GetToolsInNode(nodeIndex)                       --> [toolsList]"
+        ],
+        "21.1": "def GetToolsInNode(self, nodeIndex: int) -> list[str]"
+      },
+      "SetNodeEnabled": {
+        "21.0.4": [
+          "SetNodeEnabled(nodeIndex, isEnabled)            --> Bool"
+        ],
+        "21.1": "def SetNodeEnabled(self, nodeIndex: int, isEnabled: bool) -> bool"
+      },
+      "ApplyGradeFromDRX": {
+        "21.0.4": [
+          "ApplyGradeFromDRX(path, gradeMode)              --> Bool"
+        ],
+        "21.1": "def ApplyGradeFromDRX(self, path: str, gradeMode: int) -> bool"
+      },
+      "ApplyArriCdlLut": {
+        "21.0.4": [
+          "ApplyArriCdlLut()                               --> Bool"
+        ],
+        "21.1": "def ApplyArriCdlLut(self) -> bool"
+      },
+      "ResetAllGrades": {
+        "21.0.4": [
+          "ResetAllGrades()                                --> Bool"
+        ],
+        "21.1": "def ResetAllGrades(self) -> bool"
+      }
+    }
+  },
+  "ColorGroup": {
+    "added": {},
+    "absent_from_stub": {},
+    "common_signatures": {
+      "GetName": {
+        "21.0.4": [
+          "GetName()                                       --> String"
+        ],
+        "21.1": "def GetName(self) -> str"
+      },
+      "SetName": {
+        "21.0.4": [
+          "SetName(groupName)                              --> Bool"
+        ],
+        "21.1": "def SetName(self, groupName: str) -> bool"
+      },
+      "GetClipsInTimeline": {
+        "21.0.4": [
+          "GetClipsInTimeline(Timeline=CurrTimeline)       --> [TimelineItem]"
+        ],
+        "21.1": "def GetClipsInTimeline(self, timeline: Timeline | None=None) -> list[TimelineItem]"
+      },
+      "GetPreClipNodeGraph": {
+        "21.0.4": [
+          "GetPreClipNodeGraph()                           --> Graph"
+        ],
+        "21.1": "def GetPreClipNodeGraph(self) -> Graph"
+      },
+      "GetPostClipNodeGraph": {
+        "21.0.4": [
+          "GetPostClipNodeGraph()                          --> Graph"
+        ],
+        "21.1": "def GetPostClipNodeGraph(self) -> Graph"
+      }
+    }
+  }
+}

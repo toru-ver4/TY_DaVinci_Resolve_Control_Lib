@@ -1,0 +1,19 @@
+{
+  "old_snapshot_available": false,
+  "old_documented_snapshot_count": 158,
+  "new_snapshot_count": 158,
+  "added_keys": "comparison_unverified",
+  "removed_keys": "comparison_unverified",
+  "default_changes": "comparison_unverified",
+  "new_snapshot_not_in_official_type": [],
+  "official_type_not_in_new_snapshot": [],
+  "snapshot_not_in_enum": [
+    "perfOptimisedCodec",
+    "perfRenderCacheCodec",
+    "superScaleNoiseReductionStrength",
+    "superScaleSharpnessStrength",
+    "videoCaptureCodec",
+    "videoCaptureFormat",
+    "videoDeckFormat"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "resolve": "21.1.0.17",
+  "python": "3.13.16",
+  "recorded_at": "2026-10-04T20:19:55.055634+09:00",
+  "unit": {
+    "command": ".venv313/Scripts/python.exe -m pytest tests/unit -q -x --basetemp=.pytest-tmp-upgrade-unit-check -o cache_dir=.pytest-upgrade-cache-unit-check",
+    "passed": 97,
+    "seconds": 1.22
+  },
+  "integration_without_restart": {
+    "command": ".venv313/Scripts/python.exe -m pytest tests/integration -m \"not resolve_restart\" -q -x --basetemp=.pytest-tmp-upgrade-integration-final -o cache_dir=.pytest-upgrade-cache-final",
+    "execution": "outside sandbox (authorized)",
+    "passed": 7,
+    "deselected": 1,
+    "seconds": 395.87,
+    "image_regression": {
+      "conditions": 4,
+      "frames": 384,
+      "samples": "all 16-bit RGB samples",
+      "master": "ref_data_1280x720_resolve_21_1_0.zip",
+      "exact_match": true
+    }
+  },
+  "fusion_comparison": {
+    "refresh_disabled_different_frames": 196,
+    "frames": 384,
+    "evidence": "fusion-without-refresh.json"
+  },
+  "packaging": {
+    "command": "uv build --offline --python .venv313/Scripts/python.exe --cache-dir .uv-cache --out-dir dist/resolve-21.1-verification",
+    "wheel": true,
+    "sdist": true,
+    "wheel_install": "uv pip install --offline --no-deps --cache-dir .uv-cache --target .pytest-wheel-upgrade dist/resolve-21.1-verification/ty_davinci_resolve_control-0.1.0-py3-none-any.whl",
+    "isolated_import": true,
+    "new_settings_module_included": true,
+    "cache_excluded": true,
+    "artifact_sha256": {
+      ".gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+      "ty_davinci_resolve_control-0.1.0-py3-none-any.whl": "71c483c38afa2b06c3d9375460f71ec034e69385d6b0eaa905ebfd5d9e7349c5",
+      "ty_davinci_resolve_control-0.1.0.tar.gz": "1c313d937b81b73adad71c8defc72ea8d02877375959261cc40c29f8321bd14b"
+    }
+  },
+  "restart": {
+    "command": ".venv313/Scripts/python.exe -m pytest tests/integration/test_restart.py -q -x --basetemp=.pytest-tmp-upgrade-restart-final -o cache_dir=.pytest-upgrade-cache-restart-final",
+    "passed": 1,
+    "seconds": 23.88,
+    "execution": "alone, outside sandbox (authorized)"
+  },
+  "lifecycle_stress": {
+    "command": ".venv313/Scripts/python.exe tests/stress/project_lifecycle_stress.py --iterations 20",
+    "passed": 20,
+    "iterations": 20,
+    "seconds": 173.66,
+    "execution": "outside sandbox (authorized)"
+  },
+  "total_pytest_passed": 105,
+  "cleanup": {
+    "upgrade_probe_projects_remaining": [],
+    "temporary_artifacts_remaining": [],
+    "build_outputs_removed": true
+  }
+}

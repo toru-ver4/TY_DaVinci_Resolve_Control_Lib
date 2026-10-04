@@ -1,0 +1,189 @@
+{
+  "resolve": "21.1.0.17",
+  "observations": [
+    {
+      "before_evidence": "preset-sdr709-reload.json",
+      "after_evidence": "gui-preset-sdr709-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "SDR Rec.709",
+      "diff": {
+        "colorSpaceInput": {
+          "before": "P3-D65",
+          "after": "Rec.709 (Scene)"
+        },
+        "colorSpaceTimeline": {
+          "before": "Rec.2020 (Scene)",
+          "after": "Rec.709 (Scene)"
+        },
+        "inputDRT": {
+          "before": "None",
+          "after": "DaVinci"
+        },
+        "outputDRT": {
+          "before": "None",
+          "after": "DaVinci"
+        },
+        "rcmPresetMode": {
+          "before": "Custom",
+          "after": "SDR Rec.709"
+        },
+        "useColorSpaceAwareGradingTools": {
+          "before": "0",
+          "after": "1"
+        }
+      }
+    },
+    {
+      "before_evidence": "gui-preset-sdr709-after.json",
+      "after_evidence": "gui-preset-sdr2020-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "SDR Rec.2020",
+      "diff": {
+        "colorSpaceTimeline": {
+          "before": "Rec.709 (Scene)",
+          "after": "Rec.2020 (Scene)"
+        },
+        "rcmPresetMode": {
+          "before": "SDR Rec.709",
+          "after": "SDR Rec.2020"
+        }
+      }
+    },
+    {
+      "before_evidence": "gui-preset-sdr2020-after.json",
+      "after_evidence": "gui-preset-sdr2020-p3-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "SDR Rec.2020 (P3-D65 limited)",
+      "diff": {
+        "colorSpaceTimeline": {
+          "before": "Rec.2020 (Scene)",
+          "after": "P3-D65 (Scene)"
+        },
+        "rcmPresetMode": {
+          "before": "SDR Rec.2020",
+          "after": "SDR Rec.2020 (P3-D65 limited)"
+        }
+      }
+    },
+    {
+      "before_evidence": "gui-preset-sdr2020-p3-after.json",
+      "after_evidence": "gui-preset-sdr-cinema-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "SDR P3-D60 Cinema",
+      "diff": {
+        "colorSpaceTimeline": {
+          "before": "P3-D65 (Scene)",
+          "after": "P3-D60"
+        },
+        "rcmPresetMode": {
+          "before": "SDR Rec.2020 (P3-D65 limited)",
+          "after": "SDR P3-D60 Cinema"
+        }
+      }
+    },
+    {
+      "before_evidence": "gui-preset-sdr-cinema-after.json",
+      "after_evidence": "gui-preset-hdr-wide-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "HDR DaVinci Wide Gamut Intermediate",
+      "diff": {
+        "colorSpaceTimeline": {
+          "before": "P3-D60",
+          "after": "DaVinci WG/Intermediate"
+        },
+        "graphicsWhiteLevel": {
+          "before": "100",
+          "after": "200"
+        },
+        "imageResizingGamma": {
+          "before": "Gamma",
+          "after": "Log"
+        },
+        "rcmPresetMode": {
+          "before": "SDR P3-D60 Cinema",
+          "after": "HDR DaVinci Wide Gamut Intermediate"
+        },
+        "timelineWorkingLuminanceMode": {
+          "before": "SDR 100",
+          "after": "HDR 4000"
+        }
+      }
+    },
+    {
+      "before_evidence": "gui-preset-hdr-wide-after.json",
+      "after_evidence": "gui-preset-hdr-intermediate-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "HDR Rec.2020 Intermediate",
+      "diff": {
+        "colorSpaceTimeline": {
+          "before": "DaVinci WG/Intermediate",
+          "after": "Rec.2020 Intermediate"
+        },
+        "rcmPresetMode": {
+          "before": "HDR DaVinci Wide Gamut Intermediate",
+          "after": "HDR Rec.2020 Intermediate"
+        },
+        "timelineWorkingLuminanceMode": {
+          "before": "HDR 4000",
+          "after": "HDR 1000"
+        }
+      }
+    },
+    {
+      "before_evidence": "gui-preset-hdr-intermediate-after.json",
+      "after_evidence": "gui-preset-hdr-hlg-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "HDR Rec.2020 HLG",
+      "diff": {
+        "colorSpaceTimeline": {
+          "before": "Rec.2020 Intermediate",
+          "after": "Rec.2100 HLG (Scene)"
+        },
+        "rcmPresetMode": {
+          "before": "HDR Rec.2020 Intermediate",
+          "after": "HDR Rec.2020 HLG"
+        }
+      }
+    },
+    {
+      "before_evidence": "gui-preset-hdr-hlg-after.json",
+      "after_evidence": "gui-preset-hdr-hlg-p3-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "HDR Rec.2020 HLG (P3-D65 limited)",
+      "diff": {
+        "rcmPresetMode": {
+          "before": "HDR Rec.2020 HLG",
+          "after": "HDR Rec.2020 HLG (P3-D65 limited)"
+        }
+      }
+    },
+    {
+      "before_evidence": "gui-preset-hdr-hlg-p3-after.json",
+      "after_evidence": "gui-preset-hdr-pq-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "HDR Rec.2020 PQ",
+      "diff": {
+        "colorSpaceTimeline": {
+          "before": "Rec.2100 HLG (Scene)",
+          "after": "Rec.2100 ST2084"
+        },
+        "rcmPresetMode": {
+          "before": "HDR Rec.2020 HLG (P3-D65 limited)",
+          "after": "HDR Rec.2020 PQ"
+        }
+      }
+    },
+    {
+      "before_evidence": "gui-preset-hdr-pq-after.json",
+      "after_evidence": "gui-preset-hdr-pq-p3-after.json",
+      "gui_changed_item": "Color processing mode",
+      "preset": "HDR Rec.2020 PQ (P3-D65 limited)",
+      "diff": {
+        "rcmPresetMode": {
+          "before": "HDR Rec.2020 PQ",
+          "after": "HDR Rec.2020 PQ (P3-D65 limited)"
+        }
+      }
+    }
+  ]
+}

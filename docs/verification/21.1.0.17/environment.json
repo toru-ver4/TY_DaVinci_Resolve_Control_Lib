@@ -1,0 +1,50 @@
+{
+  "resolve": "21.1.0.17",
+  "product": "DaVinci Resolve Studio",
+  "python": "3.13.16 (main, Oct  3 2026, 01:04:41) [MSC v.1944 64 bit (AMD64)]",
+  "fonts": {
+    "Noto Sans": {
+      "Regular": {
+        "path": "C:\\Users\\toruv\\AppData\\Local\\Microsoft\\Windows\\Fonts\\NotoSans-Regular.ttf",
+        "sha256": "fe8c022f48d8dd29f17b744d16f9346f4357e16f7d4f7be58b000ae7c291b614"
+      },
+      "Bold": {
+        "path": "C:\\Users\\toruv\\AppData\\Local\\Microsoft\\Windows\\Fonts\\NotoSans-Bold.ttf",
+        "sha256": "13a813c49624ae3ba3c5c6e72c5ebffc4b9e1e6ea32f421c04069b037c6ad431"
+      }
+    },
+    "Noto Sans Mono": {
+      "Black": {
+        "path": "C:\\Users\\toruv\\AppData\\Local\\Microsoft\\Windows\\Fonts\\NotoSansMono-VariableFont_wdth,wght.ttf",
+        "sha256": "47d856141683450ee297592b27be447eb5141c68516e5e0e748c66b6e0a54afe"
+      }
+    }
+  },
+  "snapshot_count": 158,
+  "legacy_canonical_equal": true,
+  "verified_at": "2026-10-04T19:34:11.350003+09:00",
+  "official_sources": {
+    "official_documents\\21.0.4_Scripting\\CHANGELOG.txt": "65057495f82503125cc78b147b9792b7553ab44ac1111fbcf09b35181e457e63",
+    "official_documents\\21.0.4_Scripting\\README.txt": "3d75040528d53d803450f09d12dc1e158052257377819ce5e28a12c83e04788b",
+    "official_documents\\21.1.0_Scripting\\CHANGELOG.md": "b094a560258282657efb594a208b81c5aa22c1d2767af991d9d430100d37df15",
+    "official_documents\\21.1.0_Scripting\\DaVinciResolveScript.pyi": "f934bcdbc71d3bcbe2b4eb9d921811ac5a47bad6aba1f4f46b7ca917fa8411d5",
+    "official_documents\\21.1.0_Scripting\\README.md": "5e12a637aa8db77d8110ea8c05397e89dff1d3b2ecb33d2e96122d3c87502bfc"
+  },
+  "dctl": {
+    "draw_45deg_lines.dctl": {
+      "installed": "C:\\ProgramData\\Blackmagic Design\\DaVinci Resolve\\Support\\LUT\\TY_DCTL\\draw_45deg_lines.dctl",
+      "sha256": "c97b97249cfc7e489e9d24ce08307e3f2c32a91defc28367991e5e79cfa77a5b",
+      "matches_source": true
+    },
+    "draw_countdown_border.dctl": {
+      "installed": "C:\\ProgramData\\Blackmagic Design\\DaVinci Resolve\\Support\\LUT\\TY_DCTL\\draw_countdown_border.dctl",
+      "sha256": "83b477f27d0fbe95129da45d4971356c2c1bc9caa47374fd4e8ba4e2bdc7d119",
+      "matches_source": true
+    },
+    "draw_countdown_ramp.dctl": {
+      "installed": "C:\\ProgramData\\Blackmagic Design\\DaVinci Resolve\\Support\\LUT\\TY_DCTL\\draw_countdown_ramp.dctl",
+      "sha256": "108b2788baf1de227b1be80ba609f1aede31c596e85864b545263f7880217e2a",
+      "matches_source": true
+    }
+  }
+}

@@ -9,6 +9,7 @@ import time
 from typing import Any
 
 from .connection import ResolveSession
+from ._settings import read_setting, write_setting
 from .errors import ResolveOperationError, ResolveValidationError
 
 
@@ -464,10 +465,7 @@ def get_project_setting(project: Any, name: str) -> str:
     '24'
     """
     name = _non_empty_text(name, "name")
-    result = project.GetSetting(name)
-    if result is None:
-        raise ResolveOperationError("Project.GetSetting", result)
-    return str(result)
+    return str(read_setting(project, "Project", name))
 
 
 def set_project_setting(project: Any, name: str, value: str | int) -> None:
@@ -496,11 +494,7 @@ def set_project_setting(project: Any, name: str, value: str | int) -> None:
         value = _non_empty_text(value, "value")
     elif isinstance(value, bool) or not isinstance(value, int):
         raise ResolveValidationError("value must be a non-empty string or integer.")
-    result = project.SetSetting(name, value)
-    if result is not True:
-        raise ResolveOperationError(
-            "Project.SetSetting", result, f"Project rejected setting {name!r}."
-        )
+    write_setting(project, "Project", name, value)
 
 
 def set_project_settings(

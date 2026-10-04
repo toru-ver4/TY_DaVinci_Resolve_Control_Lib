@@ -162,6 +162,8 @@ def import_media_files(media_pool: Any, paths: Iterable[str | Path]) -> tuple[An
             raise ResolveValidationError(f"Media path must be absolute: {path}.")
         if not path.is_file():
             raise ResolveValidationError(f"Media file does not exist: {path}.")
+    # Resolve Studio 21.1.0.17 rejects FilePath-only dictionaries for
+    # ordinary video files (see docs/resolve-21.1-verification.md).
     result = media_pool.ImportMedia([str(path) for path in normalized])
     if not result:
         raise ResolveOperationError("MediaPool.ImportMedia", result)
@@ -245,7 +247,7 @@ def import_media_storage_items(
         raise ResolveValidationError("items must be an iterable.") from error
     if not normalized:
         raise ResolveValidationError("items must not be empty.")
-    arguments: list[str | dict[str, Any]] = []
+    arguments: list[dict[str, Any]] = []
     for item in normalized:
         specification = item if isinstance(item, MediaStorageItem) else MediaStorageItem(item)
         path = Path(specification.path).expanduser()
@@ -254,7 +256,7 @@ def import_media_storage_items(
         if (specification.start_frame is None) != (specification.end_frame is None):
             raise ResolveValidationError("start_frame and end_frame must be provided together.")
         if specification.start_frame is None:
-            arguments.append(str(path))
+            arguments.append({"media": str(path)})
             continue
         for value, name in ((specification.start_frame, "start_frame"), (specification.end_frame, "end_frame")):
             if isinstance(value, bool) or not isinstance(value, int):

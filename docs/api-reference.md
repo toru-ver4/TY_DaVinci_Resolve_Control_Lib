@@ -1,4 +1,21 @@
-# Resolve 21.0.4 API対応表
+# Resolve API対応表
+
+## 21.1の呼び出し形式と実機制限
+
+[21.1検証記録](resolve-21.1-verification.md)と[シグネチャ台帳](verification/21.1.0.17/api-signatures.json)が今回の更新根拠です。以下の旧版行番号・実機記録は歴史的な根拠として保持します。
+
+| 対象 | 現在の実装 | 21.1実機確認 |
+|---|---|---|
+| Project／Timeline setting | `GetSettings()`の辞書をindex、`SetSettings({key: value})`を1キーずつ順に適用。メソッド不在時だけ旧Get/SetSetting | 公式型定義の辞書形式。新APIが拒否した場合は旧APIで再試行しない |
+| MediaStorage import | `AddItemListToMediaPool([{"media": path}])`、範囲付き辞書も維持 | 通常path・範囲付きとも成功 |
+| MediaPool通常import | 非推奨の`ImportMedia([path])`を維持 | 新`FilePath`辞書はMP4でNone、旧pathリストは成功。失敗を隠す自動fallbackは追加しない |
+| Rendering | `StartRendering([job_id])` | 正式なIDリスト形式で画像回帰成功 |
+| RCM preset／Automatic | APIの成功と直後readbackはGUI preset適用・保存後保持を保証しない | 名前だけのSDR Rec.709は再読込でCustom。CustomからAutomaticオンは再読込でオフ。GUI設定またはCustomの関連値を明示設定する |
+| Fusion color management refresh | 既存0.5秒待機を維持 | 無効時196/384枚に差、通常時384枚完全一致 |
+
+21.1で追加した`ProjectPresetMode.SDR_REC_709`、`ColorSpace.DJI_D_GAMUT_2`、`ColorSpace.VIVO_WIDE_GAMUT`の根拠は21.1実機です。21.0.4での可否は未再検証です。公式`.pyi`は静的な根拠として使用し、実行時APIとしてロードしません。
+
+## 従来の実装根拠
 
 このページはライブラリの保守・拡張を行う開発者向けです。通常の制作自動化は[利用ガイド](guide.md)、Resolve画面から設定項目を探す場合は[Resolve GUIと本ライブラリ定数の対応](project-settings.md)を参照してください。
 
@@ -21,7 +38,7 @@
 | `timeline.py` | native Fusion Composition挿入 | `Timeline.InsertFusionCompositionIntoTimeline()` | 438行 |
 | `timeline.py` | current timeline、playhead、timeline setting、generator | `Project.GetCurrentTimeline()`, `Timeline.Get/SetCurrentTimecode()`, `Get/SetSetting()`, `InsertGeneratorIntoTimeline()` | 165、411–412、434–436行 |
 | `render.py` | format・codec・解像度照会 | `GetRenderFormats()`, `GetRenderCodecs()`, `GetRenderResolutions()` | 197–203行 |
-| `render.py` | job ID単位の追加・開始・監視・削除 | `AddRenderJob()`, `StartRendering(jobId)`, `GetRenderJobStatus(jobId)`, `DeleteRenderJob(jobId)` | 172–189行 |
+| `render.py` | job ID単位の追加・開始・監視・削除 | `AddRenderJob()`, `StartRendering([jobId])`, `GetRenderJobStatus(jobId)`, `DeleteRenderJob(jobId)` | 172–189行、21.1型定義 |
 | `render.py` | render preset import・削除 | `Resolve.ImportRenderPreset()`, `Project.GetRenderPresetList()`, `DeleteRenderPreset()` | 102、177、186行 |
 | `fusion.py` | native/固定長Fusion Composition追加 | `InsertFusionCompositionIntoTimeline()`, `GetFusionCompByIndex()`, `AddFusionComp()`と明示dummy media fallback | 438、473–474、502行 |
 

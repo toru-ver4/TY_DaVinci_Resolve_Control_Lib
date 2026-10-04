@@ -2,6 +2,26 @@
 
 このページは、納品仕様や制作テンプレートに合わせてProject SettingsをPythonから自動設定したい人向けの対応表です。Resolveの画面で見える項目から、コードで指定する設定名と値を探せます。
 
+## Resolve 21.1での確認結果
+
+現在の確認環境はWindows／Python 3.13.16／Studio 21.1.0.17です。[検証記録](resolve-21.1-verification.md)と[版付きGUI台帳](project-setting-gui-coverage.json)を参照してください。以下の従来の大きな対応表は21.0.4.5での記録を保持しており、全行を21.1確認済みに変更していません。
+
+| 項目 | 21.1での状態・使い方 |
+|---|---|
+| RCM Automatic on/off | GUI変更とsnapshotは対応。CustomからPythonでオンにすると直後readbackは1でも再読込後0へ戻ったため、保存後の自動設定は保証しない |
+| RCMの10プリセットとCustom | 全GUI表示と1項目ずつのsnapshot差分を確認。`RCM_PRESET_MODE`の名前だけの設定は関連する色空間・DRTを適用しない。SDR Rec.709は再読込でCustomに戻った。プリセット適用が必要ならGUIを使う。Pythonの制作条件はCustomで関連値を明示する |
+| Separate color space and gamma | オンにするとcombined色空間はgamut単体へ変わる。未指定の空gammaは再読込で補完される場合がある |
+| Input／Timeline／Output color space | SeparateオンでPython設定→readback→再読込→GUI一致をP3／Rec.2020およびDJI／Vivoの代表値で確認。gamutのGUI全選択肢を保存。`ColorSpace`45件、`OUTPUT_COLOR_SPACES`41件のAPI設定確認を実施 |
+| Outputの候補 | HSL・HSV・Lab・YUVを除外。21.1のOutputでは文字列`"Same as Timeline"`のPython設定・readback・再読込・GUI一致も確認。Inputへ同じ文字列を渡すと拒否される |
+| ACEScc／ACEScct | 両GUI状態とAPI設定を確認。ACESccは保存・再読込・GUI保持を確認。親変更ではgamut compression等の関連値も変わる |
+| Projectのframe rate | 空projectでPythonから25を設定し保存・GUI保持を確認。Playbackは変更拒否、GUIで30に変更した値はAPI取得・保存保持が可能 |
+| Timelineのframe rate | 空のcustom timelineでPythonから30を設定し保存・GUI保持を確認。GUIで25へ変えた全snapshotも保存。独立Playback欄はなく、そのAPI書き込みも拒否 |
+| Limit output gamut to | `unmapped`。GUIでOutput color space→P3-D65としても全158キーに差がなく、`OUTPUT_GAMUT_MAPPING`へ割り当てない |
+
+21.1の新gamutは`ColorSpace.DJI_D_GAMUT_2`と`ColorSpace.VIVO_WIDE_GAMUT`です。通常の［TY API］setterは設定拒否で停止し、保存後保持や依存設定の自動補完まで保証するものではありません。21.0.4への接続は維持しますが、今回の変更後の実機互換性は未再検証です。
+
+[21.1のframe rate制限probe](verification/21.1.0.17/frame-rate-constraints.json)では、空custom timelineの整数24／25／30／50／60が成功し、小数23.976／29.97／59.94は拒否されました。clip追加後のtimeline変更も拒否されました。一方、全timelineがcustom設定の今回のprojectでは、素材import後でもproject frame rateの変更が成功しました。素材の存在だけからprojectの変更可否を断定せず、実際の設定・readbackを確認してください。
+
 ## 名前の読み方
 
 - **［Resolve GUI］** 「Project Settings」や「Timeline frame rate」は、Resolveの画面に表示される名前です。

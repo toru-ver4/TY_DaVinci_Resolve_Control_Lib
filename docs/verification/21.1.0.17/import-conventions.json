@@ -1,0 +1,29 @@
+[
+  {
+    "arguments": [
+      {
+        "FilePath": "C:\\Users\\toruv\\OneDrive\\work\\sample_code\\ty_lib\\TY_DaVinci_Resolve_Control_Lib\\src\\ty_davinci_resolve\\assets\\duration_media\\dummy_video_1280x720_23.976P.mp4"
+      }
+    ],
+    "result_count": 0,
+    "was_none": true
+  },
+  {
+    "arguments": [
+      {
+        "FilePath": "C:\\Users\\toruv\\OneDrive\\work\\sample_code\\ty_lib\\TY_DaVinci_Resolve_Control_Lib\\src\\ty_davinci_resolve\\assets\\duration_media\\dummy_video_1280x720_23.976P.mp4",
+        "StartIndex": 0,
+        "EndIndex": 23
+      }
+    ],
+    "result_count": 0,
+    "was_none": true
+  },
+  {
+    "arguments": [
+      "C:\\Users\\toruv\\OneDrive\\work\\sample_code\\ty_lib\\TY_DaVinci_Resolve_Control_Lib\\src\\ty_davinci_resolve\\assets\\duration_media\\dummy_video_1280x720_23.976P.mp4"
+    ],
+    "result_count": 1,
+    "was_none": false
+  }
+]

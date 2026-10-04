@@ -37,6 +37,7 @@ from ty_davinci_resolve import (
     delete_project,
     list_projects,
     load_project,
+    set_project_setting,
     set_project_settings,
 )
 
@@ -93,9 +94,9 @@ def _assert_setting(
     --------
     >>> _assert_setting(project, ProjectSetting.COLOR_SPACE_TIMELINE, ColorSpace.P3_D65)  # doctest: +SKIP
     """
-    assert project.SetSetting(key, value) is True
+    set_project_setting(project, key, value)
     time.sleep(0.35)
-    actual = project.GetSetting(key)
+    actual = project.GetSettings()[key] if callable(getattr(project, "GetSettings", None)) else project.GetSetting(key)
     assert _setting_matches(actual, value)
 
 
@@ -121,10 +122,10 @@ def test_project_setting_constants_on_supported_resolve() -> None:
         for value in set(FrameRate) - drop_frame_rates:
             _assert_setting(project, ProjectSetting.TIMELINE_FRAME_RATE, value)
         for value in drop_frame_rates:
-            assert project.SetSetting(
+            set_project_setting(project,
                 ProjectSetting.TIMELINE_FRAME_RATE,
                 value,
-            ) is True
+            )
             time.sleep(0.35)
             assert _setting_matches(
                 project.GetSetting(ProjectSetting.TIMELINE_FRAME_RATE),
@@ -209,10 +210,10 @@ def test_project_setting_constants_on_supported_resolve() -> None:
             TIMELINE_WORKING_LUMINANCE_MIN_NITS,
             TIMELINE_WORKING_LUMINANCE_MAX_NITS,
         ):
-            assert project.SetSetting(
+            set_project_setting(project,
                 ProjectSetting.TIMELINE_WORKING_LUMINANCE,
                 str(value),
-            ) is True
+            )
             time.sleep(0.35)
             assert _setting_matches(
                 project.GetSetting(ProjectSetting.TIMELINE_WORKING_LUMINANCE),

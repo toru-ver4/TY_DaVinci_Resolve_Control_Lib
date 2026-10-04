@@ -395,8 +395,9 @@ class ColorScienceMode(StrEnum):
 
 
 class ProjectPresetMode(StrEnum):
-    """Color processing modes accepted by Resolve 21.0.4."""
+    """RCM labels; setting a label alone need not apply or persist a GUI preset."""
 
+    SDR_REC_709 = "SDR Rec.709"
     SDR_REC_2020 = "SDR Rec.2020"
     SDR_REC_2020_P3_D65_LIMITED = "SDR Rec.2020 (P3-D65 limited)"
     SDR_P3_D60_CINEMA = "SDR P3-D60 Cinema"
@@ -416,7 +417,7 @@ class ProjectPresetMode(StrEnum):
 
 
 class ColorSpace(StrEnum):
-    """Complete Custom-mode gamut list verified by Resolve 21.0.4."""
+    """Custom-mode gamuts; DJI D-Gamut2 and Vivo were verified on Resolve 21.1."""
 
     ACES_AP0 = "ACES (AP0)"
     ACES_AP1 = "ACES (AP1)"
@@ -442,6 +443,7 @@ class ColorSpace(StrEnum):
     DAVINCI_WG = "DaVinci WG"
     DCI_XYZ = "DCI XYZ"
     DJI_D_GAMUT = "DJI D-Gamut"
+    DJI_D_GAMUT_2 = "DJI D-Gamut2"
     DRAGONCOLOR = "DRAGONcolor"
     DRAGONCOLOR2 = "DRAGONcolor2"
     FUJIFILM_F_GAMUT_C = "Fujifilm F-Gamut C"
@@ -463,12 +465,13 @@ class ColorSpace(StrEnum):
     SONY_S_GAMUT3 = "Sony S-Gamut3"
     SONY_S_GAMUT3_CINE = "Sony S-Gamut3.Cine"
     SRGB = "sRGB"
+    VIVO_WIDE_GAMUT = "Vivo Wide Gamut"
     XYZ_CIE = "XYZ (CIE)"
     YUV = "Y'UV"
 
 
 class InputColorSpaceMode(StrEnum):
-    """Input-only UI labels in Custom mode (not accepted by SetSetting)."""
+    """Input UI labels; Same as Timeline is rejected for Input, accepted for Output in 21.1."""
 
     SAME_AS_TIMELINE = "Same as Timeline"
 

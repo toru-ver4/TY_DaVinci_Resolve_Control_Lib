@@ -1,0 +1,157 @@
+[
+  {
+    "before_file": "gui-yrgb-before.json",
+    "after_file": "gui-rcm-after.json",
+    "before_count": 158,
+    "after_count": 158,
+    "added": [],
+    "removed": [],
+    "changed": {
+      "colorScienceMode": [
+        "davinciYRGB",
+        "davinciYRGBColorManagedv2"
+      ],
+      "colorSpaceInput": [
+        "Rec.709 Gamma 2.4",
+        "Rec.709 (Scene)"
+      ],
+      "colorSpaceOutputGamma": [
+        "",
+        "ACEScc"
+      ],
+      "hdrDolbyMasterDisplay": [
+        "",
+        "4000-nit, P3, D65, ST.2084, Full"
+      ],
+      "imageResizingGamma": [
+        "Timeline",
+        "Gamma"
+      ],
+      "inputDRT": [
+        "None",
+        "DaVinci"
+      ],
+      "isAutoColorManage": [
+        "0",
+        "1"
+      ],
+      "outputDRT": [
+        "None",
+        "DaVinci"
+      ],
+      "rcmPresetMode": [
+        "Custom",
+        "SDR"
+      ],
+      "timelineWorkingLuminanceMode": [
+        "HDR 1000",
+        "SDR 100"
+      ],
+      "useColorSpaceAwareGradingTools": [
+        "0",
+        "1"
+      ],
+      "useInverseDRT": [
+        "0",
+        "1"
+      ],
+      "videoCaptureCodec": [
+        "",
+        "apch"
+      ],
+      "videoCaptureFormat": [
+        "",
+        "mov"
+      ]
+    }
+  },
+  {
+    "before_file": "gui-rcm-after.json",
+    "after_file": "gui-auto-off-after.json",
+    "before_count": 158,
+    "after_count": 158,
+    "added": [],
+    "removed": [],
+    "changed": {
+      "isAutoColorManage": [
+        "1",
+        "0"
+      ],
+      "rcmPresetMode": [
+        "SDR",
+        "SDR Rec.709"
+      ]
+    }
+  },
+  {
+    "before_file": "gui-auto-off-after.json",
+    "after_file": "gui-custom-after.json",
+    "before_count": 158,
+    "after_count": 158,
+    "added": [],
+    "removed": [],
+    "changed": {
+      "rcmPresetMode": [
+        "SDR Rec.709",
+        "Custom"
+      ]
+    }
+  },
+  {
+    "before_file": "api-input-p3-reload.json",
+    "after_file": "gui-limit-p3-after.json",
+    "before_count": 158,
+    "after_count": 158,
+    "added": [],
+    "removed": [],
+    "changed": {}
+  },
+  {
+    "before_file": "api-acescc-reload.json",
+    "after_file": "gui-acescct-after.json",
+    "before_count": 158,
+    "after_count": 158,
+    "added": [],
+    "removed": [],
+    "changed": {
+      "colorAcesGamutCompressType": [
+        "None",
+        "ACES reference gamut compress"
+      ],
+      "colorScienceMode": [
+        "acescc",
+        "acescct"
+      ],
+      "inputDRT": [
+        "DaVinci",
+        "None"
+      ],
+      "outputDRT": [
+        "DaVinci",
+        "None"
+      ],
+      "useCATransform": [
+        "1",
+        "0"
+      ],
+      "useColorSpaceAwareGradingTools": [
+        "1",
+        "0"
+      ]
+    }
+  },
+  {
+    "before_file": "api-project-fps25-reload.json",
+    "after_file": "gui-project-playback30-after.json",
+    "before_count": 158,
+    "after_count": 158,
+    "added": [],
+    "removed": [],
+    "changed": {
+      "timelinePlaybackFrameRate": [
+        "24",
+        "30"
+      ]
+    }
+  }
+]

@@ -8,6 +8,7 @@ import re
 from typing import Any
 
 from .constants import TimelineSetting, TrackType
+from ._settings import read_setting, write_setting
 from .errors import ResolveOperationError, ResolveValidationError
 
 
@@ -336,10 +337,7 @@ def get_timeline_setting(timeline: Any, name: str) -> str:
     """
     if not isinstance(name, str) or not name.strip():
         raise ResolveValidationError("name must be a non-empty string.")
-    result = timeline.GetSetting(name)
-    if result is None:
-        raise ResolveOperationError("Timeline.GetSetting", result)
-    return str(result)
+    return str(read_setting(timeline, "Timeline", name))
 
 
 def set_timeline_setting(timeline: Any, name: str, value: str) -> None:
@@ -366,9 +364,7 @@ def set_timeline_setting(timeline: Any, name: str, value: str) -> None:
         raise ResolveValidationError("name must be a non-empty string.")
     if not isinstance(value, str) or not value.strip():
         raise ResolveValidationError("value must be a non-empty string.")
-    result = timeline.SetSetting(name, value)
-    if result is not True:
-        raise ResolveOperationError("Timeline.SetSetting", result, f"Timeline rejected setting {name!r}.")
+    write_setting(timeline, "Timeline", name, value)
 
 
 def set_timeline_settings(

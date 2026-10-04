@@ -221,7 +221,7 @@ def start_render_job(project: Any, job_id: str) -> None:
     """
     if not isinstance(job_id, str) or not job_id:
         raise ResolveValidationError("job_id must be a non-empty string.")
-    result = project.StartRendering(job_id)
+    result = project.StartRendering([job_id])
     if result is not True:
         raise ResolveOperationError("Project.StartRendering", result)
 

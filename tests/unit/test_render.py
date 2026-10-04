@@ -50,8 +50,8 @@ class FakeRenderProject:
     def AddRenderJob(self) -> str:
         return "job-1"
 
-    def StartRendering(self, job_id: str) -> bool:
-        self.started.append(job_id)
+    def StartRendering(self, job_ids: list[str]) -> bool:
+        self.started.extend(job_ids)
         return True
 
     def GetRenderJobStatus(self, job_id: str) -> dict[str, object]:
