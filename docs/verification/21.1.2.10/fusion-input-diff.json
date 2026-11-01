@@ -1,0 +1,417 @@
+{
+  "CineonLogTool": {
+    "added": [
+      "PreDividePostMultiply"
+    ],
+    "removed": []
+  },
+  "CreateReliefMapTool": {
+    "added": [
+      "Filter",
+      "Passes"
+    ],
+    "removed": []
+  },
+  "DimensionCameraTrackerTool": {
+    "added": [
+      "ImportTracksDropTarget"
+    ],
+    "removed": []
+  },
+  "LensDistortTool": {
+    "added": [
+      "AddLine",
+      "CalibLineListSelection",
+      "CalibLineOrder",
+      "CalibrateType"
+    ],
+    "removed": []
+  },
+  "MtlBlinnTool": {
+    "added": [
+      "EnablePBRMaterial",
+      "PBRMaterial"
+    ],
+    "removed": []
+  },
+  "MtlCookTorranceTool": {
+    "added": [
+      "EnablePBRMaterial",
+      "PBRMaterial"
+    ],
+    "removed": []
+  },
+  "MtlMerge3DTool": {
+    "added": [
+      "EnablePBRMaterial",
+      "MergeType",
+      "PBRMaterial",
+      "ReceivesLighting",
+      "ReceivesShadows"
+    ],
+    "removed": []
+  },
+  "MtlPbrUberTool": {
+    "added": [
+      "Comments",
+      "CommentsNest",
+      "EndRenderScript",
+      "EndRenderScripts",
+      "FrameRenderScript",
+      "FrameRenderScriptNest",
+      "HideInputs",
+      "LayerSpacer",
+      "LayersNest",
+      "MaterialID",
+      "MaterialIDNest",
+      "ProcessLayers",
+      "ProcessLayersCustom",
+      "ReceivesLighting",
+      "ReceivesShadows",
+      "StartRenderScript",
+      "StartRenderScripts",
+      "UseTwoSidedLighting"
+    ],
+    "removed": []
+  },
+  "MtlPhongTool": {
+    "added": [
+      "EnablePBRMaterial",
+      "PBRMaterial"
+    ],
+    "removed": []
+  },
+  "MtlStereoMix3DTool": {
+    "added": [
+      "EnablePBRMaterial",
+      "PBRMaterial",
+      "ReceivesLighting",
+      "ReceivesShadows"
+    ],
+    "removed": []
+  },
+  "MtlWardTool": {
+    "added": [
+      "EnablePBRMaterial",
+      "PBRMaterial"
+    ],
+    "removed": []
+  },
+  "OGrafLoaderTool": {
+    "added": [
+      "AddPlayAction",
+      "AddStopAction",
+      "DynParamCombo0",
+      "DynParamCombo1",
+      "DynParamCombo10",
+      "DynParamCombo11",
+      "DynParamCombo12",
+      "DynParamCombo13",
+      "DynParamCombo14",
+      "DynParamCombo15",
+      "DynParamCombo16",
+      "DynParamCombo17",
+      "DynParamCombo18",
+      "DynParamCombo19",
+      "DynParamCombo2",
+      "DynParamCombo3",
+      "DynParamCombo4",
+      "DynParamCombo5",
+      "DynParamCombo6",
+      "DynParamCombo7",
+      "DynParamCombo8",
+      "DynParamCombo9",
+      "DynamicParams",
+      "GraphicPlayback",
+      "HoldFirstFrame",
+      "HoldLastFrame",
+      "ScheduledActions",
+      "StopActionUserModified",
+      "TimeScale",
+      "TrimIn",
+      "TrimOut"
+    ],
+    "removed": [
+      "CustomAction0",
+      "CustomAction1",
+      "CustomAction2",
+      "CustomAction3",
+      "CustomAction4",
+      "CustomAction5",
+      "CustomAction6",
+      "CustomAction7",
+      "CustomAction8",
+      "CustomAction9"
+    ]
+  },
+  "PRenderTool": {
+    "added": [
+      "EnablePBRMaterial"
+    ],
+    "removed": []
+  },
+  "Renderer3DTool": {
+    "added": [
+      "FallbackForMissingMaterials",
+      "FitScene"
+    ],
+    "removed": []
+  },
+  "ReplaceMaterial3DTool": {
+    "added": [
+      "EnablePBRMaterial",
+      "PBRMaterial",
+      "ReceivesLighting",
+      "ReceivesShadows"
+    ],
+    "removed": []
+  },
+  "ResolveFxAnalogDamageTool": {
+    "added": [
+      "isLegacyCentering"
+    ],
+    "removed": []
+  },
+  "ResolveFxApertureDiffractionTool": {
+    "added": [
+      "legacyIsNoTransparencyHandling"
+    ],
+    "removed": []
+  },
+  "ResolveFxBeautyTool": {
+    "added": [
+      "grainIsEnabled",
+      "grainSrcBlur",
+      "isLegacyRecoveryAfterGrain"
+    ],
+    "removed": []
+  },
+  "ResolveFxBlankingFillTool": {
+    "added": [
+      "isLegacyPositioning"
+    ],
+    "removed": []
+  },
+  "ResolveFxBurnAwayTool": {
+    "added": [
+      "isLegacyScaling"
+    ],
+    "removed": []
+  },
+  "ResolveFxCineFocusTool": {
+    "added": [
+      "blankingCropB",
+      "blankingCropL",
+      "blankingCropR",
+      "blankingCropT",
+      "blankingMode",
+      "grainSrcBlur",
+      "isLegacyProcessingModes",
+      "lensIsShowCenter",
+      "qualityGroup",
+      "qualityIsFullRes",
+      "qualityIsSingleKernel",
+      "xyPosition"
+    ],
+    "removed": []
+  },
+  "ResolveFxCinematicHazeTool": {
+    "added": [
+      "isLegacyPositioning"
+    ],
+    "removed": []
+  },
+  "ResolveFxColorToneDiffuserTool": {
+    "added": [
+      "isLegacyPositioning",
+      "toneLightsFalloffAspect"
+    ],
+    "removed": []
+  },
+  "ResolveFxDeflickerTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxDetailRecoveryTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxDropShadowTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxEdgeDetectTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxFalseColorTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxFilmDamageTool": {
+    "added": [
+      "isLegacyCentering"
+    ],
+    "removed": []
+  },
+  "ResolveFxFilmGrainTool": {
+    "added": [
+      "detailLoss"
+    ],
+    "removed": []
+  },
+  "ResolveFxFilmLookTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxGaussianBlurTool": {
+    "added": [
+      "isLegacyBlurScaling"
+    ],
+    "removed": []
+  },
+  "ResolveFxGlowTool": {
+    "added": [
+      "atmsphIsTracked",
+      "isLegacyPositioning",
+      "legacyIsNoTransparencyHandling"
+    ],
+    "removed": []
+  },
+  "ResolveFxHalationPluginTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxLensFlareV2Tool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxLensReflectionsTool": {
+    "added": [
+      "legacyIsNoTransparencyHandling"
+    ],
+    "removed": []
+  },
+  "ResolveFxLightrayTool": {
+    "added": [
+      "atmsphIsTracked",
+      "isLegacyPositioning",
+      "legacyIsNoTransparencyHandling",
+      "posIsTracked"
+    ],
+    "removed": []
+  },
+  "ResolveFxMosaicBlurTool": {
+    "added": [
+      "isLegacyCentering",
+      "xyPosition"
+    ],
+    "removed": []
+  },
+  "ResolveFxOFX3DKeyerV2Tool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxOFXLumaKeyerTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxOfxhslKeyerTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxPatchReplacerTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxPictureInPictureTool": {
+    "added": [
+      "isLegacyBlur"
+    ],
+    "removed": []
+  },
+  "ResolveFxRadialBlurTool": {
+    "added": [
+      "isLegacyScaling"
+    ],
+    "removed": []
+  },
+  "ResolveFxScanlineV2Tool": {
+    "added": [
+      "isLegacyCentering"
+    ],
+    "removed": []
+  },
+  "ResolveFxZoomBlurTool": {
+    "added": [
+      "isLegacyScaling"
+    ],
+    "removed": []
+  },
+  "SoftClipTool": {
+    "added": [
+      "EnablePBRMaterial",
+      "PBRMaterial",
+      "ReceivesLighting",
+      "ReceivesShadows"
+    ],
+    "removed": []
+  },
+  "SurfaceAlembicMeshTool": {
+    "added": [
+      "NoAbortOnOrphanVertices"
+    ],
+    "removed": []
+  },
+  "TrackerModifierTool": {
+    "added": [
+      "GoToSelectTime0",
+      "SelectTimeText0"
+    ],
+    "removed": []
+  },
+  "TrackerTool": {
+    "added": [
+      "CustomTime",
+      "GoToCustomTime",
+      "GoToSelectTime1",
+      "ReferenceTimeText",
+      "SelectTimeText1",
+      "SetCustomTimeToNow",
+      "ShowSplines",
+      "TrimToEnd",
+      "TrimToStart"
+    ],
+    "removed": []
+  },
+  "URendererTool": {
+    "added": [
+      "FitScene"
+    ],
+    "removed": []
+  }
+}

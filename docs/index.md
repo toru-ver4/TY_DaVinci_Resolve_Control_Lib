@@ -4,6 +4,7 @@
 - [Resolve GUIと本ライブラリ定数の対応](project-settings.md): Resolve画面の各項目をPythonから設定する方法と注意点
 - [Resolve API対応表](api-reference.md): 開発者向けの実装根拠とResolve公式APIの対応
 - [Resolve 21.1調査・検証記録](resolve-21.1-verification.md): 公式API差分、全snapshot、GUI証拠、保存時の制限、画像比較と未確認事項
+- [Resolve 21.1.2調査・検証記録](resolve-21.1.2-verification.md): 21.1.0からのAPI・設定差分、追加定数、実機テストと画像比較
 - [Resolveバージョン更新時の検証手順](resolve-version-upgrade.md): 更新時のGUI/API再調査、証拠の残し方、テスト、完了条件
 - [移行・再設計計画](migration-plan.md): 開発者向けの設計原則、対象範囲、実装状況
 

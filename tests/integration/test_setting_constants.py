@@ -113,7 +113,10 @@ def test_project_setting_constants_on_supported_resolve() -> None:
         project = create_project(session, project_name)
         snapshot = project.GetSetting()
         assert isinstance(snapshot, dict)
-        assert set(ProjectSetting).issubset(snapshot)
+        required_keys = set(ProjectSetting)
+        if session.version[:3] < (21, 1, 2):
+            required_keys.remove(ProjectSetting.TRANSCRIPTION_EXTENDED_LANGUAGE_SUPPORT)
+        assert required_keys.issubset(snapshot)
 
         drop_frame_rates = {
             FrameRate.FPS_29_97_DF,

@@ -2,9 +2,24 @@
 
 このページは、納品仕様や制作テンプレートに合わせてProject SettingsをPythonから自動設定したい人向けの対応表です。Resolveの画面で見える項目から、コードで指定する設定名と値を探せます。
 
+## Resolve 21.1.2の差分
+
+最新の実機環境はWindows／Python 3.13.16／Studio 21.1.2.10です。
+[21.1.2検証記録](resolve-21.1.2-verification.md)を参照してください。
+空projectの全159設定を21.1.0.17と比較し、追加は`"transcriptionExtendedLanguageSupport"`の
+1キー（初期値`"0"`）、既存キーの削除と初期値変更はありませんでした。
+［TY API］`ProjectSetting`は152キーを収録しています。残る7キーの扱いは従来どおりです。
+
+［TY API］`ProjectSetting.TRANSCRIPTION_EXTENDED_LANGUAGE_SUPPORT`は21.1.2で追加したキーです。
+`SettingToggle.DISABLED`（`"0"`）の設定・再取得・保存後の保持を確認しました。
+`SettingToggle.ENABLED`（`"1"`）には拡張言語モデルのインストールが必要で、この実機では拒否されました。
+公式資料によると値の変更で`"transcriptionLanguage"`が`"auto"`に戻ります。
+未導入のモデルを自動取得する処理はありません。GUIとの対応は確認範囲を検証記録に記載します。
+以下の21.1.0以前のGUI対応は、確認した版を区別して保持しています。
+
 ## Resolve 21.1での確認結果
 
-現在の確認環境はWindows／Python 3.13.16／Studio 21.1.0.17です。[検証記録](resolve-21.1-verification.md)と[版付きGUI台帳](project-setting-gui-coverage.json)を参照してください。以下の従来の大きな対応表は21.0.4.5での記録を保持しており、全行を21.1確認済みに変更していません。
+当時の確認環境はWindows／Python 3.13.16／Studio 21.1.0.17です。[検証記録](resolve-21.1-verification.md)と[版付きGUI台帳](project-setting-gui-coverage.json)を参照してください。以下の従来の大きな対応表は21.0.4.5での記録を保持しており、全行を21.1確認済みに変更していません。
 
 | 項目 | 21.1での状態・使い方 |
 |---|---|
@@ -82,7 +97,7 @@ set_timeline_settings(
 
 この文書はWindows版DaVinci Resolve Studio 21.0.4.5を対象とします。APIの基準資料は同梱の[Resolve 21.0.4 Scripting README](../official_documents/21.0.4_Scripting/README.txt)です（679–711行）。
 
-［TY API］`ProjectSetting`クラスには、調査対象158個のうち151個の設定キーを定数として収録しています。151は収録数であり、すべてをPythonから変更できるという意味ではありません。読み取り専用やGUIとの対応を特定できていないキーは、この文書で個別に区別します。［TY API］`ProjectSetting`はResolveの画面名ではなく、設定キーの入力間違いを防ぐために本ライブラリが用意したPythonクラスです。
+21.0.4／21.1.0では、調査対象158個のうち151個の設定キーを定数として収録しました。21.1.2の追加キーを含め、現在の［TY API］`ProjectSetting`は152個です。収録数は、すべてをPythonから変更できるという意味ではありません。読み取り専用やGUIとの対応を特定できていないキーは、この文書で個別に区別します。［TY API］`ProjectSetting`はResolveの画面名ではなく、設定キーの入力間違いを防ぐために本ライブラリが用意したPythonクラスです。
 
 次の7個の設定キーは、［TY API］`ProjectSetting`には収録していません。自動設定には使用できないためです。［Resolve API］`Project.GetSetting()`で現在値を読み取ることはできますが、［Resolve API］`Project.SetSetting()`へ同じ値を書き戻してもResolveに拒否されます。
 

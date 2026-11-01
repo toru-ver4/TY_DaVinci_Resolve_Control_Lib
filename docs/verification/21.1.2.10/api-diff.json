@@ -1,0 +1,1312 @@
+{
+  "after": "21.1.2",
+  "before": "21.1.0",
+  "classes": {
+    "AudioLevelsInfo": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "Integrated": "float",
+          "TruePeak": "float"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "AutoCaptionSettings": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": [
+          "TypedDict"
+        ]
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "extendedLanguageSupport": "bool"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "ColorGroup": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "GetPhotosInPhotoAlbum": [
+            "self, photoAlbum: PhotoAlbum | None=None -> list[PhotoAlbumItem]"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "CopyAttributesOptions": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "allAudioAttributes": "bool",
+          "allClipAttributes": "bool",
+          "allCropAttributes": "bool",
+          "allFlipAttributes": "bool",
+          "allVideoAttributes": "bool",
+          "allZoomAttributes": "bool",
+          "anchorPoint": "bool",
+          "audioEqualizer": "bool",
+          "audioPlugins": "bool",
+          "audioVolume": "bool",
+          "clipColor": "bool",
+          "colorCorrection": "bool",
+          "compositionMode": "bool",
+          "cropBottom": "bool",
+          "cropLeft": "bool",
+          "cropRight": "bool",
+          "cropSoftness": "bool",
+          "cropTop": "bool",
+          "flags": "bool",
+          "flipH": "bool",
+          "flipV": "bool",
+          "fusionEffects": "bool",
+          "keyframeTiming": "KeyframeTiming",
+          "markers": "bool",
+          "motionEstimation": "bool",
+          "opacity": "bool",
+          "pitch": "bool",
+          "position": "bool",
+          "retainImagePosition": "bool",
+          "retimeEffect": "bool",
+          "retimeProcess": "bool",
+          "rippleSequence": "bool",
+          "rotationAngle": "bool",
+          "scaleX": "bool",
+          "scaleY": "bool",
+          "videoPlugins": "bool",
+          "yaw": "bool"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "CreateSubtitlesFromAudioStatus": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "AnalysisSpeed": "float",
+          "CompletionPercentage": "int",
+          "Error": "str",
+          "EstimatedTimeRemaining": "int",
+          "JobStatus": "str"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "DetectSceneCutsStatus": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "AnalysisSpeed": "float",
+          "CompletionPercentage": "int",
+          "EstimatedTimeRemaining": "int",
+          "JobStatus": "str"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "Effect": {
+      "bases": {
+        "after": [],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "GetFusionComp": [
+            "self -> FusionComp | None"
+          ],
+          "GetIndex": [
+            "self -> int | None"
+          ],
+          "GetInfo": [
+            "self -> EffectInfo | None"
+          ],
+          "GetIsEnabled": [
+            "self -> bool"
+          ],
+          "SetIndex": [
+            "self, index: int -> bool"
+          ],
+          "SetIsEnabled": [
+            "self, enabled: bool -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "EffectInfo": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "category": "str",
+          "id": "str",
+          "name": "str"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "ExportFrameOptions": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "encodedImageFormat": "str | None",
+          "filePath": "str | None",
+          "maxDimension": "int | None",
+          "outputType": "str | None"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "ExportFrameResult": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "data": "str | None",
+          "error": "str | None",
+          "success": "bool"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "Folder": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "GetParentFolder": [
+            "self -> Folder"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "Graph": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "GetNodeColor": [
+            "self, nodeIndex: int -> NodeColor | Literal['']"
+          ],
+          "SetNodeColor": [
+            "self, nodeIndex: int, colorName: NodeColor | Literal[''] -> bool"
+          ],
+          "SetNodeLabel": [
+            "self, nodeIndex: int, label: str -> bool"
+          ]
+        },
+        "changed": {
+          "ApplyGradeFromDRX": {
+            "after": [
+              "self, path: str, gradeMode: int, applyToAllLayers=False, keyframeMode=Resolve.KEYFRAME_MODE_ALL -> bool"
+            ],
+            "before": [
+              "self, path: str, gradeMode: int -> bool"
+            ]
+          }
+        }
+      }
+    },
+    "MediaPool": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "AddToPhotoAlbum": [
+            "self, photos: list[MediaPoolItem] -> list[PhotoAlbumItem]"
+          ],
+          "CreateEmptyPhotoAlbum": [
+            "self, name: str -> PhotoAlbum"
+          ],
+          "CreatePhotoAlbumFromPhotos": [
+            "self, name: str, photos: list[MediaPoolItem] -> PhotoAlbum"
+          ],
+          "DeletePhotoAlbums": [
+            "self, photoAlbums: list[PhotoAlbum] -> bool"
+          ]
+        },
+        "changed": {
+          "AddSubFolder": {
+            "after": [
+              "self, folder: Folder, name: str -> Folder | None"
+            ],
+            "before": [
+              "self, folder: Folder, name: str -> Folder"
+            ]
+          },
+          "CreateEmptyTimeline": {
+            "after": [
+              "self, name: str, timecode: str | None=None -> Timeline | None"
+            ],
+            "before": [
+              "self, name: str -> Timeline"
+            ]
+          }
+        }
+      }
+    },
+    "MediaPoolItem": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "ExportFrame": [
+            "self, frameOffset: int, exportFrameOptions: ExportFrameOptions | None=None -> ExportFrameResult"
+          ],
+          "GetParentFolder": [
+            "self -> Folder"
+          ],
+          "GetPhotoAlbum": [
+            "self -> PhotoAlbum | None"
+          ],
+          "SetTranscription": [
+            "self, transcription: Transcription -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "PhotoAlbum": {
+      "bases": {
+        "after": [],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "DeletePhotos": [
+            "self, photoAlbumItems: list[PhotoAlbumItem] -> bool"
+          ],
+          "GetCurrentItem": [
+            "self -> PhotoAlbumItem | None"
+          ],
+          "GetMediaPoolItem": [
+            "self -> MediaPoolItem | None"
+          ],
+          "GetName": [
+            "self -> str"
+          ],
+          "GetNodeGraph": [
+            "self -> Graph"
+          ],
+          "GetPhotoList": [
+            "self -> list[PhotoAlbumItem]"
+          ],
+          "GetUniqueId": [
+            "self -> str"
+          ],
+          "GrabAllStills": [
+            "self -> list[GalleryStill]"
+          ],
+          "GrabStill": [
+            "self -> GalleryStill"
+          ],
+          "SetName": [
+            "self, photoAlbumName: str -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "PhotoAlbumItem": {
+      "bases": {
+        "after": [],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "AddEffect": [
+            "self, category: str, id: str -> Effect | None"
+          ],
+          "AddFlag": [
+            "self, color: FlagColor -> bool"
+          ],
+          "AddFusionComp": [
+            "self -> FusionComp"
+          ],
+          "AddVersion": [
+            "self, versionName: str -> bool"
+          ],
+          "AssignToColorGroup": [
+            "self, colorGroup: ColorGroup -> bool"
+          ],
+          "ClearClipColor": [
+            "self -> bool"
+          ],
+          "ClearFlags": [
+            "self, color: FlagColor | Literal['All'] -> bool"
+          ],
+          "CopyGrades": [
+            "self, tgtPhotoAlbumItems: list[PhotoAlbumItem] -> bool"
+          ],
+          "DeleteEffects": [
+            "self, effects: list[Effect] -> bool"
+          ],
+          "DeleteFusionCompByName": [
+            "self, compName: str -> bool"
+          ],
+          "DeleteVersionByName": [
+            "self, versionName: str -> bool"
+          ],
+          "ExportFrame": [
+            "self, exportFrameOptions: ExportFrameOptions | None=None -> ExportFrameResult"
+          ],
+          "ExportFusionComp": [
+            "self, path: str, compIndex: int -> bool"
+          ],
+          "ExportLUT": [
+            "self, exportType: ExportLutType, path: str -> bool"
+          ],
+          "GetClipColor": [
+            "self -> ClipColor | Literal['']"
+          ],
+          "GetColorGroup": [
+            "self -> ColorGroup | None"
+          ],
+          "GetCurrentVersion": [
+            "self -> VersionInfo"
+          ],
+          "GetEffects": [
+            "self, category: str -> list[Effect]"
+          ],
+          "GetFlagList": [
+            "self -> list[str]"
+          ],
+          "GetFusionCompByIndex": [
+            "self, compIndex: int -> FusionComp | None"
+          ],
+          "GetFusionCompByName": [
+            "self, compName: str -> FusionComp | None"
+          ],
+          "GetFusionCompCount": [
+            "self -> int"
+          ],
+          "GetFusionCompNameList": [
+            "self -> list[str]"
+          ],
+          "GetMediaPoolItem": [
+            "self -> MediaPoolItem | None"
+          ],
+          "GetName": [
+            "self -> str"
+          ],
+          "GetNodeGraph": [
+            "self, layerIdx: int | None=None -> Graph"
+          ],
+          "GetProperties": [
+            "self -> PhotoAlbumItemProperties"
+          ],
+          "GetRatings": [
+            "self -> int"
+          ],
+          "GetUniqueId": [
+            "self -> str"
+          ],
+          "GetVersionNameList": [
+            "self -> list[str]"
+          ],
+          "ImportFusionComp": [
+            "self, path: str -> FusionComp"
+          ],
+          "LoadBurnInPreset": [
+            "self, presetName: str -> bool"
+          ],
+          "LoadFusionCompByName": [
+            "self, compName: str -> FusionComp"
+          ],
+          "LoadVersionByName": [
+            "self, versionName: str -> bool"
+          ],
+          "RemoveFromColorGroup": [
+            "self -> bool"
+          ],
+          "RenameFusionCompByName": [
+            "self, oldName: str, newName: str -> bool"
+          ],
+          "RenameVersionByName": [
+            "self, oldName: str, newName: str -> bool"
+          ],
+          "ResetAllNodeColors": [
+            "self -> bool"
+          ],
+          "SetCDL": [
+            "self, CDL: CDL -> bool"
+          ],
+          "SetClipColor": [
+            "self, colorName: ClipColor -> bool"
+          ],
+          "SetName": [
+            "self, name: str -> bool"
+          ],
+          "SetProperties": [
+            "self, properties: PhotoAlbumItemProperties -> bool"
+          ],
+          "SetRatings": [
+            "self, stars: int -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "PhotoAlbumItemProperties": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "CropBottom": "float",
+          "CropLeft": "float",
+          "CropLockAspectRatio": "bool",
+          "CropRatio": "PhotoCropRatio",
+          "CropRight": "float",
+          "CropTop": "float",
+          "FlipX": "bool",
+          "FlipY": "bool",
+          "ImageOrientation": "PhotoImageOrientation",
+          "Pan": "float",
+          "Pitch": "float",
+          "RotationAngle": "float",
+          "SourceCroppingEnabled": "bool",
+          "SourceLookType": "PhotoLookType",
+          "SourceLooksEnabled": "bool",
+          "SourceTransformEnabled": "bool",
+          "Tilt": "float",
+          "Yaw": "float",
+          "ZoomGang": "bool",
+          "ZoomX": "float",
+          "ZoomY": "float"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "PhotoQuickExportRenderSettings": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "BitDepth": "int | None",
+          "CompressionLevel": "int | None",
+          "CustomName": "str",
+          "IncludeMetadata": "bool | None",
+          "ManualQualityPercent": "int | None",
+          "Resolution": "int | None",
+          "ScalePercent": "int | None",
+          "TargetDir": "str",
+          "TiffCompressionType": "PhotoTiffCompressionType | None"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "PhotoRenderSettings": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "AllowEnlarge": "bool",
+          "AutoQualityLevel": "PhotoAutoQuality",
+          "BitDepth": "int",
+          "CompressionLevel": "int",
+          "CustomName": "str",
+          "CustomSuffix": "str",
+          "ExportAlpha": "bool",
+          "FilenameDigits": "int",
+          "Format": "PhotoExportFormat",
+          "IncludeMetadata": "bool",
+          "ManualQualityPercent": "int",
+          "Resolution": "int",
+          "ResolutionUnit": "PhotoResolutionUnit",
+          "ScaleHeight": "int",
+          "ScaleLongSide": "int",
+          "ScaleMegapixels": "float",
+          "ScaleMode": "PhotoScaleMode",
+          "ScalePercent": "int",
+          "ScaleShortSide": "int",
+          "ScaleWidth": "int",
+          "TargetDir": "str",
+          "TiffCompressionType": "PhotoTiffCompressionType",
+          "UsePhotoAlbumName": "bool"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "Project": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "GetAnalyzeForSlateStatus": [
+            "self -> SlateAnalysisStatus"
+          ],
+          "GetCreateSubtitlesFromAudioStatus": [
+            "self -> CreateSubtitlesFromAudioStatus"
+          ],
+          "GetCurrentPhotoAlbum": [
+            "self -> PhotoAlbum | None"
+          ],
+          "GetDetectSceneCutsStatus": [
+            "self -> DetectSceneCutsStatus"
+          ],
+          "GetPhotoAlbumByIndex": [
+            "self, idx: int -> PhotoAlbum | None"
+          ],
+          "GetPhotoAlbumCount": [
+            "self -> int"
+          ],
+          "GetPhotoQuickExportRenderPresets": [
+            "self -> list[str]"
+          ],
+          "GetRenderWithQuickExportStatus": [
+            "self -> QuickExportRenderStatus"
+          ],
+          "GetSmartReframeStatus": [
+            "self -> SmartReframeStatus"
+          ],
+          "GetTranscribeAudioStatus": [
+            "self -> TranscribeAudioStatus"
+          ],
+          "RenderPhotosWithQuickExport": [
+            "self, quickExportPresetName: str, presetInfo: PhotoQuickExportRenderSettings -> QuickExportRenderStatus"
+          ],
+          "SetCurrentPhotoAlbum": [
+            "self, photoAlbum: PhotoAlbum -> bool"
+          ],
+          "SetPhotoRenderSettings": [
+            "self, settings: PhotoRenderSettings -> bool"
+          ]
+        },
+        "changed": {
+          "GenerateSpeech": {
+            "after": [
+              "self, speechSettings: SpeechSettings, timecode: str | None=None -> MediaPoolItem | None"
+            ],
+            "before": [
+              "self, speechSettings: SpeechSettings -> MediaPoolItem"
+            ]
+          }
+        }
+      }
+    },
+    "ProjectSettings": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": [
+          "TypedDict"
+        ]
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "transcriptionExtendedLanguageSupport": "str"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "QuickExportRenderStatus": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": [
+          "TypedDict"
+        ]
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "EstimatedTimeRemainingInMs": "int"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "RemoveSilenceOptions": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "crossFadeAudio": "bool",
+          "minimumToStrip": "int",
+          "postTail": "int",
+          "preHead": "int",
+          "threshold": "float"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "RenderJobInfo": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": [
+          "TypedDict"
+        ]
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "PhotoAlbumName": "str | None",
+          "PhotoAllowEnlarge": "bool | None",
+          "PhotoCount": "int | None",
+          "PhotoFormat": "str | None",
+          "PhotoResolution": "int | None",
+          "PhotoResolutionUnit": "PhotoResolutionUnit | None",
+          "PhotoScaleHeight": "int | None",
+          "PhotoScaleLongSide": "int | None",
+          "PhotoScaleMegapixels": "float | None",
+          "PhotoScaleMode": "PhotoScaleMode | None",
+          "PhotoScalePercent": "int | None",
+          "PhotoScaleShortSide": "int | None",
+          "PhotoScaleWidth": "int | None"
+        },
+        "changed": {
+          "AlphaMode": {
+            "after": "int | None",
+            "before": "int"
+          },
+          "AudioBitDepth": {
+            "after": "int | None",
+            "before": "int"
+          },
+          "AudioCodec": {
+            "after": "str | None",
+            "before": "str"
+          },
+          "AudioSampleRate": {
+            "after": "int | None",
+            "before": "int"
+          },
+          "ClipStartFrame": {
+            "after": "int | None",
+            "before": "int"
+          },
+          "EncodingProfile": {
+            "after": "str | None",
+            "before": "str"
+          },
+          "FormatHeight": {
+            "after": "int | None",
+            "before": "int"
+          },
+          "FormatWidth": {
+            "after": "int | None",
+            "before": "int"
+          },
+          "FrameRate": {
+            "after": "str | None",
+            "before": "str"
+          },
+          "IsExportAudio": {
+            "after": "bool | None",
+            "before": "bool"
+          },
+          "IsExportVideo": {
+            "after": "bool | None",
+            "before": "bool"
+          },
+          "MarkIn": {
+            "after": "int | None",
+            "before": "int"
+          },
+          "MarkOut": {
+            "after": "int | None",
+            "before": "int"
+          },
+          "MultiPassEncode": {
+            "after": "bool | None",
+            "before": "bool"
+          },
+          "NetworkOptimization": {
+            "after": "bool | None",
+            "before": "bool"
+          },
+          "PixelAspectRatio": {
+            "after": "float | None",
+            "before": "float"
+          },
+          "RenderMode": {
+            "after": "str | None",
+            "before": "str"
+          },
+          "ReplaceExistingFilesInPlace": {
+            "after": "bool | None",
+            "before": "bool"
+          },
+          "TimelineName": {
+            "after": "str | None",
+            "before": "str"
+          },
+          "TimelineStartTimecode": {
+            "after": "str | None",
+            "before": "str"
+          },
+          "UploadStatus": {
+            "after": "str | None",
+            "before": "str"
+          },
+          "VideoCodec": {
+            "after": "str | None",
+            "before": "str"
+          },
+          "VideoFormat": {
+            "after": "str | None",
+            "before": "str"
+          }
+        }
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "Resolve": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "AUTO_CAPTION_AFRIKAANS": "AutoCaptionLanguage",
+          "AUTO_CAPTION_ARABIC": "AutoCaptionLanguage",
+          "AUTO_CAPTION_ARMENIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_AZERBAIJANI": "AutoCaptionLanguage",
+          "AUTO_CAPTION_BELARUSIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_BOSNIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_BULGARIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_CANTONESE": "AutoCaptionLanguage",
+          "AUTO_CAPTION_CATALAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_CROATIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_CZECH": "AutoCaptionLanguage",
+          "AUTO_CAPTION_ESTONIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_GALICIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_GREEK": "AutoCaptionLanguage",
+          "AUTO_CAPTION_HEBREW": "AutoCaptionLanguage",
+          "AUTO_CAPTION_HUNGARIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_ICELANDIC": "AutoCaptionLanguage",
+          "AUTO_CAPTION_KANNADA": "AutoCaptionLanguage",
+          "AUTO_CAPTION_KAZAKH": "AutoCaptionLanguage",
+          "AUTO_CAPTION_LATVIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_LITHUANIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_MACEDONIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_MAORI": "AutoCaptionLanguage",
+          "AUTO_CAPTION_MARATHI": "AutoCaptionLanguage",
+          "AUTO_CAPTION_MYANMAR": "AutoCaptionLanguage",
+          "AUTO_CAPTION_NEPALI": "AutoCaptionLanguage",
+          "AUTO_CAPTION_PERSIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_SERBIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_SLOVAK": "AutoCaptionLanguage",
+          "AUTO_CAPTION_SLOVENIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_SWAHILI": "AutoCaptionLanguage",
+          "AUTO_CAPTION_TAGALOG": "AutoCaptionLanguage",
+          "AUTO_CAPTION_UKRAINIAN": "AutoCaptionLanguage",
+          "AUTO_CAPTION_URDU": "AutoCaptionLanguage",
+          "AUTO_CAPTION_WELSH": "AutoCaptionLanguage",
+          "KEYFRAME_TIMING_MAINTAIN": "KeyframeTiming",
+          "KEYFRAME_TIMING_STRETCH_TO_FIT": "KeyframeTiming",
+          "PHOTO_AUTO_QUALITY_BEST": "PhotoAutoQuality",
+          "PHOTO_AUTO_QUALITY_HIGH": "PhotoAutoQuality",
+          "PHOTO_AUTO_QUALITY_LEAST": "PhotoAutoQuality",
+          "PHOTO_AUTO_QUALITY_LOW": "PhotoAutoQuality",
+          "PHOTO_AUTO_QUALITY_MEDIUM": "PhotoAutoQuality",
+          "PHOTO_CROP_RATIO_16X9": "PhotoCropRatio",
+          "PHOTO_CROP_RATIO_1X1": "PhotoCropRatio",
+          "PHOTO_CROP_RATIO_2X3": "PhotoCropRatio",
+          "PHOTO_CROP_RATIO_4X3": "PhotoCropRatio",
+          "PHOTO_CROP_RATIO_4X5": "PhotoCropRatio",
+          "PHOTO_CROP_RATIO_AS_SHOT": "PhotoCropRatio",
+          "PHOTO_CROP_RATIO_CUSTOM": "PhotoCropRatio",
+          "PHOTO_FORMAT_HEIC": "PhotoExportFormat",
+          "PHOTO_FORMAT_JPEG": "PhotoExportFormat",
+          "PHOTO_FORMAT_PNG": "PhotoExportFormat",
+          "PHOTO_FORMAT_TIFF": "PhotoExportFormat",
+          "PHOTO_LOOK_BRIGHT": "PhotoLookType",
+          "PHOTO_LOOK_BW": "PhotoLookType",
+          "PHOTO_LOOK_COOL": "PhotoLookType",
+          "PHOTO_LOOK_DEFAULT": "PhotoLookType",
+          "PHOTO_LOOK_DRAMATIC": "PhotoLookType",
+          "PHOTO_LOOK_GOLD": "PhotoLookType",
+          "PHOTO_LOOK_NATURAL": "PhotoLookType",
+          "PHOTO_LOOK_RICH_CONTRAST": "PhotoLookType",
+          "PHOTO_LOOK_ROSE": "PhotoLookType",
+          "PHOTO_LOOK_VIBRANT": "PhotoLookType",
+          "PHOTO_LOOK_WARM": "PhotoLookType",
+          "PHOTO_ORIENTATION_0_DEG": "PhotoImageOrientation",
+          "PHOTO_ORIENTATION_180_DEG": "PhotoImageOrientation",
+          "PHOTO_ORIENTATION_90_DEG_LEFT": "PhotoImageOrientation",
+          "PHOTO_ORIENTATION_90_DEG_RIGHT": "PhotoImageOrientation",
+          "PHOTO_RESOLUTION_UNIT_PPCM": "PhotoResolutionUnit",
+          "PHOTO_RESOLUTION_UNIT_PPI": "PhotoResolutionUnit",
+          "PHOTO_SCALE_DIMENSIONS": "PhotoScaleMode",
+          "PHOTO_SCALE_LONG_SIDE": "PhotoScaleMode",
+          "PHOTO_SCALE_MEGAPIXELS": "PhotoScaleMode",
+          "PHOTO_SCALE_ORIGINAL": "PhotoScaleMode",
+          "PHOTO_SCALE_PERCENT": "PhotoScaleMode",
+          "PHOTO_SCALE_SHORT_SIDE": "PhotoScaleMode",
+          "PHOTO_TIFF_COMPRESSION_LZW": "PhotoTiffCompressionType",
+          "PHOTO_TIFF_COMPRESSION_NONE": "PhotoTiffCompressionType",
+          "PHOTO_TIFF_COMPRESSION_ZIP": "PhotoTiffCompressionType",
+          "SUBTITLE_EXTENDED_LANGUAGE_SUPPORT": "SubtitleSettingKey"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "GetEffectsList": [
+            "self, mediaType: str | None=None -> list[EffectInfo]"
+          ]
+        },
+        "changed": {
+          "GetKeyframeMode": {
+            "after": [
+              "self -> KeyframeMode"
+            ],
+            "before": [
+              "self -> int"
+            ]
+          }
+        }
+      }
+    },
+    "STYPE_BOOL": {
+      "bases": {
+        "after": [],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "STYPE_STR": {
+      "bases": {
+        "after": [],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "SlateAnalysisStatus": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "CompletionPercentage": "int",
+          "CurrentClipIndex": "int",
+          "Error": "str",
+          "EstimatedTimeRemaining": "int",
+          "JobStatus": "str",
+          "TotalClips": "int"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "SmartReframeStatus": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "AnalysisSpeed": "float",
+          "CompletionPercentage": "int",
+          "Error": "str",
+          "EstimatedTimeRemaining": "int",
+          "JobStatus": "str"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "Timeline": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "DeleteGaps": [
+            "self -> bool"
+          ],
+          "ExportFrame": [
+            "self, frameOffset: int, exportFrameOptions: ExportFrameOptions | None=None -> ExportFrameResult"
+          ],
+          "GetIsEnabled": [
+            "self -> bool"
+          ],
+          "MoveItems": [
+            "self, timelineItems: list[TimelineItem], position: TimelineItemPosition, moveLinkedItems=True, subframePrecision=False -> bool"
+          ],
+          "SetIsEnabled": [
+            "self, enabled: bool -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "TimelineItem": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "AddEffect": [
+            "self, category: str, id: str -> Effect | None"
+          ],
+          "AnalyzeAudioLevels": [
+            "self, standard: str -> AudioLevelsInfo"
+          ],
+          "CopyAttributes": [
+            "self, targetItems: list[TimelineItem], options: CopyAttributesOptions -> bool"
+          ],
+          "DeleteEffects": [
+            "self, effects: list[Effect] -> bool"
+          ],
+          "ExportFrame": [
+            "self, frameOffset: int, exportFrameOptions: ExportFrameOptions | None=None -> ExportFrameResult"
+          ],
+          "GetEffects": [
+            "self, category: str -> list[Effect]"
+          ],
+          "GetPosition": [
+            "self, subframePrecision=False -> TimelineItemPosition"
+          ],
+          "RippleDeleteSilence": [
+            "self, removeSilenceOptions: RemoveSilenceOptions | None=None -> bool"
+          ],
+          "SetLeftOffset": [
+            "self, offset: float, subframePrecision=False, updateLinkedItems=True -> bool"
+          ],
+          "SetPosition": [
+            "self, position: TimelineItemPosition, moveLinkedItems=True, subframePrecision=False -> bool"
+          ],
+          "SetRightOffset": [
+            "self, offset: float, subframePrecision=False, updateLinkedItems=True -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "TimelineItemPosition": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "startFrame": "float",
+          "trackIndex": "int",
+          "trackType": "str"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "TimelineItemProperties": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": [
+          "TypedDict"
+        ]
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "TransitionAlignment": "str",
+          "TransitionCategory": "str",
+          "TransitionDuration": "int",
+          "TransitionType": "str"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "TranscribeAudioStatus": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "CompletionPercentage": "int",
+          "CurrentClipIndex": "int",
+          "Error": "str",
+          "EstimatedTimeRemaining": "int",
+          "JobStatus": "str",
+          "TotalClips": "int"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    }
+  }
+}

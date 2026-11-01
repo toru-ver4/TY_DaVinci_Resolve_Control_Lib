@@ -1014,6 +1014,13 @@ def add_fusion_tool(
 @overload
 def add_fusion_tool(
     comp: Any,
+    tool_type: Literal[FusionTool.MTL_PBR_UBER],
+    position: Sequence[float] = ...,
+) -> MtlPbrUberTool: ...
+
+@overload
+def add_fusion_tool(
+    comp: Any,
     tool_type: Literal[FusionTool.MTL_PHONG],
     position: Sequence[float] = ...,
 ) -> MtlPhongTool: ...

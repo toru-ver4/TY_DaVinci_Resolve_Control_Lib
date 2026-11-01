@@ -64,11 +64,14 @@ class RenderSetting(StrEnum):
 
 
 class ProjectSetting(StrEnum):
-    """Project setting keys observed in a Resolve 21.0.4 snapshot.
+    """Project setting keys observed in supported Resolve snapshots.
 
     Notes
     -----
-    Snapshot presence does not guarantee that ``SetSetting`` accepts a value.
+    Snapshot presence does not guarantee that ``SetSettings`` accepts a value.
+    ``TRANSCRIPTION_EXTENDED_LANGUAGE_SUPPORT`` was added in Resolve 21.1.2.
+    Its value ``"0"`` was verified; enabling it requires installed extended
+    language models and was rejected on the verification machine.
     """
 
     TIMELINE_RESOLUTION_WIDTH = "timelineResolutionWidth"
@@ -226,6 +229,7 @@ class ProjectSetting(StrEnum):
     TIMELINE_PIXEL_ASPECT_RATIO = "timelinePixelAspectRatio"
     TIMELINE_SAVE_THUMBS_IN_PROJECT = "timelineSaveThumbsInProject"
     TRANSCRIPTION_LANGUAGE = "transcriptionLanguage"
+    TRANSCRIPTION_EXTENDED_LANGUAGE_SUPPORT = "transcriptionExtendedLanguageSupport"
     USE_CA_TRANSFORM = "useCATransform"
     VIDEO_CAPTURE_INGEST_HANDLES = "videoCaptureIngestHandles"
     VIDEO_CAPTURE_MODE = "videoCaptureMode"
@@ -1145,4 +1149,4 @@ BT2100_PROJECT_SETTINGS = MappingProxyType(
 
 
 SUPPORTED_RESOLVE_VERSION = (21, 0, 4)
-SUPPORTED_RESOLVE_VERSIONS = (SUPPORTED_RESOLVE_VERSION, (21, 1, 0))
+SUPPORTED_RESOLVE_VERSIONS = (SUPPORTED_RESOLVE_VERSION, (21, 1, 0), (21, 1, 2))

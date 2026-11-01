@@ -1,5 +1,20 @@
 # Resolve API対応表
 
+## 21.1.2の更新
+
+最新の根拠は[21.1.2検証記録](resolve-21.1.2-verification.md)と
+[公式API差分](verification/21.1.2.10/api-diff.json)です。接続判定へ21.1.2を追加し、
+ProjectSettingを152キーに拡張しました。追加した
+`TRANSCRIPTION_EXTENDED_LANGUAGE_SUPPORT`は`"0"`の設定・保存・再読込を確認しています。
+`"1"`は拡張言語モデルが必要で、この実機では拒否されました。旧版には存在しません。
+21.1.1からの非同期化対象は本ライブラリの既存ラッパーでは未使用です。
+直接使用する場合はProjectの対応するGet…Statusで完了・エラーを確認してください。
+以下の21.1.0以前の観測は、各版の記録として保持します。
+
+Fusionの実機registryから`FusionTool.MTL_PBR_UBER`（OpenPBR）を追加し、Tool入力補完の
+型定義も21.1.2で再生成しました。大文字・小文字だけが異なる入力の生成順を固定しています。
+既存のFusion色管理refreshは、無効時196/384枚に差が出るため維持します。
+
 ## 21.1の呼び出し形式と実機制限
 
 [21.1検証記録](resolve-21.1-verification.md)と[シグネチャ台帳](verification/21.1.0.17/api-signatures.json)が今回の更新根拠です。以下の旧版行番号・実機記録は歴史的な根拠として保持します。

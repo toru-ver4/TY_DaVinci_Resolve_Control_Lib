@@ -36,8 +36,8 @@ def main() -> None:
     >>> main()  # doctest: +SKIP
     """
     session = ResolveSession.connect()
-    if session.version[:3] != (21, 1, 0):
-        raise RuntimeError("This convention comparison requires Resolve 21.1.0.")
+    if session.version_string not in ("21.1.0.17", "21.1.2.10"):
+        raise RuntimeError("This convention comparison requires a verified Resolve 21.1 build.")
     manager = session.project_manager
     original = manager.GetCurrentProject()
     original_name = original.GetName() if original else None
@@ -78,7 +78,8 @@ def main() -> None:
     finally:
         if original_name and original_name in names:
             load_project(session, original_name)
-    path = Path("docs/verification/21.1.0.17/settings-persistence-conventions.json")
+    path = Path("docs/verification") / session.version_string / "settings-persistence-conventions.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(dict(resolve=session.version_string, observations=observations),
                                indent=2) + "\n", encoding="utf-8")
 

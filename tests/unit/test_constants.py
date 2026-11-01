@@ -111,8 +111,8 @@ def test_fusion_tool_registry_ids_are_exposed_as_string_enums() -> None:
             "05b661cf1faf1ae242b271cc455dcf4e94b294f47fcbc66b227a6dfc80e88921",
         ),
         FusionTool: (
-            296,
-            "2eb47043f4846a794f3bdbce7372579493fdeb20d23eeb68cf45ae1c725b1a69",
+            297,
+            "873181bc21c5d8ba795cba6f3252a3853d3f5ac53badb5870bd0e47bc6fb0c53",
         ),
         FusionResolveFxTool: (
             83,
@@ -172,7 +172,8 @@ def test_legacy_render_values_are_migrated() -> None:
 
 def test_new_official_and_readback_values_are_defined() -> None:
     assert len(FrameRate) == 21
-    assert len(ProjectSetting) == 151
+    assert len(ProjectSetting) == 152
+    assert ProjectSetting.TRANSCRIPTION_EXTENDED_LANGUAGE_SUPPORT == "transcriptionExtendedLanguageSupport"
     assert len(ResolutionValue) == 28
     assert len(PlaybackFrameRate) == 19
     assert len(TimelineSetting) == 6

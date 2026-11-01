@@ -1,0 +1,8 @@
+{
+  "resolve": "21.1.2.10",
+  "iterations": 20,
+  "passed": true,
+  "seconds": 161.18,
+  "project_list_restored": true,
+  "original_project_restored": true
+}

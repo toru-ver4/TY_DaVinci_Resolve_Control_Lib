@@ -122,7 +122,7 @@ def _input_ids(tool: Any) -> tuple[str, ...]:
             and input_id not in _RESERVED_TOOL_ATTRIBUTES
         ):
             names.add(input_id)
-    return tuple(sorted(names, key=str.casefold))
+    return tuple(sorted(names, key=lambda name: (name.casefold(), name)))
 
 
 def _inspect_tools(

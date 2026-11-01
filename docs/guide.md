@@ -1,6 +1,6 @@
 # TY_DaVinci_Resolve_Control_Lib
 
-DaVinci Resolve 21.0.4／21.1.0をPythonから制御するためのライブラリです。
+DaVinci Resolve 21.0.4／21.1.0／21.1.2をPythonから制御するためのライブラリです。
 
 現在は再設計中のpre-alpha版です。Windows、Python 3.13 64-bitのみを動作保証対象とします。
 
@@ -56,7 +56,7 @@ print(session.product_name)
 print(session.version_string)
 ```
 
-標準では接続先がResolve 21.0.4または21.1.0であることを検査します。`ResolveSession.connect(expected_version=(21, 1, 0))`のように指定すれば、指定した版だけを許可できます。未起動、APIのロード失敗、バージョン不一致は例外になります。
+標準では接続先がResolve 21.0.4、21.1.0または21.1.2であることを検査します。`ResolveSession.connect(expected_version=(21, 1, 2))`のように指定すれば、指定した版だけを許可できます。未検証の21.1.1などは自動許可しません。未起動、APIのロード失敗、バージョン不一致は例外になります。
 
 ## 基本操作
 
@@ -199,6 +199,9 @@ status = render_current_settings(
 Fusionでは、Rectangleの作成、利用可能fontの確認、Flow上でのTool配置も行えます。次の例は白いRectangleを作成し、Flow上の座標`(2, 3)`へ配置します。
 
 `Composition.AddTool()`へ渡すRegistry IDは、`FusionTool`から指定できます。Resolve FX（OFX）は`FusionResolveFxTool`へ分けています。
+
+21.1.2の実機一覧からOpenPBRの`FusionTool.MTL_PBR_UBER`を追加しました。
+旧版での使用可否は未検証です。今回の差分と検証範囲は[21.1.2検証記録](resolve-21.1.2-verification.md)を参照してください。
 
 ```python
 from ty_davinci_resolve import FusionTool, add_fusion_tool
@@ -369,7 +372,7 @@ delete_render_job(project, job_id)
 python -m pytest tests/unit
 ```
 
-Resolve 21.0.4または21.1.0を使用する短い実機テストは次のコマンドで分離して実行します。
+Resolve 21.0.4、21.1.0または21.1.2を使用する短い実機テストは次のコマンドで分離して実行します。
 
 ```powershell
 python -m pytest -m resolve_integration tests/integration/test_project_lifecycle.py
@@ -388,7 +391,7 @@ Countdown V2の4条件・384枚をrenderし、参照ZIPとdecode後の16-bit RGB
 
 事前に`sample_code/2025/02_Countdown_V2/DCTL`の`draw_45deg_lines.dctl`、`draw_countdown_border.dctl`、`draw_countdown_ramp.dctl`をResolveのLUTフォルダー内の`TY_DCTL`に配置してください。Windowsに`Noto Sans Regular`、`Noto Sans Bold`、`Noto Sans Mono Black`をインストールし、Fusionから使用できることを確認します。フォントを追加した場合はResolveを再起動します。テストはDCTLのソースとのSHA-256一致を検査し、実際にFusionが参照するフォントのパスとSHA-256をレンダー前に記録します。
 
-Resolve 21.0.4では旧参照ZIP、21.1.0では専用参照ZIPを自動選択します。Windowsのフォント更新後も旧参照と文字の輪郭が一致しなかったため、ユーザーの方針に従い、21.1.0用参照はPython 3.13.16／Resolve Studio 21.1.0.17で生成した384枚へ更新しました。比較は16-bit RGB全sampleの完全一致を維持します。生成環境とフォントのハッシュは[参照データの検証記録](../tests/countdown_reference_data/ref_data_1280x720_resolve_21_1_0.json)に保存しています。
+Resolve 21.0.4では旧参照ZIP、21.1.0／21.1.2では21.1用参照ZIPを自動選択します。Windowsのフォント更新後も旧参照と文字の輪郭が一致しなかったため、ユーザーの方針に従い、21.1.0用参照はPython 3.13.16／Resolve Studio 21.1.0.17で生成した384枚へ更新しました。21.1.2対応でマスターは置換していません。比較は16-bit RGB全sampleの完全一致を維持します。生成環境とフォントのハッシュは[参照データの検証記録](../tests/countdown_reference_data/ref_data_1280x720_resolve_21_1_0.json)に保存しています。
 
 ```powershell
 python -m pytest -m countdown_regression tests/integration/test_countdown_regression.py -s

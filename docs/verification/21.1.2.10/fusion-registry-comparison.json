@@ -1,0 +1,22 @@
+{
+  "FusionTool": {
+    "count": 297,
+    "added": {
+      "MTL_PBR_UBER": "MtlPBRUber"
+    },
+    "removed": {},
+    "changed": {}
+  },
+  "FusionModifier": {
+    "count": 11,
+    "added": {},
+    "removed": {},
+    "changed": {}
+  },
+  "FusionResolveFxTool": {
+    "count": 83,
+    "added": {},
+    "removed": {},
+    "changed": {}
+  }
+}

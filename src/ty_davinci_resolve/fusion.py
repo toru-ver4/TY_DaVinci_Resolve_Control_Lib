@@ -977,7 +977,7 @@ def refresh_fusion_color_management(
     Parameters
     ----------
     session
-        Connected Resolve 21.0.4 or 21.1.0 session.
+        Connected Resolve 21.0.4, 21.1.0 or 21.1.2 session.
     delay
         Positive page-transition delay in seconds.
 
@@ -994,7 +994,7 @@ def refresh_fusion_color_management(
     >>> refresh_fusion_color_management(session)  # doctest: +SKIP
     """
     if tuple(session.version[:3]) not in SUPPORTED_RESOLVE_VERSIONS:
-        raise ResolveValidationError("The Fusion RCM workaround is limited to Resolve 21.0.4 and 21.1.0.")
+        raise ResolveValidationError("The Fusion RCM workaround is limited to Resolve 21.0.4, 21.1.0 and 21.1.2.")
     if isinstance(delay, bool) or not isinstance(delay, (int, float)) or not math.isfinite(delay) or delay <= 0:
         raise ResolveValidationError("delay must be a positive finite number.")
     open_page(session, Page.FUSION)

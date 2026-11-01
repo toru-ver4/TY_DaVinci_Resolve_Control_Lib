@@ -1199,6 +1199,7 @@ class CineonLogTool(FusionToolProtocol, Protocol):
     Mode: Any
     MultiplyByMask: Any
     ObjectID: Any
+    PreDividePostMultiply: Any
     ProcessAlpha: Any
     ProcessBlue: Any
     ProcessGreen: Any
@@ -2073,6 +2074,7 @@ class CreateReliefMapTool(FusionToolProtocol, Protocol):
     DepthScale: Any
     EndRenderScript: Any
     EndRenderScripts: Any
+    Filter: Any
     FlipDepth: Any
     FrameRenderScript: Any
     FrameRenderScriptNest: Any
@@ -2084,6 +2086,7 @@ class CreateReliefMapTool(FusionToolProtocol, Protocol):
     MapType: Any
     MinScanRadius: Any
     MotionBlur: Any
+    Passes: Any
     PreBlur: Any
     ProcessAlpha: Any
     ProcessBlue: Any
@@ -3630,6 +3633,7 @@ class DimensionCameraTrackerTool(FusionToolProtocol, Protocol):
     HideInputs: Any
     ImageToTrack: Any
     ImageToTrack_LayerSelect: Any
+    ImportTracksDropTarget: Any
     k1: Any
     k2: Any
     k3: Any
@@ -6604,6 +6608,7 @@ class LayerRemoverTool(FusionToolProtocol, Protocol):
 
 
 class LensDistortTool(FusionToolProtocol, Protocol):
+    AddLine: Any
     ApertureH: Any
     ApertureW: Any
     ApplyMaskInverted: Any
@@ -6612,7 +6617,10 @@ class LensDistortTool(FusionToolProtocol, Protocol):
     Blank4: Any
     Blank6: Any
     Blend: Any
+    CalibLineListSelection: Any
+    CalibLineOrder: Any
     CalibrateMode: Any
+    CalibrateType: Any
     CalibrationCollectionRange: Any
     CalibrationFrameStep: Any
     CalibrationRangeEndTime: Any
@@ -7447,6 +7455,7 @@ class MergeTool(FusionToolProtocol, Protocol):
 class MtlBlinnTool(FusionToolProtocol, Protocol):
     Comments: Any
     CommentsNest: Any
+    EnablePBRMaterial: Any
     EndRenderScript: Any
     EndRenderScripts: Any
     FrameRenderScript: Any
@@ -7456,6 +7465,7 @@ class MtlBlinnTool(FusionToolProtocol, Protocol):
     LayerSpacer: Any
     MaterialID: Any
     MaterialIDNest: Any
+    PBRMaterial: Any
     ProcessLayers: Any
     ProcessLayersCustom: Any
     ReceivesLighting: Any
@@ -7507,6 +7517,57 @@ class MtlChanBoolTool(FusionToolProtocol, Protocol):
 class MtlCookTorranceTool(FusionToolProtocol, Protocol):
     Comments: Any
     CommentsNest: Any
+    EnablePBRMaterial: Any
+    EndRenderScript: Any
+    EndRenderScripts: Any
+    FrameRenderScript: Any
+    FrameRenderScriptNest: Any
+    HideInputs: Any
+    LayersNest: Any
+    LayerSpacer: Any
+    MaterialID: Any
+    MaterialIDNest: Any
+    PBRMaterial: Any
+    ProcessLayers: Any
+    ProcessLayersCustom: Any
+    ReceivesLighting: Any
+    ReceivesShadows: Any
+    StartRenderScript: Any
+    StartRenderScripts: Any
+    UseTwoSidedLighting: Any
+
+
+class MtlMerge3DTool(FusionToolProtocol, Protocol):
+    BackgroundMaterial: Any
+    BackgroundMaterial_LayerSelect: Any
+    Blend: Any
+    Comments: Any
+    CommentsNest: Any
+    EnablePBRMaterial: Any
+    EndRenderScript: Any
+    EndRenderScripts: Any
+    ForegroundMaterial: Any
+    ForegroundMaterial_LayerSelect: Any
+    FrameRenderScript: Any
+    FrameRenderScriptNest: Any
+    HideInputs: Any
+    LayersNest: Any
+    LayerSpacer: Any
+    MaterialID: Any
+    MaterialIDNest: Any
+    MergeType: Any
+    PBRMaterial: Any
+    ProcessLayers: Any
+    ProcessLayersCustom: Any
+    ReceivesLighting: Any
+    ReceivesShadows: Any
+    StartRenderScript: Any
+    StartRenderScripts: Any
+
+
+class MtlPbrUberTool(FusionToolProtocol, Protocol):
+    Comments: Any
+    CommentsNest: Any
     EndRenderScript: Any
     EndRenderScripts: Any
     FrameRenderScript: Any
@@ -7525,32 +7586,10 @@ class MtlCookTorranceTool(FusionToolProtocol, Protocol):
     UseTwoSidedLighting: Any
 
 
-class MtlMerge3DTool(FusionToolProtocol, Protocol):
-    BackgroundMaterial: Any
-    BackgroundMaterial_LayerSelect: Any
-    Blend: Any
-    Comments: Any
-    CommentsNest: Any
-    EndRenderScript: Any
-    EndRenderScripts: Any
-    ForegroundMaterial: Any
-    ForegroundMaterial_LayerSelect: Any
-    FrameRenderScript: Any
-    FrameRenderScriptNest: Any
-    HideInputs: Any
-    LayersNest: Any
-    LayerSpacer: Any
-    MaterialID: Any
-    MaterialIDNest: Any
-    ProcessLayers: Any
-    ProcessLayersCustom: Any
-    StartRenderScript: Any
-    StartRenderScripts: Any
-
-
 class MtlPhongTool(FusionToolProtocol, Protocol):
     Comments: Any
     CommentsNest: Any
+    EnablePBRMaterial: Any
     EndRenderScript: Any
     EndRenderScripts: Any
     FrameRenderScript: Any
@@ -7560,6 +7599,7 @@ class MtlPhongTool(FusionToolProtocol, Protocol):
     LayerSpacer: Any
     MaterialID: Any
     MaterialIDNest: Any
+    PBRMaterial: Any
     ProcessLayers: Any
     ProcessLayersCustom: Any
     ReceivesLighting: Any
@@ -7592,6 +7632,7 @@ class MtlReflectTool(FusionToolProtocol, Protocol):
 class MtlStereoMix3DTool(FusionToolProtocol, Protocol):
     Comments: Any
     CommentsNest: Any
+    EnablePBRMaterial: Any
     EndRenderScript: Any
     EndRenderScripts: Any
     FrameRenderScript: Any
@@ -7603,8 +7644,11 @@ class MtlStereoMix3DTool(FusionToolProtocol, Protocol):
     LeftMaterial_LayerSelect: Any
     MaterialID: Any
     MaterialIDNest: Any
+    PBRMaterial: Any
     ProcessLayers: Any
     ProcessLayersCustom: Any
+    ReceivesLighting: Any
+    ReceivesShadows: Any
     RightMaterial: Any
     RightMaterial_LayerSelect: Any
     StartRenderScript: Any
@@ -7615,6 +7659,7 @@ class MtlStereoMix3DTool(FusionToolProtocol, Protocol):
 class MtlWardTool(FusionToolProtocol, Protocol):
     Comments: Any
     CommentsNest: Any
+    EnablePBRMaterial: Any
     EndRenderScript: Any
     EndRenderScripts: Any
     FrameRenderScript: Any
@@ -7624,6 +7669,7 @@ class MtlWardTool(FusionToolProtocol, Protocol):
     LayerSpacer: Any
     MaterialID: Any
     MaterialIDNest: Any
+    PBRMaterial: Any
     ProcessLayers: Any
     ProcessLayersCustom: Any
     ReceivesLighting: Any
@@ -8077,6 +8123,8 @@ class OCIOFileTransformTool(FusionToolProtocol, Protocol):
 
 
 class OGrafLoaderTool(FusionToolProtocol, Protocol):
+    AddPlayAction: Any
+    AddStopAction: Any
     ApplyMaskInverted: Any
     BaseLayerName: Any
     Blank2: Any
@@ -8084,17 +8132,8 @@ class OGrafLoaderTool(FusionToolProtocol, Protocol):
     CenterBias: Any
     Comments: Any
     CommentsNest: Any
-    CustomAction0: Any
-    CustomAction1: Any
-    CustomAction2: Any
-    CustomAction3: Any
-    CustomAction4: Any
-    CustomAction5: Any
-    CustomAction6: Any
-    CustomAction7: Any
-    CustomAction8: Any
-    CustomAction9: Any
     Depth: Any
+    DynamicParams: Any
     DynParamCheck0: Any
     DynParamCheck1: Any
     DynParamCheck10: Any
@@ -8195,6 +8234,26 @@ class OGrafLoaderTool(FusionToolProtocol, Protocol):
     DynParamColor9_B: Any
     DynParamColor9_G: Any
     DynParamColor9_R: Any
+    DynParamCombo0: Any
+    DynParamCombo1: Any
+    DynParamCombo10: Any
+    DynParamCombo11: Any
+    DynParamCombo12: Any
+    DynParamCombo13: Any
+    DynParamCombo14: Any
+    DynParamCombo15: Any
+    DynParamCombo16: Any
+    DynParamCombo17: Any
+    DynParamCombo18: Any
+    DynParamCombo19: Any
+    DynParamCombo2: Any
+    DynParamCombo3: Any
+    DynParamCombo4: Any
+    DynParamCombo5: Any
+    DynParamCombo6: Any
+    DynParamCombo7: Any
+    DynParamCombo8: Any
+    DynParamCombo9: Any
     DynParamNum0: Any
     DynParamNum1: Any
     DynParamNum10: Any
@@ -8244,8 +8303,11 @@ class OGrafLoaderTool(FusionToolProtocol, Protocol):
     FrameRenderScriptNest: Any
     GlobalIn: Any
     GlobalOut: Any
+    GraphicPlayback: Any
     Height: Any
     HideInputs: Any
+    HoldFirstFrame: Any
+    HoldLastFrame: Any
     ImageNest: Any
     LayersNest: Any
     LayerSpacer: Any
@@ -8262,11 +8324,16 @@ class OGrafLoaderTool(FusionToolProtocol, Protocol):
     Quality: Any
     ReloadAction: Any
     SampleSpread: Any
+    ScheduledActions: Any
     SettingsNest: Any
     ShutterAngle: Any
     StartRenderScript: Any
     StartRenderScripts: Any
+    StopActionUserModified: Any
     TemplatePath: Any
+    TimeScale: Any
+    TrimIn: Any
+    TrimOut: Any
     UseFrameFormatSettings: Any
     Width: Any
 
@@ -9505,6 +9572,7 @@ class PRenderTool(FusionToolProtocol, Protocol):
     DepthMergeParticles: Any
     EffectMask: Any
     EffectMask_LayerSelect: Any
+    EnablePBRMaterial: Any
     EndRenderScript: Any
     EndRenderScripts: Any
     FitMask: Any
@@ -10708,7 +10776,9 @@ class Renderer3DTool(FusionToolProtocol, Protocol):
     EndRenderScript: Any
     EndRenderScripts: Any
     Eye: Any
+    FallbackForMissingMaterials: Any
     FitMask: Any
+    FitScene: Any
     FrameRenderScript: Any
     FrameRenderScriptNest: Any
     GlobalIn: Any
@@ -10753,6 +10823,7 @@ class ReplaceMaterial3DTool(FusionToolProtocol, Protocol):
     Comments: Any
     CommentsNest: Any
     Enable: Any
+    EnablePBRMaterial: Any
     EndRenderScript: Any
     EndRenderScripts: Any
     FrameRenderScript: Any
@@ -10772,8 +10843,11 @@ class ReplaceMaterial3DTool(FusionToolProtocol, Protocol):
     MinObjectID: Any
     ObjectID: Any
     ObjectIDLimitMode: Any
+    PBRMaterial: Any
     ProcessLayers: Any
     ProcessLayersCustom: Any
+    ReceivesLighting: Any
+    ReceivesShadows: Any
     SceneInput: Any
     StartRenderScript: Any
     StartRenderScripts: Any
@@ -10944,6 +11018,7 @@ class ResolveFxAnalogDamageTool(FusionToolProtocol, Protocol):
     HideInputs: Any
     ignoreContentShape: Any
     isLegacyAlphaBehavior: Any
+    isLegacyCentering: Any
     isLegacyFootOnlyIfCRTScan: Any
     isLegacyIgnoreAlphaIn: Any
     IsLegacyPassThroughAlphaOnEditPage: Any
@@ -11077,6 +11152,7 @@ class ResolveFxApertureDiffractionTool(FusionToolProtocol, Protocol):
     isolationPreSmooth: Any
     LayersNest: Any
     LayerSpacer: Any
+    legacyIsNoTransparencyHandling: Any
     legacyIsProcessRGBOnly: Any
     MaskChannel: Any
     MaskClipBlack: Any
@@ -11148,9 +11224,11 @@ class ResolveFxBeautyTool(FusionToolProtocol, Protocol):
     FrameRenderScript: Any
     FrameRenderScriptNest: Any
     grainGroup: Any
+    grainIsEnabled: Any
     grainSat: Any
     grainSize: Any
     grainSoft: Any
+    grainSrcBlur: Any
     grainStrength: Any
     HideInputs: Any
     highFreqGain: Any
@@ -11158,6 +11236,7 @@ class ResolveFxBeautyTool(FusionToolProtocol, Protocol):
     ignoreContentShape: Any
     isLegacyNegativeBeauty: Any
     isLegacyNegativeDiff: Any
+    isLegacyRecoveryAfterGrain: Any
     IsNoTemporalFramesReqd: Any
     isPreviewBlur: Any
     isPreviewRecovery: Any
@@ -11251,6 +11330,7 @@ class ResolveFxBlankingFillTool(FusionToolProtocol, Protocol):
     ignoreContentShape: Any
     isFollowSizing: Any
     isInvertInputAlpha: Any
+    isLegacyPositioning: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
     LayerSpacer: Any
@@ -11522,6 +11602,7 @@ class ResolveFxBurnAwayTool(FusionToolProtocol, Protocol):
     hotspot07Y: Any
     hotspot07Z: Any
     ignoreContentShape: Any
+    isLegacyScaling: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
     LayerSpacer: Any
@@ -11670,6 +11751,11 @@ class ResolveFxCineFocusTool(FusionToolProtocol, Protocol):
     Blank2: Any
     Blank4: Any
     Blank5: Any
+    blankingCropB: Any
+    blankingCropL: Any
+    blankingCropR: Any
+    blankingCropT: Any
+    blankingMode: Any
     Blend: Any
     blend: Any
     blendGroup: Any
@@ -11713,11 +11799,13 @@ class ResolveFxCineFocusTool(FusionToolProtocol, Protocol):
     grainSat: Any
     grainSize: Any
     grainSoft: Any
+    grainSrcBlur: Any
     grainStrength: Any
     HideInputs: Any
     highlightBoost: Any
     ignoreContentShape: Any
     isFocusPeaking: Any
+    isLegacyProcessingModes: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
     LayerSpacer: Any
@@ -11730,6 +11818,7 @@ class ResolveFxCineFocusTool(FusionToolProtocol, Protocol):
     lensIsAnamorphic: Any
     lensIsCurved: Any
     lensIsPreviewCurvature: Any
+    lensIsShowCenter: Any
     lensModel: Any
     lensPropertiesGroup: Any
     MaskChannel: Any
@@ -11751,6 +11840,9 @@ class ResolveFxCineFocusTool(FusionToolProtocol, Protocol):
     ProcessWhenBlendIs00: Any
     Quality: Any
     quality: Any
+    qualityGroup: Any
+    qualityIsFullRes: Any
+    qualityIsSingleKernel: Any
     regrainAnalyseButton: Any
     regrainChromaThresh: Any
     regrainDegrainMode: Any
@@ -11778,6 +11870,7 @@ class ResolveFxCineFocusTool(FusionToolProtocol, Protocol):
     StartRenderScripts: Any
     UseMaterial: Any
     UseObject: Any
+    xyPosition: Any
 
 
 class ResolveFxCinematicHazeTool(FusionToolProtocol, Protocol):
@@ -11849,6 +11942,7 @@ class ResolveFxCinematicHazeTool(FusionToolProtocol, Protocol):
     inputColorSpace: Any
     inputGamma: Any
     isInvertDepthMap: Any
+    isLegacyPositioning: Any
     IsNoTemporalFramesReqd: Any
     isolationIsOn: Any
     isolationSoftness: Any
@@ -12147,6 +12241,7 @@ class ResolveFxColorToneDiffuserTool(FusionToolProtocol, Protocol):
     ignoreContentShape: Any
     inputColorSpace: Any
     inputGamma: Any
+    isLegacyPositioning: Any
     isLutCompatible: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
@@ -12185,6 +12280,7 @@ class ResolveFxColorToneDiffuserTool(FusionToolProtocol, Protocol):
     threshold: Any
     toneLightsB: Any
     toneLightsFalloffAmount: Any
+    toneLightsFalloffAspect: Any
     toneLightsFalloffGroup: Any
     toneLightsFalloffIsApply: Any
     toneLightsFalloffIsPreviewMask: Any
@@ -12833,6 +12929,7 @@ class ResolveFxDeflickerTool(FusionToolProtocol, Protocol):
     gangThreshs: Any
     HideInputs: Any
     ignoreContentShape: Any
+    isLegacyBlur: Any
     IsNoTemporalFramesReqd: Any
     isShowRestoredDetail: Any
     isSkipColorInfo: Any
@@ -13107,6 +13204,7 @@ class ResolveFxDetailRecoveryTool(FusionToolProtocol, Protocol):
     frequencyCutoff: Any
     HideInputs: Any
     ignoreContentShape: Any
+    isLegacyBlur: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
     LayerSpacer: Any
@@ -13244,6 +13342,7 @@ class ResolveFxDropShadowTool(FusionToolProtocol, Protocol):
     FrameRenderScriptNest: Any
     HideInputs: Any
     ignoreContentShape: Any
+    isLegacyBlur: Any
     isLegacyComp: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
@@ -13412,6 +13511,7 @@ class ResolveFxEdgeDetectTool(FusionToolProtocol, Protocol):
     ignoreContentShape: Any
     isClamp: Any
     isLegacy: Any
+    isLegacyBlur: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
     LayerSpacer: Any
@@ -13656,6 +13756,7 @@ class ResolveFxFalseColorTool(FusionToolProtocol, Protocol):
     HideInputs: Any
     ignoreContentShape: Any
     isFirstLoad: Any
+    isLegacyBlur: Any
     IsNoTemporalFramesReqd: Any
     iso: Any
     isShowSliders: Any
@@ -13742,6 +13843,7 @@ class ResolveFxFilmDamageTool(FusionToolProtocol, Protocol):
     FrameRenderScriptNest: Any
     HideInputs: Any
     ignoreContentShape: Any
+    isLegacyCentering: Any
     isLegacyIgnoreAlphaIn: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
@@ -13885,6 +13987,7 @@ class ResolveFxFilmGrainTool(FusionToolProtocol, Protocol):
     CommentsNest: Any
     CompositeType: Any
     CorrectEdges: Any
+    detailLoss: Any
     dstProcessingAlphaMode: Any
     EffectMask: Any
     EffectMask_LayerSelect: Any
@@ -14126,6 +14229,7 @@ class ResolveFxFilmLookTool(FusionToolProtocol, Protocol):
     inputGamma: Any
     isFirstLoad: Any
     IsLegacyAlwaysClampForCoreLook: Any
+    isLegacyBlur: Any
     IsLegacyContrastRolloffs: Any
     isLegacyDiscontinuities: Any
     isLegacyIgnoreAlphaIn: Any
@@ -14354,6 +14458,7 @@ class ResolveFxGaussianBlurTool(FusionToolProtocol, Protocol):
     HStrength: Any
     ignoreContentShape: Any
     isBlurAlpha: Any
+    isLegacyBlurScaling: Any
     IsNoTemporalFramesReqd: Any
     isSplitHV: Any
     LayersNest: Any
@@ -14410,6 +14515,7 @@ class ResolveFxGlowTool(FusionToolProtocol, Protocol):
     atmsphGroup: Any
     atmsphHvRatio: Any
     atmsphIsAdd: Any
+    atmsphIsTracked: Any
     atmsphScale: Any
     atmsphSeethe: Any
     atmsphStrength: Any
@@ -14449,11 +14555,13 @@ class ResolveFxGlowTool(FusionToolProtocol, Protocol):
     isAlphaMasking: Any
     isInverse: Any
     isLegacyBlur: Any
+    isLegacyPositioning: Any
     isLegacyRecovery: Any
     isLegacySat: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
     LayerSpacer: Any
+    legacyIsNoTransparencyHandling: Any
     legacyIsProcessRGBOnly: Any
     MaskChannel: Any
     MaskClipBlack: Any
@@ -14628,6 +14736,7 @@ class ResolveFxHalationPluginTool(FusionToolProtocol, Protocol):
     grainStrength: Any
     HideInputs: Any
     ignoreContentShape: Any
+    isLegacyBlur: Any
     IsNoTemporalFramesReqd: Any
     isolationCutoff: Any
     isolationGroup: Any
@@ -15176,6 +15285,7 @@ class ResolveFxLensFlareV2Tool(FusionToolProtocol, Protocol):
     HideInputs: Any
     ignoreContentShape: Any
     isFollowSizing: Any
+    isLegacyBlur: Any
     isLegacySizeAndBrightness: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
@@ -15276,6 +15386,7 @@ class ResolveFxLensReflectionsTool(FusionToolProtocol, Protocol):
     isolationPreSmooth: Any
     LayersNest: Any
     LayerSpacer: Any
+    legacyIsNoTransparencyHandling: Any
     legacyIsProcessRGBOnly: Any
     MaskChannel: Any
     MaskClipBlack: Any
@@ -15379,6 +15490,7 @@ class ResolveFxLightrayTool(FusionToolProtocol, Protocol):
     atmsphGroup: Any
     atmsphHvRatio: Any
     atmsphIsEnabled: Any
+    atmsphIsTracked: Any
     atmsphScale: Any
     atmsphSeethe: Any
     atmsphStrength: Any
@@ -15413,10 +15525,12 @@ class ResolveFxLightrayTool(FusionToolProtocol, Protocol):
     inputAlphaUsage: Any
     isAlphaComping: Any
     isAlphaMasking: Any
+    isLegacyPositioning: Any
     IsNoTemporalFramesReqd: Any
     isUseLegacyPosition: Any
     LayersNest: Any
     LayerSpacer: Any
+    legacyIsNoTransparencyHandling: Any
     legacyIsProcessRGBOnly: Any
     length: Any
     lengthBlue: Any
@@ -15432,6 +15546,7 @@ class ResolveFxLightrayTool(FusionToolProtocol, Protocol):
     MultiplyByMask: Any
     ObjectID: Any
     outputSelection: Any
+    posIsTracked: Any
     position: Any
     ProcessAlpha: Any
     ProcessBlue: Any
@@ -15623,6 +15738,7 @@ class ResolveFxMosaicBlurTool(FusionToolProtocol, Protocol):
     isAntiAlias: Any
     isBinarizeAlpha: Any
     isBlurAlpha: Any
+    isLegacyCentering: Any
     isLegacyMethod: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
@@ -15659,6 +15775,7 @@ class ResolveFxMosaicBlurTool(FusionToolProtocol, Protocol):
     UseMaterial: Any
     UseObject: Any
     xOffset: Any
+    xyPosition: Any
     yOffset: Any
 
 
@@ -15701,8 +15818,8 @@ class ResolveFxMotionBlurTool(FusionToolProtocol, Protocol):
     MaskLow: Any
     MaterialID: Any
     moEstType: Any
-    motionBlur: Any
     MotionBlur: Any
+    motionBlur: Any
     motionRange: Any
     MultiplyByMask: Any
     ObjectID: Any
@@ -16030,6 +16147,7 @@ class ResolveFxOFX3DKeyerV2Tool(FusionToolProtocol, Protocol):
     ignoreContentShape: Any
     isBWDuringDrag: Any
     isInvert: Any
+    isLegacyBlur: Any
     isLegacyFusionAlpha: Any
     IsNoTemporalFramesReqd: Any
     isShowKeyMap: Any
@@ -16139,6 +16257,7 @@ class ResolveFxOFXLumaKeyerTool(FusionToolProtocol, Protocol):
     HideInputs: Any
     ignoreContentShape: Any
     isInvert: Any
+    isLegacyBlur: Any
     isLegacyFusionAlpha: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
@@ -16235,6 +16354,7 @@ class ResolveFxOfxhslKeyerTool(FusionToolProtocol, Protocol):
     HideInputs: Any
     ignoreContentShape: Any
     isInvert: Any
+    isLegacyBlur: Any
     isLegacyFusionAlpha: Any
     IsNoTemporalFramesReqd: Any
     isUseH: Any
@@ -16317,6 +16437,7 @@ class ResolveFxPatchReplacerTool(FusionToolProtocol, Protocol):
     isCloneBorder: Any
     isKeepOriginalDetail: Any
     isLegacyAlphaCloneBug: Any
+    isLegacyBlur: Any
     isLegacyGradientBlend: Any
     isLegacyPositions: Any
     IsNoTemporalFramesReqd: Any
@@ -16414,6 +16535,7 @@ class ResolveFxPictureInPictureTool(FusionToolProtocol, Protocol):
     FrameRenderScriptNest: Any
     HideInputs: Any
     ignoreContentShape: Any
+    isLegacyBlur: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
     LayerSpacer: Any
@@ -16571,6 +16693,7 @@ class ResolveFxRadialBlurTool(FusionToolProtocol, Protocol):
     ignoreContentShape: Any
     isBlurAlpha: Any
     isFollowSizing: Any
+    isLegacyScaling: Any
     IsNoTemporalFramesReqd: Any
     isUseLegacyPosition: Any
     LayersNest: Any
@@ -16862,6 +16985,7 @@ class ResolveFxScanlineV2Tool(FusionToolProtocol, Protocol):
     frequency: Any
     HideInputs: Any
     ignoreContentShape: Any
+    isLegacyCentering: Any
     IsNoTemporalFramesReqd: Any
     LayersNest: Any
     LayerSpacer: Any
@@ -17742,8 +17866,8 @@ class ResolveFxTransformTool(FusionToolProtocol, Protocol):
     MaskHigh: Any
     MaskLow: Any
     MaterialID: Any
-    motionBlur: Any
     MotionBlur: Any
+    motionBlur: Any
     MultiplyByMask: Any
     ObjectID: Any
     olayAntiAlias: Any
@@ -17929,8 +18053,8 @@ class ResolveFxVideoCollageTool(FusionToolProtocol, Protocol):
     MaskHigh: Any
     MaskLow: Any
     MaterialID: Any
-    motionBlur: Any
     MotionBlur: Any
+    motionBlur: Any
     MultiplyByMask: Any
     muteTile: Any
     muteTilesGroup: Any
@@ -18457,6 +18581,7 @@ class ResolveFxZoomBlurTool(FusionToolProtocol, Protocol):
     ignoreContentShape: Any
     isBlurAlpha: Any
     isFollowSizing: Any
+    isLegacyScaling: Any
     IsNoTemporalFramesReqd: Any
     isUseLegacyAlgorithm: Any
     isUseLegacyPosition: Any
@@ -19697,6 +19822,7 @@ class SoftClipTool(FusionToolProtocol, Protocol):
     Comments: Any
     CommentsNest: Any
     Enable: Any
+    EnablePBRMaterial: Any
     EndRenderScript: Any
     EndRenderScripts: Any
     FrameRenderScript: Any
@@ -19704,9 +19830,12 @@ class SoftClipTool(FusionToolProtocol, Protocol):
     HideInputs: Any
     LayersNest: Any
     OpaqueDistance: Any
+    PBRMaterial: Any
     ProcessLayers: Any
     ProcessLayersCustom: Any
     Radial: Any
+    ReceivesLighting: Any
+    ReceivesShadows: Any
     SceneInput: Any
     ShowInView: Any
     SmoothTransition: Any
@@ -19938,6 +20067,7 @@ class SurfaceAlembicMeshTool(FusionToolProtocol, Protocol):
     LayersNest: Any
     MaterialInput: Any
     MaterialInput_LayerSelect: Any
+    NoAbortOnOrphanVertices: Any
     ObjName: Any
     SamplingRate: Any
     SceneInput: Any
@@ -20941,6 +21071,7 @@ class TrackerModifierTool(FusionToolProtocol, Protocol):
     FrameRenderScript: Any
     FrameRenderScriptNest: Any
     FramesPerPathPoint: Any
+    GoToSelectTime0: Any
     MatchTolerance: Any
     PathCenter: Any
     PatternCenter0: Any
@@ -20948,6 +21079,7 @@ class TrackerModifierTool(FusionToolProtocol, Protocol):
     PatternWidth0: Any
     SearchHeight0: Any
     SearchWidth0: Any
+    SelectTimeText0: Any
     Sep1: Any
     StartRenderScript: Any
     StartRenderScripts: Any
@@ -20987,6 +21119,7 @@ class TrackerTool(FusionToolProtocol, Protocol):
     Comments: Any
     CommentsNest: Any
     CorrectEdges: Any
+    CustomTime: Any
     Delete1: Any
     Edges: Any
     EffectMask: Any
@@ -21003,6 +21136,8 @@ class TrackerTool(FusionToolProtocol, Protocol):
     FrameRenderScript: Any
     FrameRenderScriptNest: Any
     FramesPerPathPoint: Any
+    GoToCustomTime: Any
+    GoToSelectTime1: Any
     HideInputs: Any
     IncompleteTrackerFadeInOutFrames: Any
     Input: Any
@@ -21046,6 +21181,7 @@ class TrackerTool(FusionToolProtocol, Protocol):
     Quality: Any
     Reference: Any
     ReferenceIntermediatePoints: Any
+    ReferenceTimeText: Any
     RotateClockwise: Any
     RotateCounterClockwise: Any
     Rotation: Any
@@ -21054,12 +21190,15 @@ class TrackerTool(FusionToolProtocol, Protocol):
     SearchHeight1: Any
     SearchScale: Any
     SearchWidth1: Any
+    SelectTimeText1: Any
     Sep1: Any
     Sep2: Any
+    SetCustomTimeToNow: Any
     SettingsNest: Any
     Show: Any
     ShowEnlargedPatternOnDragging: Any
     ShowPatternNamesInPreview: Any
+    ShowSplines: Any
     ShutterAngle: Any
     StartRenderScript: Any
     StartRenderScripts: Any
@@ -21076,6 +21215,8 @@ class TrackerTool(FusionToolProtocol, Protocol):
     TrackForwardFromCurrentTime: Any
     TrackReverse: Any
     TrackReverseFromCurrentTime: Any
+    TrimToEnd: Any
+    TrimToStart: Any
     UseGPU: Any
     UseMaterial: Any
     UseObject: Any
@@ -21800,6 +21941,7 @@ class URendererTool(FusionToolProtocol, Protocol):
     EndRenderScripts: Any
     Eye: Any
     FitMask: Any
+    FitScene: Any
     FrameRenderScript: Any
     FrameRenderScriptNest: Any
     GlobalIn: Any

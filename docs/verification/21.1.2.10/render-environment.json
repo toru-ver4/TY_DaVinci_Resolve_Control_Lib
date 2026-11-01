@@ -1,0 +1,37 @@
+{
+  "fonts": {
+    "Noto Sans": {
+      "Regular": {
+        "path": "C:\\Users\\toruv\\AppData\\Local\\Microsoft\\Windows\\Fonts\\NotoSans-Regular.ttf",
+        "sha256": "fe8c022f48d8dd29f17b744d16f9346f4357e16f7d4f7be58b000ae7c291b614",
+        "matches_21_1_0": true
+      },
+      "Bold": {
+        "path": "C:\\Users\\toruv\\AppData\\Local\\Microsoft\\Windows\\Fonts\\NotoSans-Bold.ttf",
+        "sha256": "13a813c49624ae3ba3c5c6e72c5ebffc4b9e1e6ea32f421c04069b037c6ad431",
+        "matches_21_1_0": true
+      }
+    },
+    "Noto Sans Mono": {
+      "Black": {
+        "path": "C:\\Users\\toruv\\AppData\\Local\\Microsoft\\Windows\\Fonts\\NotoSansMono-VariableFont_wdth,wght.ttf",
+        "sha256": "47d856141683450ee297592b27be447eb5141c68516e5e0e748c66b6e0a54afe",
+        "matches_21_1_0": true
+      }
+    }
+  },
+  "dctl": {
+    "draw_45deg_lines.dctl": {
+      "sha256": "c97b97249cfc7e489e9d24ce08307e3f2c32a91defc28367991e5e79cfa77a5b",
+      "matches_21_1_0": true
+    },
+    "draw_countdown_border.dctl": {
+      "sha256": "83b477f27d0fbe95129da45d4971356c2c1bc9caa47374fd4e8ba4e2bdc7d119",
+      "matches_21_1_0": true
+    },
+    "draw_countdown_ramp.dctl": {
+      "sha256": "108b2788baf1de227b1be80ba609f1aede31c596e85864b545263f7880217e2a",
+      "matches_21_1_0": true
+    }
+  }
+}

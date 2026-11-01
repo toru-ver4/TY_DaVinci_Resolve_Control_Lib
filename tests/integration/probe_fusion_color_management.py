@@ -42,7 +42,7 @@ def main() -> None:
     >>> main()  # doctest: +SKIP
     """
     session = ResolveSession.connect()
-    if session.version[:3] != (21, 1, 0):
+    if session.version_string not in ("21.1.0.17", "21.1.2.10"):
         raise RuntimeError("This probe uses the approved 21.1 image master.")
     manager = session.project_manager
     original = manager.GetCurrentProject()
@@ -82,7 +82,9 @@ def main() -> None:
     result = {"resolve": session.version_string, "refresh_enabled": False,
               "master_sha256": REFERENCE_SHA256_RESOLVE_21_1_0,
               "compared_frames": len(names), "different_frames": len(failures), "mismatches": failures}
-    (ROOT / "docs/verification/21.1.0.17/fusion-without-refresh.json").write_text(
+    output = ROOT / "docs/verification" / session.version_string
+    output.mkdir(parents=True, exist_ok=True)
+    (output / "fusion-without-refresh.json").write_text(
         json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({key: value for key, value in result.items() if key != "mismatches"}, indent=2))
 

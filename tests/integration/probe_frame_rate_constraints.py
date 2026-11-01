@@ -37,8 +37,8 @@ def main() -> None:
     >>> main()  # doctest: +SKIP
     """
     session = ResolveSession.connect()
-    if session.version[:3] != (21, 1, 0):
-        raise RuntimeError("This constraint probe requires Resolve 21.1.0.")
+    if session.version_string not in ("21.1.0.17", "21.1.2.10"):
+        raise RuntimeError("This constraint probe requires a verified Resolve 21.1 build.")
     manager = session.project_manager
     original = manager.GetCurrentProject()
     original_name = original.GetName() if original else None
@@ -93,7 +93,9 @@ def main() -> None:
         if original_name and original_name in original_names:
             load_project(session, original_name)
     result = dict(resolve=session.version_string, observations=observations)
-    Path("docs/verification/21.1.0.17/frame-rate-constraints.json").write_text(
+    output = Path("docs/verification") / session.version_string
+    output.mkdir(parents=True, exist_ok=True)
+    (output / "frame-rate-constraints.json").write_text(
         json.dumps(result, indent=2) + "\n", encoding="utf-8")
     for row in observations:
         print(row["condition"], row["key"], row["value"], row["accepted"], row["after"][row["key"]])

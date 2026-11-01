@@ -326,6 +326,10 @@ def test_rcm_workaround_is_version_limited() -> None:
     with patch("ty_davinci_resolve.fusion.time.sleep"):
         refresh_fusion_color_management(current, delay=0.01)
     assert pages == ["fusion", "edit", "fusion", "edit"]
+    latest = ResolveSession(resolve, object(), "Resolve", (21, 1, 2), "21.1.2")
+    with patch("ty_davinci_resolve.fusion.time.sleep"):
+        refresh_fusion_color_management(latest, delay=0.01)
+    assert pages == ["fusion", "edit"] * 3
     unsupported = ResolveSession(resolve, object(), "Resolve", (21, 1, 1), "21.1.1")
     with pytest.raises(ResolveValidationError):
         refresh_fusion_color_management(unsupported)

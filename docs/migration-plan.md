@@ -20,7 +20,7 @@
 | 項目 | 方針 |
 |---|---|
 | OS | Windows のみ保証。macOS は可能な範囲で単体テスト可能な設計にするが、実機保証しない |
-| DaVinci Resolve | 21.0.4／21.1.0 |
+| DaVinci Resolve | 21.0.4／21.1.0／21.1.2（最新実機検証21.1.2.10） |
 | Python | 3.13 64-bit |
 | パッケージ形式 | `pyproject.toml` と `src` layout を使用 |
 | 開発用インストール | `python -m pip install -e .` |

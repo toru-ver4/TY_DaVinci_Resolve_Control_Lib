@@ -1,0 +1,10 @@
+{
+  "added": {
+    "transcriptionExtendedLanguageSupport": "0"
+  },
+  "after": "21.1.2.10",
+  "before": "21.1.0.17",
+  "changed_defaults": {},
+  "note": "Defaults may depend on local preferences, presets and environment.",
+  "removed": {}
+}

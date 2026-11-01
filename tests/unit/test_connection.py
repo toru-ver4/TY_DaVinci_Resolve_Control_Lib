@@ -204,11 +204,36 @@ class ResolveSessionTests(unittest.TestCase):
                 expected_version=(21, 0, 4), module_loader=lambda: module
             )
 
+    def test_connect_accepts_resolve_21_1_2(self) -> None:
+        """Accept the verified patch while keeping explicit version checks strict.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        >>> unittest.main()  # doctest: +SKIP
+        """
+        module = FakeScriptModule(FakeResolve(version=(21, 1, 2, 10)))
+
+        session = ResolveSession.connect(module_loader=lambda: module)
+
+        self.assertEqual(session.version, (21, 1, 2, 10))
+        with self.assertRaises(ResolveVersionError):
+            ResolveSession.connect(
+                expected_version=(21, 1, 0), module_loader=lambda: module
+            )
+
     def test_default_version_error_lists_supported_versions(self) -> None:
         module = FakeScriptModule(FakeResolve(version=(21, 1, 1, 5)))
 
         with self.assertRaisesRegex(
-            ResolveVersionError, "expected 21.0.4 or 21.1.0, got 21.1.1"
+            ResolveVersionError, "expected 21.0.4 or 21.1.0 or 21.1.2, got 21.1.1"
         ):
             ResolveSession.connect(module_loader=lambda: module)
 

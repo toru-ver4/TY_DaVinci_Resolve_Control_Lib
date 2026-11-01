@@ -1,4 +1,4 @@
-"""Fusion Tool Registry IDs verified with Resolve 21.0.4."""
+"""Fusion Tool Registry IDs verified with Resolve 21.1.2."""
 
 from enum import StrEnum
 
@@ -149,6 +149,7 @@ class FusionTool(StrEnum):
     MTL_CHAN_BOOL = "MtlChanBool"  # Channel Boolean
     MTL_COOK_TORRANCE = "MtlCookTorrance"  # CookTorrance
     MTL_MERGE_3D = "MtlMerge3D"  # Material Merge
+    MTL_PBR_UBER = "MtlPBRUber"  # OpenPBR (added to this library for Resolve 21.1.2)
     MTL_PHONG = "MtlPhong"  # Phong
     MTL_REFLECT = "MtlReflect"  # Reflect
     MTL_STEREO_MIX_3D = "MtlStereoMix3D"  # Stereo Mix
