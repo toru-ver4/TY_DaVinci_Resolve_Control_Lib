@@ -36,8 +36,8 @@ def main() -> None:
     >>> main()  # doctest: +SKIP
     """
     session = ResolveSession.connect()
-    if session.version_string not in ("21.1.0.17", "21.1.2.10"):
-        raise RuntimeError("This convention comparison requires a verified Resolve 21.1 build.")
+    if session.version_string not in ("21.1.0.17", "21.1.2.10", "21.2.0.5"):
+        raise RuntimeError("This convention comparison requires a verified Resolve 21.1/21.2 build.")
     manager = session.project_manager
     original = manager.GetCurrentProject()
     original_name = original.GetName() if original else None

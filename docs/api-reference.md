@@ -1,5 +1,9 @@
 # Resolve API対応表
 
+## 21.2.0の更新
+
+[21.2.0検証記録](resolve-21.2.0-verification.md)と[公式API差分](verification/21.2.0.5/api-diff.json)を追加しました。接続・Fusion refreshで21.2.0を許可します。既存setterでProjectのPlayback frame rateが設定可能になりました。Timeline frame rate変更はPlaybackも更新します。サムネイル・Auto Color・Extras APIの専用ラッパーは今回追加していません。
+
 ## 21.1.2の更新
 
 最新の根拠は[21.1.2検証記録](resolve-21.1.2-verification.md)と

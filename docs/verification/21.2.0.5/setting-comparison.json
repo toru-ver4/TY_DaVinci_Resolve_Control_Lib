@@ -1,0 +1,8 @@
+{
+  "added": {},
+  "after": "21.2.0.5",
+  "before": "21.1.2.10",
+  "changed_defaults": {},
+  "note": "Defaults may depend on local preferences, presets and environment.",
+  "removed": {}
+}

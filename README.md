@@ -1,8 +1,8 @@
 # TY_DaVinci_Resolve_Control_Lib
 
-DaVinci Resolve 21.0.4／21.1.0／21.1.2をWindowsから制御するPython 3.13（64-bit）向けライブラリです。
+DaVinci Resolve 21.0.4／21.1.0／21.1.2／21.2.0をWindowsから制御するPython 3.13（64-bit）向けライブラリです。
 
-現在の実機検証はStudio 21.1.2.10です。[21.1.2検証記録](docs/resolve-21.1.2-verification.md)に公式API差分、21.1.0からの全設定比較、実機テストと画像比較をまとめています。21.0.4／21.1.0への接続は維持しますが、今回の変更後に旧版実機では再検証していません。過去のGUI/API対応と制限は[21.1.0検証記録](docs/resolve-21.1-verification.md)に版を区別して残しています。
+現在の実機検証はStudio 21.2.0.5です。[21.2.0検証記録](docs/resolve-21.2.0-verification.md)に公式API差分、全設定比較、Playback frame rateの変更と実機テストをまとめています。旧対応版への接続を維持します。旧版実機は今回再検証していません。
 
 ```powershell
 python -m pip install -e .

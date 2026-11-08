@@ -69,6 +69,8 @@ class ProjectSetting(StrEnum):
     Notes
     -----
     Snapshot presence does not guarantee that ``SetSettings`` accepts a value.
+    Project ``TIMELINE_PLAYBACK_FRAME_RATE`` is writable since Resolve 21.2.0;
+    setting ``TIMELINE_FRAME_RATE`` also updates the playback rate in that version.
     ``TRANSCRIPTION_EXTENDED_LANGUAGE_SUPPORT`` was added in Resolve 21.1.2.
     Its value ``"0"`` was verified; enabling it requires installed extended
     language models and was rejected on the verification machine.
@@ -1149,4 +1151,4 @@ BT2100_PROJECT_SETTINGS = MappingProxyType(
 
 
 SUPPORTED_RESOLVE_VERSION = (21, 0, 4)
-SUPPORTED_RESOLVE_VERSIONS = (SUPPORTED_RESOLVE_VERSION, (21, 1, 0), (21, 1, 2))
+SUPPORTED_RESOLVE_VERSIONS = (SUPPORTED_RESOLVE_VERSION, (21, 1, 0), (21, 1, 2), (21, 2, 0))

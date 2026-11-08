@@ -1,0 +1,33 @@
+{
+  "resolve": "21.2.0.5",
+  "unit": {
+    "passed": 99
+  },
+  "integration": {
+    "passed": 7,
+    "deselected_restart": 1,
+    "seconds": 314.09
+  },
+  "countdown": {
+    "conditions": 4,
+    "images": 384,
+    "all_16bit_rgb_samples_equal": true,
+    "master_replaced": false,
+    "generated_pngs_deleted": 384
+  },
+  "stress": {
+    "iterations": 20,
+    "passed": 20,
+    "seconds": 153.88
+  },
+  "restart": {
+    "passed": 1,
+    "seconds": 24.23
+  },
+  "distribution": {
+    "offline_wheel_and_sdist_build": true,
+    "isolated_python313_wheel_install": true,
+    "media_assets": 48
+  },
+  "markdown_local_links_checked": 125
+}

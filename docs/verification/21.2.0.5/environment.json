@@ -1,0 +1,16 @@
+{
+  "legacy_canonical_equal": true,
+  "official_sources": {
+    "CHANGELOG.md": "4393755e1a6223b9077a957acfd8e040818a6b841a79bb9400488afe3e24e321",
+    "DaVinciResolveScript.pyi": "0157d58c67961f7512236227b0692a8cb8986a9643794a35d00ffc30288fb37b",
+    "Modules/DaVinciResolveScript.py": "0e78f374e452ced64c3d570ef620c310bcbb7685e836bfc3bcbd7599a0d4509d",
+    "README.md": "a199d48772f185b4c13acefb0e6028d361579c0e1fb91e87a3e5add917ed424a"
+  },
+  "os": "Windows-11-10.0.26300-SP0",
+  "product": "DaVinci Resolve Studio",
+  "python": "3.13.16 (main, Oct  3 2026, 01:04:41) [MSC v.1944 64 bit (AMD64)]",
+  "resolve": "21.2.0.5",
+  "snapshot_count": 159,
+  "studio": true,
+  "verified_at": "2026-11-08T19:22:18.855660+09:00"
+}

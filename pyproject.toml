@@ -41,7 +41,7 @@ testpaths = ["tests"]
 addopts = ["--basetemp=.pytest-tmp"]
 cache_dir = ".pytest-tmp/cache"
 markers = [
-    "resolve_integration: requires DaVinci Resolve 21.0.4, 21.1.0 or 21.1.2 on Windows",
+    "resolve_integration: requires DaVinci Resolve 21.0.4, 21.1.0, 21.1.2 or 21.2.0 on Windows",
     "resolve_restart: quits and relaunches DaVinci Resolve and must run alone",
     "countdown_regression: renders and compares the Countdown V2 PNG sequence",
 ]

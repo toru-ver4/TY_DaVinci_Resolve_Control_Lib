@@ -41,12 +41,12 @@ def test_project_and_timeline_frame_rate_settings_have_distinct_scopes() -> None
             ProjectSetting.TIMELINE_FRAME_RATE,
             FrameRate.FPS_24,
         )
-        assert (
-            project.SetSetting(
-                ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE,
-                FrameRate.FPS_25,
-            )
-            is False
+        playback_writable = session.version[:3] >= (21, 2, 0)
+        assert project.SetSetting(
+            ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE, FrameRate.FPS_25,
+        ) is playback_writable
+        assert float(project.GetSetting(ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE)) == (
+            25.0 if playback_writable else 24.0
         )
 
         timeline = create_empty_timeline(get_media_pool(project), "25 fps Timeline")
@@ -71,7 +71,9 @@ def test_project_and_timeline_frame_rate_settings_have_distinct_scopes() -> None
             get_timeline_setting(timeline, TimelineSetting.TIMELINE_FRAME_RATE)
         ) == 25.0
         assert float(project.GetSetting(ProjectSetting.TIMELINE_FRAME_RATE)) == 24.0
-        assert project.GetSetting(ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE) == "24"
+        assert float(project.GetSetting(ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE)) == (
+            25.0 if playback_writable else 24.0
+        )
     finally:
         current = manager.GetCurrentProject()
         if current is not None and current.GetName() == project_name:

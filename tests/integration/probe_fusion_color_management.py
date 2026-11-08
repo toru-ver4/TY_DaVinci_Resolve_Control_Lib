@@ -42,7 +42,7 @@ def main() -> None:
     >>> main()  # doctest: +SKIP
     """
     session = ResolveSession.connect()
-    if session.version_string not in ("21.1.0.17", "21.1.2.10"):
+    if session.version_string not in ("21.1.0.17", "21.1.2.10", "21.2.0.5"):
         raise RuntimeError("This probe uses the approved 21.1 image master.")
     manager = session.project_manager
     original = manager.GetCurrentProject()

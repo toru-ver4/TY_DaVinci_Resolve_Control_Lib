@@ -281,7 +281,7 @@ class ResolveSession:
         ----------
         expected_version
             Required major, minor, and patch version, or a tuple of accepted
-            versions. Defaults to 21.0.4, 21.1.0 and 21.1.2. Pass `None` to skip the
+            versions. Defaults to 21.0.4, 21.1.0, 21.1.2 and 21.2.0. Pass `None` to skip the
             version check.
         module_loader
             Optional loader used for tests or non-standard installations.

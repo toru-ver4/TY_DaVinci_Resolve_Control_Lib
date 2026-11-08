@@ -229,11 +229,18 @@ class ResolveSessionTests(unittest.TestCase):
                 expected_version=(21, 1, 0), module_loader=lambda: module
             )
 
+    def test_connect_accepts_21_2_0_by_default(self) -> None:
+        module = FakeScriptModule(FakeResolve(version=(21, 2, 0, 5)))
+        session = ResolveSession.connect(module_loader=lambda: module)
+        self.assertEqual(session.version, (21, 2, 0, 5))
+        with self.assertRaises(ResolveVersionError):
+            ResolveSession.connect(expected_version=(21, 1, 2), module_loader=lambda: module)
+
     def test_default_version_error_lists_supported_versions(self) -> None:
         module = FakeScriptModule(FakeResolve(version=(21, 1, 1, 5)))
 
         with self.assertRaisesRegex(
-            ResolveVersionError, "expected 21.0.4 or 21.1.0 or 21.1.2, got 21.1.1"
+            ResolveVersionError, "expected 21.0.4 or 21.1.0 or 21.1.2 or 21.2.0, got 21.1.1"
         ):
             ResolveSession.connect(module_loader=lambda: module)
 

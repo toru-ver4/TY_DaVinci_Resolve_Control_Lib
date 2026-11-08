@@ -1,10 +1,14 @@
 # Resolve GUIと本ライブラリ定数の対応
 
+## Resolve 21.2.0の差分
+
+最新の実機はStudio 21.2.0.5です。[21.2.0検証記録](resolve-21.2.0-verification.md)を参照してください。全159設定のキー・初期値は21.1.2と一致し、公開定数は152個を維持します。Projectの`ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE`は21.2.0から設定可能です。公式CHANGELOGに記載され、SetSetting／SetSettingsで設定・readback・保存後保持を確認しました。`ProjectSetting.TIMELINE_FRAME_RATE`の変更はPlaybackも更新します。異なる再生速度は後に設定してください。旧GUI台帳は当時の証拠として保持しています。
+
 このページは、納品仕様や制作テンプレートに合わせてProject SettingsをPythonから自動設定したい人向けの対応表です。Resolveの画面で見える項目から、コードで指定する設定名と値を探せます。
 
 ## Resolve 21.1.2の差分
 
-最新の実機環境はWindows／Python 3.13.16／Studio 21.1.2.10です。
+当時の実機環境はWindows／Python 3.13.16／Studio 21.1.2.10です。
 [21.1.2検証記録](resolve-21.1.2-verification.md)を参照してください。
 空projectの全159設定を21.1.0.17と比較し、追加は`"transcriptionExtendedLanguageSupport"`の
 1キー（初期値`"0"`）、既存キーの削除と初期値変更はありませんでした。
@@ -54,7 +58,7 @@
 | ［Resolve GUI］対象 | ［Resolve GUI］画面項目 | 制作上の役割 | ［TY API］からの変更 |
 |---|---|---|---|
 | Project | Timeline frame rate | 新しく作るtimelineの基準となるフレームレート | ［TY API］`ProjectSetting.TIMELINE_FRAME_RATE`で設定可能。project作成直後に設定する |
-| Project | Playback frame rate | Project Settingsで指定する再生フレームレート | 変更不可。［TY API］`ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE`で現在値の確認だけが可能 |
+| Project | Playback frame rate | Project Settingsで指定する再生フレームレート | 21.2.0では［TY API］`ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE`で設定可能。21.1.2以前は取得のみ |
 | 個別timeline | Timeline frame rate | そのtimelineを編集・再生するフレームレート | 整数のframe rateは、空timelineに［TY API］`TimelineSetting.TIMELINE_FRAME_RATE`で設定できる。23.976、29.97、59.94などの小数値は設定できない |
 | 個別timeline | Playback frame rate | 個別timelineには独立した設定項目がない | 設定不要。GUIにも選択項目がなく、［Resolve API］`Timeline.SetSetting()`からも変更できない |
 
@@ -121,7 +125,7 @@ set_timeline_settings(
 |---|---|---|---|---|
 | Master Settings > Timeline Format | Timeline resolution | `TIMELINE_RESOLUTION_WIDTH`, `TIMELINE_RESOLUTION_HEIGHT` | `ResolutionValue`（例: `"1920"`, `"1080"`） | GUI、設定確認 |
 | Master Settings > Timeline Format | Timeline frame rate | `TIMELINE_FRAME_RATE` | `FrameRate`（例: `"24"`, `"29.97 DF"`） | 公式、GUI、設定確認 |
-| Master Settings > Timeline Format | Playback frame rate | `ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE` | `PlaybackFrameRate`（現在値の確認用） | GUI、Project APIで変更不可 |
+| Master Settings > Timeline Format | Playback frame rate | `ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE` | `PlaybackFrameRate` | 21.2.0ではProject APIで設定可能。21.1.2以前はAPI変更不可 |
 | Master Settings > Timeline Format | Pixel aspect ratio | `TIMELINE_PIXEL_ASPECT_RATIO` | `PixelAspectRatio`（例: `"square"`） | 公式、GUI |
 | Master Settings > Video Monitoring | Video format | `VIDEO_MONITOR_FORMAT` | `make_video_monitor_format()`（例: `"HD 1080p 24"`） | GUI、設定確認 |
 | Master Settings > Video Monitoring | SDI configuration | `VIDEO_MONITOR_SDI_CONFIGURATION` | `SDIConfiguration`（例: `"dual_link"`） | GUI、設定確認 |

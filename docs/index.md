@@ -1,5 +1,7 @@
 # ドキュメント
 
+- [Resolve 21.2.0調査・検証記録](resolve-21.2.0-verification.md): API差分、再生速度設定、実機検証
+
 - [利用ガイド](guide.md): project作成、制作条件の設定、素材・Fusion・renderの自動化
 - [Resolve GUIと本ライブラリ定数の対応](project-settings.md): Resolve画面の各項目をPythonから設定する方法と注意点
 - [Resolve API対応表](api-reference.md): 開発者向けの実装根拠とResolve公式APIの対応

@@ -1,6 +1,6 @@
 # TY_DaVinci_Resolve_Control_Lib
 
-DaVinci Resolve 21.0.4／21.1.0／21.1.2をPythonから制御するためのライブラリです。
+DaVinci Resolve 21.0.4／21.1.0／21.1.2／21.2.0をPythonから制御するためのライブラリです。
 
 現在は再設計中のpre-alpha版です。Windows、Python 3.13 64-bitのみを動作保証対象とします。
 
@@ -56,7 +56,7 @@ print(session.product_name)
 print(session.version_string)
 ```
 
-標準では接続先がResolve 21.0.4、21.1.0または21.1.2であることを検査します。`ResolveSession.connect(expected_version=(21, 1, 2))`のように指定すれば、指定した版だけを許可できます。未検証の21.1.1などは自動許可しません。未起動、APIのロード失敗、バージョン不一致は例外になります。
+標準では接続先がResolve 21.0.4、21.1.0、21.1.2または21.2.0であることを検査します。`ResolveSession.connect(expected_version=(21, 2, 0))`のように指定すれば、指定した版だけを許可できます。未検証の21.1.1などは自動許可しません。未起動、APIのロード失敗、バージョン不一致は例外になります。
 
 ## 基本操作
 
@@ -106,7 +106,7 @@ set_project_settings(project, BT2100_PROJECT_SETTINGS, settle_delay=0.35)
 
 `BT2100_PROJECT_SETTINGS`のようなpresetは、設定する順番も含めたひとまとまりの制作条件です。依存するColor Management項目を連続して変更するときは、例のように`settle_delay=0.35`を指定し、Resolveが各変更を反映する時間を確保します。
 
-ResolveのProject SettingsにあるTimeline frame rateは、project作成直後に本ライブラリの`ProjectSetting.TIMELINE_FRAME_RATE`で設定します。Project SettingsのPlayback frame rateはPythonから変更できず、本ライブラリの`ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE`は現在値の確認用です。
+ResolveのProject SettingsにあるTimeline frame rateは、project作成直後に本ライブラリの`ProjectSetting.TIMELINE_FRAME_RATE`で設定します。21.2.0ではPlayback frame rateを`ProjectSetting.TIMELINE_PLAYBACK_FRAME_RATE`で設定できます。21.1.2以前では読み取り専用です。21.2.0ではTimeline frame rateの変更がPlaybackも更新するため、異なる再生速度は後から指定してください。
 
 一方、特定の空timelineだけ別のフレームレートにすることは可能です。本ライブラリの`set_timeline_settings()`へ`TimelineSetting.TIMELINE_FRAME_RATE`を渡すと、ResolveのTimeline Settingsにあるcustom settingsを有効にして、そのtimelineの「Timeline frame rate」を変更します。名前が似ていますが、本ライブラリの`TimelineSetting.TIMELINE_PLAYBACK_FRAME_RATE`を書き込む操作ではありません。
 
@@ -372,7 +372,7 @@ delete_render_job(project, job_id)
 python -m pytest tests/unit
 ```
 
-Resolve 21.0.4、21.1.0または21.1.2を使用する短い実機テストは次のコマンドで分離して実行します。
+Resolve 21.0.4、21.1.0、21.1.2または21.2.0を使用する短い実機テストは次のコマンドで分離して実行します。
 
 ```powershell
 python -m pytest -m resolve_integration tests/integration/test_project_lifecycle.py
@@ -391,7 +391,7 @@ Countdown V2の4条件・384枚をrenderし、参照ZIPとdecode後の16-bit RGB
 
 事前に`sample_code/2025/02_Countdown_V2/DCTL`の`draw_45deg_lines.dctl`、`draw_countdown_border.dctl`、`draw_countdown_ramp.dctl`をResolveのLUTフォルダー内の`TY_DCTL`に配置してください。Windowsに`Noto Sans Regular`、`Noto Sans Bold`、`Noto Sans Mono Black`をインストールし、Fusionから使用できることを確認します。フォントを追加した場合はResolveを再起動します。テストはDCTLのソースとのSHA-256一致を検査し、実際にFusionが参照するフォントのパスとSHA-256をレンダー前に記録します。
 
-Resolve 21.0.4では旧参照ZIP、21.1.0／21.1.2では21.1用参照ZIPを自動選択します。Windowsのフォント更新後も旧参照と文字の輪郭が一致しなかったため、ユーザーの方針に従い、21.1.0用参照はPython 3.13.16／Resolve Studio 21.1.0.17で生成した384枚へ更新しました。21.1.2対応でマスターは置換していません。比較は16-bit RGB全sampleの完全一致を維持します。生成環境とフォントのハッシュは[参照データの検証記録](../tests/countdown_reference_data/ref_data_1280x720_resolve_21_1_0.json)に保存しています。
+Resolve 21.0.4では旧参照ZIP、21.1.0／21.1.2／21.2.0では21.1用参照ZIPを自動選択します。Windowsのフォント更新後も旧参照と文字の輪郭が一致しなかったため、ユーザーの方針に従い、21.1.0用参照はPython 3.13.16／Resolve Studio 21.1.0.17で生成した384枚へ更新しました。21.1.2対応でマスターは置換していません。比較は16-bit RGB全sampleの完全一致を維持します。生成環境とフォントのハッシュは[参照データの検証記録](../tests/countdown_reference_data/ref_data_1280x720_resolve_21_1_0.json)に保存しています。
 
 ```powershell
 python -m pytest -m countdown_regression tests/integration/test_countdown_regression.py -s

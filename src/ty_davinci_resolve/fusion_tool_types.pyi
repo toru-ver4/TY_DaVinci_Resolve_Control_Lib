@@ -8147,7 +8147,22 @@ class OGrafLoaderTool(FusionToolProtocol, Protocol):
     DynParamCheck18: Any
     DynParamCheck19: Any
     DynParamCheck2: Any
+    DynParamCheck20: Any
+    DynParamCheck21: Any
+    DynParamCheck22: Any
+    DynParamCheck23: Any
+    DynParamCheck24: Any
+    DynParamCheck25: Any
+    DynParamCheck26: Any
+    DynParamCheck27: Any
+    DynParamCheck28: Any
+    DynParamCheck29: Any
     DynParamCheck3: Any
+    DynParamCheck30: Any
+    DynParamCheck31: Any
+    DynParamCheck32: Any
+    DynParamCheck33: Any
+    DynParamCheck34: Any
     DynParamCheck4: Any
     DynParamCheck5: Any
     DynParamCheck6: Any
@@ -8202,10 +8217,70 @@ class OGrafLoaderTool(FusionToolProtocol, Protocol):
     DynParamColor1_B: Any
     DynParamColor1_G: Any
     DynParamColor1_R: Any
+    DynParamColor20_A: Any
+    DynParamColor20_B: Any
+    DynParamColor20_G: Any
+    DynParamColor20_R: Any
+    DynParamColor21_A: Any
+    DynParamColor21_B: Any
+    DynParamColor21_G: Any
+    DynParamColor21_R: Any
+    DynParamColor22_A: Any
+    DynParamColor22_B: Any
+    DynParamColor22_G: Any
+    DynParamColor22_R: Any
+    DynParamColor23_A: Any
+    DynParamColor23_B: Any
+    DynParamColor23_G: Any
+    DynParamColor23_R: Any
+    DynParamColor24_A: Any
+    DynParamColor24_B: Any
+    DynParamColor24_G: Any
+    DynParamColor24_R: Any
+    DynParamColor25_A: Any
+    DynParamColor25_B: Any
+    DynParamColor25_G: Any
+    DynParamColor25_R: Any
+    DynParamColor26_A: Any
+    DynParamColor26_B: Any
+    DynParamColor26_G: Any
+    DynParamColor26_R: Any
+    DynParamColor27_A: Any
+    DynParamColor27_B: Any
+    DynParamColor27_G: Any
+    DynParamColor27_R: Any
+    DynParamColor28_A: Any
+    DynParamColor28_B: Any
+    DynParamColor28_G: Any
+    DynParamColor28_R: Any
+    DynParamColor29_A: Any
+    DynParamColor29_B: Any
+    DynParamColor29_G: Any
+    DynParamColor29_R: Any
     DynParamColor2_A: Any
     DynParamColor2_B: Any
     DynParamColor2_G: Any
     DynParamColor2_R: Any
+    DynParamColor30_A: Any
+    DynParamColor30_B: Any
+    DynParamColor30_G: Any
+    DynParamColor30_R: Any
+    DynParamColor31_A: Any
+    DynParamColor31_B: Any
+    DynParamColor31_G: Any
+    DynParamColor31_R: Any
+    DynParamColor32_A: Any
+    DynParamColor32_B: Any
+    DynParamColor32_G: Any
+    DynParamColor32_R: Any
+    DynParamColor33_A: Any
+    DynParamColor33_B: Any
+    DynParamColor33_G: Any
+    DynParamColor33_R: Any
+    DynParamColor34_A: Any
+    DynParamColor34_B: Any
+    DynParamColor34_G: Any
+    DynParamColor34_R: Any
     DynParamColor3_A: Any
     DynParamColor3_B: Any
     DynParamColor3_G: Any
@@ -8247,7 +8322,22 @@ class OGrafLoaderTool(FusionToolProtocol, Protocol):
     DynParamCombo18: Any
     DynParamCombo19: Any
     DynParamCombo2: Any
+    DynParamCombo20: Any
+    DynParamCombo21: Any
+    DynParamCombo22: Any
+    DynParamCombo23: Any
+    DynParamCombo24: Any
+    DynParamCombo25: Any
+    DynParamCombo26: Any
+    DynParamCombo27: Any
+    DynParamCombo28: Any
+    DynParamCombo29: Any
     DynParamCombo3: Any
+    DynParamCombo30: Any
+    DynParamCombo31: Any
+    DynParamCombo32: Any
+    DynParamCombo33: Any
+    DynParamCombo34: Any
     DynParamCombo4: Any
     DynParamCombo5: Any
     DynParamCombo6: Any
@@ -8267,7 +8357,22 @@ class OGrafLoaderTool(FusionToolProtocol, Protocol):
     DynParamNum18: Any
     DynParamNum19: Any
     DynParamNum2: Any
+    DynParamNum20: Any
+    DynParamNum21: Any
+    DynParamNum22: Any
+    DynParamNum23: Any
+    DynParamNum24: Any
+    DynParamNum25: Any
+    DynParamNum26: Any
+    DynParamNum27: Any
+    DynParamNum28: Any
+    DynParamNum29: Any
     DynParamNum3: Any
+    DynParamNum30: Any
+    DynParamNum31: Any
+    DynParamNum32: Any
+    DynParamNum33: Any
+    DynParamNum34: Any
     DynParamNum4: Any
     DynParamNum5: Any
     DynParamNum6: Any
@@ -8287,7 +8392,22 @@ class OGrafLoaderTool(FusionToolProtocol, Protocol):
     DynParamText18: Any
     DynParamText19: Any
     DynParamText2: Any
+    DynParamText20: Any
+    DynParamText21: Any
+    DynParamText22: Any
+    DynParamText23: Any
+    DynParamText24: Any
+    DynParamText25: Any
+    DynParamText26: Any
+    DynParamText27: Any
+    DynParamText28: Any
+    DynParamText29: Any
     DynParamText3: Any
+    DynParamText30: Any
+    DynParamText31: Any
+    DynParamText32: Any
+    DynParamText33: Any
+    DynParamText34: Any
     DynParamText4: Any
     DynParamText5: Any
     DynParamText6: Any

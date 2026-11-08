@@ -1,0 +1,326 @@
+{
+  "after": "21.2.0",
+  "before": "21.1.2",
+  "classes": {
+    "ExportFrameOptions": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": [
+          "TypedDict"
+        ]
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "quality": "int | None",
+          "roiHeight": "float | None",
+          "roiWidth": "float | None",
+          "roiX": "float | None",
+          "roiY": "float | None"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "ExportFrameResult": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": [
+          "TypedDict"
+        ]
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "height": "int | None",
+          "width": "int | None"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "ExportThumbnailsOptions": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "encodedImageFormat": "str | None",
+          "filePath": "str | None",
+          "maxDimension": "int | None",
+          "outputType": "str | None",
+          "quality": "int | None"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "ExportThumbnailsResult": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "cellHeight": "int | None",
+          "cellWidth": "int | None",
+          "columns": "int | None",
+          "data": "str | None",
+          "error": "str | None",
+          "height": "int | None",
+          "rows": "int | None",
+          "success": "bool",
+          "width": "int | None"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "ExtrasPackageInfo": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "description": "str",
+          "downloadSize": "int",
+          "installedSize": "int",
+          "name": "str",
+          "progress": "float",
+          "status": "str"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "Graph": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "GetNodeEnabled": [
+            "self, nodeIndex: int -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "MediaPoolItem": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "ExportThumbnails": [
+            "self, frames: list[int | ThumbnailFrame], exportThumbnailsOptions: ExportThumbnailsOptions | None=None -> ExportThumbnailsResult"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "PhotoAlbum": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "ExportThumbnails": [
+            "self, photoIndices: list[int], exportThumbnailsOptions: ExportThumbnailsOptions | None=None -> ExportThumbnailsResult"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "PhotoAlbumItem": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "ApplyAutoColor": [
+            "self -> bool"
+          ],
+          "ClearAutoColor": [
+            "self -> bool"
+          ],
+          "GetAutoColorEnabled": [
+            "self -> bool | None"
+          ],
+          "GetCDL": [
+            "self, nodeIndex: int -> CDL"
+          ],
+          "SetAutoColorEnabled": [
+            "self, enabled: bool -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "Resolve": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "GetExtrasPackages": [
+            "self -> list[ExtrasPackageInfo]"
+          ],
+          "InstallExtrasPackage": [
+            "self, name: str -> bool"
+          ],
+          "UninstallExtrasPackage": [
+            "self, name: str -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "ThumbnailFrame": {
+      "bases": {
+        "after": [
+          "TypedDict"
+        ],
+        "before": null
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {
+          "frameOffset": "int",
+          "label": "str | None"
+        },
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      }
+    },
+    "Timeline": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "ExportThumbnails": [
+            "self, frames: list[int | ThumbnailFrame], exportThumbnailsOptions: ExportThumbnailsOptions | None=None -> ExportThumbnailsResult"
+          ]
+        },
+        "changed": {}
+      }
+    },
+    "TimelineItem": {
+      "bases": {
+        "after": [],
+        "before": []
+      },
+      "fields": {
+        "absent_from_new_stub": {},
+        "added": {},
+        "changed": {}
+      },
+      "methods": {
+        "absent_from_new_stub": {},
+        "added": {
+          "ApplyAutoColor": [
+            "self -> bool"
+          ],
+          "ClearAutoColor": [
+            "self -> bool"
+          ],
+          "ExportThumbnails": [
+            "self, frames: list[int | ThumbnailFrame], exportThumbnailsOptions: ExportThumbnailsOptions | None=None -> ExportThumbnailsResult"
+          ],
+          "GetAutoColorEnabled": [
+            "self -> bool | None"
+          ],
+          "GetCDL": [
+            "self, nodeIndex: int -> CDL"
+          ],
+          "SetAutoColorEnabled": [
+            "self, enabled: bool -> bool"
+          ]
+        },
+        "changed": {}
+      }
+    }
+  }
+}

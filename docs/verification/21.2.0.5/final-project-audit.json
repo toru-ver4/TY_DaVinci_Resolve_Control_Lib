@@ -1,0 +1,9 @@
+{
+  "resolve": "21.2.0.5",
+  "upgrade_probe_project_deleted": true,
+  "existing_prefixed_projects_left_untouched": [
+    "TY_CD_6758a342cee54f3d",
+    "TY_CD_d5f87c3cc1584f01",
+    "TY_CONSTRAINT_65e44a7ee928"
+  ]
+}

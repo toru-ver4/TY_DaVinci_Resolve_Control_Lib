@@ -40,7 +40,7 @@ def test_countdown_matches_16_bit_reference(tmp_path: Path) -> None:
     project_name = f"TY_CD_{uuid4().hex[:16]}"
     reference_name, reference_sha256 = (
         ("ref_data_1280x720_resolve_21_1_0.zip", REFERENCE_SHA256_RESOLVE_21_1_0)
-        if session.version[:3] in ((21, 1, 0), (21, 1, 2))
+        if session.version[:3] in ((21, 1, 0), (21, 1, 2), (21, 2, 0))
         else ("ref_data_1280x720.zip", REFERENCE_SHA256)
     )
     reference_zip = (

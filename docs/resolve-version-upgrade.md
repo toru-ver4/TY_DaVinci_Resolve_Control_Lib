@@ -1,8 +1,12 @@
 # Resolveバージョン更新時の検証手順
 
+## 2026-11-08の更新
+
+現在の検証対象はStudio 21.2.0.5です。[21.2.0検証記録](resolve-21.2.0-verification.md)を参照してください。全159設定は21.1.2と一致し、Playback frame rateの書き込みが可能になりました。以下は以前の検証記録です。
+
 この文書は、本ライブラリの対応対象を新しいDaVinci Resolveへ更新するときに使う開発者向けチェックリストです。GUI名とAPIキー名が似ているという理由だけで対応付けず、作品制作の自動化に使えることを実機で確認してから公開します。
 
-現在の検証環境はWindows版DaVinci Resolve Studio 21.1.2.10／Python 3.13（64-bit）です。21.0.4／21.1.0への接続も引き続き許可します。この環境での利用方法は[GUIと定数の対応](project-settings.md)、実装根拠は[API対応表](api-reference.md)を参照してください。21.0.4.5、21.1.0.17、21.1.2.10の観測を区別します。最新の結果は[21.1.2調査・検証記録](resolve-21.1.2-verification.md)、以前のGUI証拠と制限は[21.1調査・検証記録](resolve-21.1-verification.md)に記録しています。
+2026-11-01の検証環境はWindows版DaVinci Resolve Studio 21.1.2.10／Python 3.13（64-bit）です。21.0.4／21.1.0への接続も引き続き許可します。この環境での利用方法は[GUIと定数の対応](project-settings.md)、実装根拠は[API対応表](api-reference.md)を参照してください。21.0.4.5、21.1.0.17、21.1.2.10の観測を区別します。当時の結果は[21.1.2調査・検証記録](resolve-21.1.2-verification.md)、以前のGUI証拠と制限は[21.1調査・検証記録](resolve-21.1-verification.md)に記録しています。
 
 ## 2026-11-01の更新
 

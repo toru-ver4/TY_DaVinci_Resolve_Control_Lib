@@ -1,0 +1,9 @@
+{
+  "sha256": {
+    ".gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+    "ty_davinci_resolve_control-0.1.0-py3-none-any.whl": "c3b8cab1d15aff8a835950cccef5c484f38752a4e48d210598c788afee2aea2d",
+    "ty_davinci_resolve_control-0.1.0.tar.gz": "cc66083b5f6607db6acaa165abb743067279b9aba493b72718a8056f4565fc61"
+  },
+  "wheel_assets": 48,
+  "ograf_added_inputs_present": true
+}
