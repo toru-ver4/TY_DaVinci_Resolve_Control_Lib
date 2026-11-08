@@ -1,5 +1,12 @@
 # Resolve API対応表
 
+## Fusion公式資料との照合
+
+[Fusion資料精査記録](fusion-documentation-review.md)に、21.2.0同梱のOverview／Referenceと現行実装の照合をまとめました。
+`connect_default_output()`はmain端子の照会で名前の異なる出力へ対応し、setterはPointの3成分dict読戻しを正規化します。
+remote値は入力IDと値または接続を検証します。共通Protocolと生成器へ入力値・接続・frame指定の型定義を補いました。
+固定Tool入力の新規追加やKrokodoveの一括収録は行っていません。今後はScripting資料に加えてFusion資料も更新手順の確認対象とします。
+
 ## 21.2.0の更新
 
 [21.2.0検証記録](resolve-21.2.0-verification.md)と[公式API差分](verification/21.2.0.5/api-diff.json)を追加しました。接続・Fusion refreshで21.2.0を許可します。既存setterでProjectのPlayback frame rateが設定可能になりました。Timeline frame rate変更はPlaybackも更新します。サムネイル・Auto Color・Extras APIの専用ラッパーは今回追加していません。

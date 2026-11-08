@@ -207,10 +207,11 @@ def connect_default_output(source: Any, target: Any) -> None:
     """
     if source is None or target is None:
         raise ResolveValidationError("source and target must not be None.")
-    try:
-        result = target.Input.ConnectTo(source.Output)
-    except AttributeError as error:
-        raise ResolveValidationError("source and target must expose default Output and Input connectors.") from error
+    output = source.FindMainOutput(1)
+    input_connector = target.FindMainInput(1)
+    if output is None or input_connector is None:
+        raise ResolveValidationError("source and target must expose main output and input connectors.")
+    result = input_connector.ConnectTo(output)
     if result is not True:
         raise ResolveOperationError("Input.ConnectTo", result)
 
@@ -274,7 +275,11 @@ def set_fusion_tool_input(
 
     Notes
     -----
-    BlackmagicFusion remote objects are accepted without equality comparison.
+    Point lists and two-component dictionaries are compared with Fusion's
+    three-component numeric dictionary readback. BlackmagicFusion remote
+    objects require an existing input and either a value or a connected output;
+    remote objects are not compared for equality.
+    Readback does not guarantee that a FuID, font or other value can render.
 
     Examples
     --------
@@ -284,15 +289,40 @@ def set_fusion_tool_input(
         raise ResolveValidationError("name must be a non-empty string.")
     if not isinstance(tolerance, (int, float)) or tolerance < 0:
         raise ResolveValidationError("tolerance must be non-negative.")
-    tool.SetInput(name, value)
-    actual = tool.GetInput(name)
     is_remote = (
         type(value).__module__ == "BlackmagicFusion"
         or type(value).__name__ == "PyRemoteObject"
     )
+    input_connector = None
     if is_remote:
-        return
-    if isinstance(value, float):
+        inputs = tool.GetInputList()
+        if isinstance(inputs, dict):
+            input_connector = next(
+                (item for item in inputs.values() if item.GetAttrs().get("INPS_ID") == name),
+                None,
+            )
+        if input_connector is None:
+            raise ResolveValidationError(f"Fusion input was not found: {name!r}.")
+    tool.SetInput(name, value)
+    actual = tool.GetInput(name)
+    if is_remote:
+        # An Image/Mask connection can be valid without an evaluated image value.
+        if actual is not None or input_connector.GetConnectedOutput() is not None:
+            return
+        raise ResolveOperationError("Tool.SetInput", actual, f"Fusion input {name!r} has no value or connection.")
+    point = value
+    if isinstance(value, (list, tuple)) and len(value) in (2, 3):
+        point = dict(enumerate(value, 1))
+    if (
+        isinstance(actual, dict) and set(actual) == {1, 2, 3}
+        and isinstance(point, Mapping) and set(point) in ({1, 2}, {1, 2, 3})
+        and all(isinstance(v, (int, float)) for v in (*point.values(), *actual.values()))
+    ):
+        matches = all(
+            math.isclose(point.get(axis, 0.0), actual[axis], rel_tol=0.0, abs_tol=tolerance)
+            for axis in (1, 2, 3)
+        )
+    elif isinstance(value, float):
         matches = isinstance(actual, (int, float)) and math.isclose(
             value, actual, rel_tol=0.0, abs_tol=tolerance
         )

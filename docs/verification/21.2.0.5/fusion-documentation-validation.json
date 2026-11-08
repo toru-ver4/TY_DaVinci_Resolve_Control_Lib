@@ -1,0 +1,19 @@
+{
+  "resolve": "21.2.0.5",
+  "unit_passed": 109,
+  "targeted_integration_passed": 3,
+  "targeted_integration_seconds": 9.18,
+  "image_regression_passed": 1,
+  "image_regression_seconds": 164.34,
+  "image_count": 384,
+  "all_16bit_rgb_samples_equal": true,
+  "reference_master_changed": false,
+  "offline_wheel_sdist_build": true,
+  "local_links_checked": 137,
+  "distributions_sha256": {
+    ".gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+    "ty_davinci_resolve_control-0.1.0-py3-none-any.whl": "bc23e52a5527d14bfd54ac804b9f8be9e1f63fd0f3da9808ccb98b338bb55770",
+    "ty_davinci_resolve_control-0.1.0.tar.gz": "ed2ced0613093a8d7591f9d2e586559c76b021d6fe07372df7d7b5537ccaa06b"
+  },
+  "generated_regression_pngs_deleted": 384
+}

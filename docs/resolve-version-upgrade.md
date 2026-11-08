@@ -37,6 +37,7 @@ python tests/stress/project_lifecycle_stress.py --iterations 20
 - Resolveの完全なバージョン、Free／Studio、OS
 - Pythonのバージョン
 - 使用した公式Scripting README／CHANGELOGの版
+- 使用した公式FusionTools.md／FusionToolReference.mdの保存先、本文更新日、SHA-256、インストール先との一致
 - 検証日時
 - GPU、I/O機器、codecなど、結果に影響した可能性がある環境情報
 - 更新前後の［Resolve API］`Project.GetSetting()`の全snapshot
@@ -70,6 +71,17 @@ GUI項目とAPI設定キーは、名前や値が似ているだけでは対応�
 2. 新旧のScripting READMEとCHANGELOGを比較し、新版の公式`.pyi`もメソッド・シグネチャ・辞書型単位で照合する。READMEから型定義への移動を削除と判断しない。
 3. 追加、変更、deprecated、unsupportedになったAPIを記録する。
 4. ［TY API］ラッパー、定数、対応バージョン検査への影響を整理する。
+
+### 1a. Fusion資料と実機の差分を調べる
+
+1. `Developer/Fusion/`の`FusionTools.md`／`FusionToolReference.md`を`official_documents/<version>_Fusion/`へ保存し、旧版を残す。ファイル本文の更新日とインストール先のbyte一致も記録する。Resolve版と資料更新日は別々に扱う。
+2. Overviewのカテゴリ・Tool IDと、ReferenceのConventions／Common Controls／Tool別ID・入力・出力・型・値・制限・例を新旧比較する。前版資料がなければ初回baselineとして扱い、「新版で追加された動作」と断定しない。
+3. Referenceを現行ラッパーと照合する。特に既定端子名、Pointのreadback、remote接続、NumberとFuID、soft／hard range、動的入力・ドット付きID、保存済みdefault、animationの初期keyframeを確認する。family名を作成可能なRegistry IDとみなさない。
+4. ID見出し・明示Control表・Enum・入力stubを機械照合し、差分を互換alias、型別family、optional package、動的入力、item構文、実装不具合に分類する。文書上の差分だけで定数を自動追加しない。現版のbaseline作成には`tests/integration/probe_fusion_documentation.py`を使える。次版では参照版と証拠保存先を更新する。
+5. Registry／GetInputListで実機照合し、修正した接続・設定は値のreadbackだけでなく接続先も確認する。AddToolの自動接続は表示中／非表示comp、選択状態、ユーザー設定を分けて調べる。Lua例は自動実行せず、モデル・optional packageも自動導入しない。
+6. 型補完の共通Protocolを変えたら`generate_fusion_type_stubs.py`も更新する。Tool別の入力名は実機inventoryに基づく生成を維持する。Fusion修正後は対象実機テストとCountdown画像回帰を行い、マスターは差分解消のために自動置換しない。
+
+[21.2.0 Fusion資料精査記録](fusion-documentation-review.md)に、初回照合と修正・未再現事項の例を残しています。
 
 ### 2. 設定キーの全体像を比較する
 
@@ -180,6 +192,7 @@ python tests/integration/probe_timeline_playback_frame_rate.py
 ## 完了条件
 
 - 新旧公式APIの差分が記録されている。
+- Fusion資料の比較とラッパー・Enum・入力型定義への影響が記録され、公式記述と実機で確認した動作が区別されている。
 - 全設定snapshotの追加・削除・初期値変更が分類されている。
 - GUI対応が、名前の類似ではなく変更前後の証拠に基づいている。
 - 公開定数はPythonからの書き込みとreadbackを確認済みである。

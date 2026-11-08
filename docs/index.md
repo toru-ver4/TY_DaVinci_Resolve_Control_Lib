@@ -1,5 +1,6 @@
 # ドキュメント
 
+- [Fusion公式資料の精査と修正](fusion-documentation-review.md): Tool ID・入力型・接続規約の照合、修正と実機検証、再現しなかった注意事項
 - [Resolve 21.2.0調査・検証記録](resolve-21.2.0-verification.md): API差分、再生速度設定、実機検証
 
 - [利用ガイド](guide.md): project作成、制作条件の設定、素材・Fusion・renderの自動化

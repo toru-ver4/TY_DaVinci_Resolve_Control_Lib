@@ -224,6 +224,8 @@ def test_fusion_connections_color_font_and_builders(tmp_path: Path) -> None:
     target = FakeTool("Target")
     connected: list[object] = []
     target.Input = SimpleNamespace(ConnectTo=lambda output: connected.append(output) or True)
+    source.FindMainOutput = lambda index: source.Output
+    target.FindMainInput = lambda index: target.Input
     connect_default_output(source, target)
     assert connected == [source.Output]
 

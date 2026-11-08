@@ -1,0 +1,43 @@
+{
+  "resolve": "21.2.0.5",
+  "main_output_id": "Mask",
+  "point_values": [
+    {
+      "written": [
+        0.2,
+        0.3
+      ],
+      "readback": {
+        "1": 0.2,
+        "2": 0.3,
+        "3": 0.0
+      }
+    },
+    {
+      "written": {
+        "1": 0.4,
+        "2": 0.6
+      },
+      "readback": {
+        "1": 0.4,
+        "2": 0.6,
+        "3": 0.0
+      }
+    },
+    {
+      "written": [
+        0.1,
+        0.2,
+        0.0
+      ],
+      "readback": {
+        "1": 0.1,
+        "2": 0.2,
+        "3": 0.0
+      }
+    }
+  ],
+  "valid_remote_connection_verified": true,
+  "missing_remote_input_rejected": true,
+  "hidden_comp_closed": true
+}

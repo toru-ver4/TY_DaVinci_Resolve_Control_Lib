@@ -92,3 +92,15 @@ def test_every_tool_constant_has_a_generated_protocol() -> None:
 
 def test_package_declares_inline_typing_support() -> None:
     assert (PACKAGE_SOURCE / "py.typed").is_file()
+
+
+def test_common_protocol_supports_documented_inspection_and_main_connectors() -> None:
+    tree = ast.parse((PACKAGE_SOURCE / "fusion_tool_types.pyi").read_text(encoding="utf-8"))
+    classes = {node.name: node for node in tree.body if isinstance(node, ast.ClassDef)}
+    tool_methods = {node.name: node for node in classes["FusionToolProtocol"].body if isinstance(node, ast.FunctionDef)}
+    assert {"GetInput", "GetOutputList", "FindMainInput", "FindMainOutput", "__getitem__"} <= tool_methods.keys()
+    for name in ("GetInput", "SetInput"):
+        assert tool_methods[name].args.args[-1].arg == "frame"
+        assert tool_methods[name].args.defaults
+    input_methods = {node.name for node in classes["FusionInputProtocol"].body if isinstance(node, ast.FunctionDef)}
+    assert {"GetAttrs", "ConnectTo", "GetConnectedOutput"} <= input_methods

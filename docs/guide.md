@@ -198,6 +198,14 @@ status = render_current_settings(
 
 Fusionでは、Rectangleの作成、利用可能fontの確認、Flow上でのTool配置も行えます。次の例は白いRectangleを作成し、Flow上の座標`(2, 3)`へ配置します。
 
+Fusion公式資料との照合により、既定端子の接続とPoint値の検証を修正しています。
+`connect_default_output()`は端子名`Input`／`Output`を固定せずmain端子を接続し、端子がなければ停止します。
+マスクを指定する場合は`connect_input(background, "EffectMask", mask)`のように対象入力を明示します。
+`set_fusion_tool_input(mask, "Center", [0.2, 0.3])`は、Fusionが返す3成分dictへ正規化して検証します。
+remote値は入力の存在と値または接続を確認しますが、無効なFuIDやfontはreadbackが一致してもrenderに失敗する場合があります。
+ドット付きIDは`tool['Transform3DOp.Translate.X']`のように指定してください。
+詳しい根拠、AddToolのdefault・自動接続・animationの注意点は[Fusion資料精査記録](fusion-documentation-review.md)を参照してください。
+
 `Composition.AddTool()`へ渡すRegistry IDは、`FusionTool`から指定できます。Resolve FX（OFX）は`FusionResolveFxTool`へ分けています。
 
 21.1.2の実機一覧からOpenPBRの`FusionTool.MTL_PBR_UBER`を追加しました。
